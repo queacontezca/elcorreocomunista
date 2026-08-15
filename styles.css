@@ -1,0 +1,226 @@
+/* ════════════════════════════════════════════════════
+   EL CORREO COMUNISTA — estética postal de clase
+   Paleta oficial boletines ¡Que Acontezca!:
+   papel crema · tinta negra · rojo ladrillo #8b1a1a
+   ════════════════════════════════════════════════════ */
+
+:root{
+  --papel:#f3edda;
+  --papel-oscuro:#e9e0c6;
+  --tinta:#1a1512;
+  --negro:#17110c;
+  --rojo:#8b1a1a;
+  --rojo-profundo:#6d1111;
+  --pizarra:#5c554d;
+  --filete:#b9ad8f;
+}
+
+*{box-sizing:border-box; margin:0; padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--papel);
+  color:var(--tinta);
+  font-family:Georgia,'Times New Roman',serif;
+  line-height:1.55;
+  font-size:1rem;
+}
+a{color:var(--rojo); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ────────── CABECERA-ESTAFETA ────────── */
+.estafeta{
+  background:var(--negro);
+  color:var(--papel);
+  border-bottom:6px double var(--rojo);
+}
+.banda-superior{
+  display:flex; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
+  max-width:74rem; margin:0 auto; padding:.45rem 1.2rem;
+  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+  color:#cbbf9f; border-bottom:1px solid #3a3129;
+}
+.masthead{
+  max-width:74rem; margin:0 auto; padding:2rem 1.2rem 1.4rem;
+  text-align:center;
+  border-bottom:1px solid #3a3129;
+}
+.masthead h1{
+  font-size:clamp(2.4rem,7vw,4.6rem);
+  letter-spacing:.05em; line-height:1.05;
+  color:var(--papel);
+}
+.masthead h1 span{color:#e8b4a0}
+.bajada{margin-top:1rem}
+.sello{
+  display:inline-block;
+  font-size:clamp(.95rem,2.4vw,1.25rem);
+  font-weight:bold; font-style:italic;
+  color:var(--papel);
+  background:var(--rojo);
+  padding:.4rem 1.4rem;
+  border:2px solid var(--papel);
+  outline:2px solid var(--rojo);
+  transform:rotate(-1.2deg);
+  letter-spacing:.04em;
+}
+.fila-fecha{
+  max-width:74rem; margin:0 auto; padding:1rem 1.2rem;
+  display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+}
+.matasellos{width:92px; height:92px; flex:none; transform:rotate(-8deg); opacity:.95}
+.fecha-larga{font-style:italic; color:#cbbf9f; flex:1; min-width:14rem}
+.fecha-larga strong{color:var(--papel); font-style:normal}
+.localizacion{display:flex; gap:.5rem}
+.localizacion a{
+  font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  padding:.35rem .8rem; border:1px solid #6b5f4a; color:#cbbf9f;
+}
+.localizacion a.activa{background:var(--papel); color:var(--negro); font-weight:bold; border-color:var(--papel)}
+.localizacion a.proxima{opacity:.55}
+.localizacion a small{text-transform:none; letter-spacing:0; font-style:italic}
+.indice{
+  max-width:74rem; margin:0 auto; padding:.55rem 1.2rem .8rem;
+  display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; justify-content:center;
+  font-size:.74rem; letter-spacing:.1em; text-transform:uppercase;
+}
+.indice a{color:var(--papel)}
+.indice a.pr{color:#e8b4a0; font-weight:bold}
+
+/* ────────── CUERPO ────────── */
+main{max-width:74rem; margin:0 auto; padding:1.8rem 1.2rem 3rem}
+
+/* ── La discusión ── */
+.discusion{
+  background:var(--papel-oscuro);
+  border:2px solid var(--rojo);
+  box-shadow:4px 4px 0 var(--rojo);
+  padding:1.4rem 1.6rem; margin-bottom:2.2rem;
+}
+.discusion h2{
+  font-size:1.35rem; color:var(--rojo);
+  border-bottom:1px solid var(--filete); padding-bottom:.5rem; margin-bottom:.8rem;
+}
+.discusion h2 span{
+  display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--pizarra); font-weight:normal; margin-top:.2rem;
+}
+.cuerpo-discusion p{margin-bottom:.6rem; max-width:60rem}
+.cuerpo-discusion .eje{font-size:1.05rem}
+.cuerpo-discusion .nota{
+  font-size:.78rem; font-style:italic; color:var(--pizarra);
+  border-top:1px dotted var(--filete); padding-top:.5rem; margin-top:.9rem;
+}
+
+/* ── Secciones: los cuatro principios ── */
+.columnas{
+  display:grid; grid-template-columns:1fr 1fr; gap:1.6rem;
+}
+@media (max-width:820px){ .columnas{grid-template-columns:1fr} }
+
+.seccion{
+  border-top:1px solid var(--filete);
+}
+.seccion h2{
+  background:var(--rojo); color:var(--papel);
+  font-size:1.1rem; letter-spacing:.06em;
+  padding:.5rem .9rem; margin-bottom:.15rem;
+}
+.seccion h2 .numeral{
+  display:inline-block; margin-right:.5rem;
+  font-style:italic; color:#e8b4a0;
+}
+.seccion .principio{
+  font-size:.82rem; font-style:italic; color:var(--pizarra);
+  padding:.45rem .2rem .9rem; border-bottom:1px solid var(--filete);
+  margin-bottom:1rem;
+}
+
+/* ── Despachos (fichas-estampilla) ── */
+.despacho{
+  position:relative;
+  background:#faf6e9;
+  border:1px solid var(--filete);
+  padding:.9rem 1rem .9rem 1.5rem;
+  margin-bottom:1rem;
+}
+/* borde perforado de estampilla */
+.despacho::before{
+  content:""; position:absolute; left:0; top:0; bottom:0; width:8px;
+  background-image:radial-gradient(circle at 4px 8px, var(--papel) 2.6px, transparent 3px);
+  background-size:8px 16px; background-repeat:repeat-y;
+  background-color:var(--rojo);
+}
+.despacho .meta{
+  font-size:.74rem; color:var(--pizarra); margin-bottom:.3rem;
+}
+.despacho .meta .org{font-weight:bold; text-transform:uppercase; letter-spacing:.06em; font-size:.72rem}
+.despacho h3{font-size:1.02rem; line-height:1.32}
+.despacho h3 a{color:var(--tinta)}
+.despacho h3 a:hover{color:var(--rojo)}
+.despacho .extracto{font-size:.86rem; color:#3d382f; margin-top:.35rem; font-style:italic}
+
+.despacho.con-imagen{display:flex; gap:.9rem}
+.miniatura{
+  flex:none; width:110px; min-height:110px;
+  border:1px solid var(--filete);
+  background:
+    repeating-linear-gradient(45deg, #8b1a1a22 0 6px, transparent 6px 12px),
+    var(--papel-oscuro);
+}
+.despacho.con-imagen .texto{flex:1}
+
+/* ── Puntos reales ── */
+.puntos-reales{
+  margin-top:2.4rem;
+  background:var(--rojo-profundo);
+  color:var(--papel);
+  padding:1.5rem 1.6rem 1.7rem;
+  border:2px solid var(--negro);
+  box-shadow:4px 4px 0 var(--negro);
+}
+.puntos-reales h2{
+  font-size:1.35rem; margin-bottom:.3rem;
+}
+.puntos-reales h2 span{
+  display:block; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase;
+  color:#e8b4a0; font-weight:normal; margin-top:.25rem;
+}
+.rejilla{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-top:1.1rem;
+}
+@media (max-width:820px){ .rejilla{grid-template-columns:1fr} }
+.indicio{
+  background:#faf6e9; color:var(--tinta);
+  border:1px solid var(--negro);
+  padding:.9rem 1rem;
+}
+.indicio .meta{font-size:.72rem; color:var(--rojo); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.35rem}
+.indicio h3{font-size:.98rem; line-height:1.3}
+.indicio h3 a{color:var(--tinta)}
+.indicio h3 a:hover{color:var(--rojo)}
+.indicio .extracto{font-size:.84rem; color:#3d382f; margin-top:.4rem}
+
+/* ── Servicios ── */
+.servicios{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;
+  margin-top:2.2rem;
+}
+@media (max-width:820px){ .servicios{grid-template-columns:1fr 1fr} }
+.servicios article{
+  border-top:3px solid var(--rojo); padding:.6rem .2rem;
+}
+.servicios h3{font-size:.95rem}
+.servicios p{font-size:.8rem; color:var(--pizarra); margin-top:.25rem}
+
+/* ── Pie ── */
+footer{
+  background:var(--negro); color:#cbbf9f;
+  text-align:center; padding:1.6rem 1.2rem;
+  font-size:.8rem; line-height:1.9;
+  border-top:6px double var(--rojo);
+}
+footer strong{color:var(--papel)}
+.aviso{
+  text-align:center; font-size:.75rem; font-style:italic;
+  color:var(--pizarra); padding:.8rem 1rem 1.5rem;
+}
