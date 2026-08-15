@@ -141,6 +141,14 @@ main{max-width:74rem; margin:0 auto; padding:1.8rem 1.2rem 3rem}
 /* ── Lugar de publicación (país / región) ── */
 .lugar{color:var(--pizarra); font-style:italic; letter-spacing:0; text-transform:none}
 
+/* ── Enlaces pendientes (contenido de muestra): sin mano, sin engaño ── */
+a:not([href]){cursor:default}
+.enlace-muestra{
+  color:var(--pizarra); border-bottom:1px dotted var(--pizarra); cursor:help;
+}
+.pendiente{opacity:.5; cursor:default}
+span.org{color:#333}
+
 /* ── Realce al llegar desde una cita ── */
 .despacho:target, .indicio:target{
   border-color:var(--rojo); box-shadow:3px 3px 0 #8b1a1a55;
