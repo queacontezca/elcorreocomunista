@@ -49,7 +49,8 @@ git add -A && git commit -m "Sitio inicial" && git push
 elcorreocomunista/          ← el repositorio ES la página
 ├── index.html              portada del día (secciones = cuatro principios + puntos reales)
 ├── styles.css              estética postal, paleta de los boletines
-├── imagenes/               (crear al agregar imágenes)
+├── imagenes/               portadas e imágenes de despachos
+├── boletines/              PDF de los Boletines ¡Que Acontezca! (versión ligera para web)
 └── README.md               este archivo
 ```
 

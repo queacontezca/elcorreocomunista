@@ -85,21 +85,22 @@ a:hover{text-decoration:underline}
 .indice a{color:var(--papel)}
 .indice a.pr{color:#e8b4a0; font-weight:bold}
 
-/* ── Franja: nuestros boletines ── */
-.franja-boletines{margin:0 0 2.2rem; text-align:center}
-.franja-boletines .rotulo{
-  font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--pizarra); margin-bottom:.9rem;
+/* ── Boletines ¡Que Acontezca! ── */
+.boletines{margin-top:2.4rem; border-top:3px solid var(--negro); padding-top:1rem}
+.boletines h2{font-size:1.2rem}
+.boletines h2 span{
+  display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--pizarra); font-weight:normal; margin-top:.25rem;
 }
-.franja-boletines .rotulo strong{color:var(--rojo)}
-.portadas{display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap}
-.portadas figure{width:124px}
-.portadas img{
-  width:100%; display:block;
-  border:1px solid var(--filete);
-  box-shadow:4px 4px 0 #8b1a1a2e;
+.boletines ul{list-style:none; margin-top:.6rem}
+.boletines li{
+  display:flex; align-items:baseline; gap:1rem;
+  padding:.65rem .2rem; border-bottom:1px dotted var(--filete);
 }
-.portadas figcaption{font-size:.72rem; color:var(--pizarra); margin-top:.4rem; font-style:italic}
+.boletines .num{font-weight:bold; font-style:italic; color:var(--rojo); min-width:2.6rem}
+.boletines .titulo{flex:1}
+.boletines .acciones{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; color:var(--pizarra)}
+.boletines li.proximo{opacity:.55}
 
 /* ────────── CUERPO ────────── */
 main{max-width:74rem; margin:0 auto; padding:1.8rem 1.2rem 3rem}
