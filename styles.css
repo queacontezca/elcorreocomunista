@@ -52,6 +52,8 @@ a:hover{text-decoration:underline}
   border-left:1px solid #3a3129; padding-left:1.2rem;
 }
 .fecha-caja strong{display:block; color:var(--papel); font-style:normal; font-size:.95rem; margin-bottom:.3rem}
+.logo-act{width:84px; display:block; margin:0 auto .35rem; border:1px solid #3a3129}
+.logo-txt{font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; font-style:normal; color:#cbbf9f}
 @media (max-width:760px){
   .masthead{flex-direction:column; gap:1rem}
   .fecha-caja{border:none; padding:0; width:auto}
@@ -129,6 +131,42 @@ a:hover{text-decoration:underline}
 }
 .en-este-numero h2{font-size:1.1rem; color:var(--rojo); margin-bottom:.5rem}
 .en-este-numero li{margin-bottom:.4rem}
+
+/* ── Páginas de sección y de escala ── */
+.pagina-sec{max-width:56rem; margin:0 auto; padding:0 1.2rem 4rem}
+.pagina-sec .volver{
+  display:block; padding:.9rem 0; font-size:.78rem;
+  letter-spacing:.12em; text-transform:uppercase;
+}
+.cab-sec{border-bottom:4px double var(--negro); padding-bottom:1rem; margin-bottom:1.4rem}
+.cab-sec .num{font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--rojo); font-weight:bold}
+.cab-sec h1{font-size:2rem; margin:.25rem 0 .35rem}
+.cab-sec .principio-sec{font-style:italic; color:#3d382f; font-size:1.02rem}
+.bloque{margin-bottom:1.8rem}
+.bloque h3{
+  font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo);
+  border-bottom:1px solid var(--filete); padding-bottom:.3rem; margin-bottom:.7rem;
+}
+.bloque p{margin-bottom:.6rem}
+.cita-boletin{
+  border-left:3px solid var(--rojo); margin:.9rem 0; padding:.5rem 0 .5rem 1.1rem;
+  font-style:italic; color:#2c2820;
+}
+.cita-boletin cite{display:block; font-style:normal; font-size:.78rem; color:var(--pizarra); margin-top:.35rem}
+.anudados{
+  background:var(--papel-oscuro); border:2px solid var(--rojo); box-shadow:4px 4px 0 var(--rojo);
+  padding:1rem 1.3rem; margin-bottom:1.8rem;
+}
+.anudados h3{font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo); margin-bottom:.5rem}
+.figura-poster{margin:0 auto 1.8rem; max-width:26rem; text-align:center}
+.figura-poster img{width:100%; border:1px solid var(--filete); box-shadow:4px 4px 0 #8b1a1a2e}
+.figura-poster figcaption{font-size:.74rem; color:var(--pizarra); font-style:italic; margin-top:.4rem}
+.nav-sec{
+  display:flex; flex-wrap:wrap; gap:.4rem 1.2rem; justify-content:center;
+  font-size:.76rem; letter-spacing:.08em; text-transform:uppercase;
+  border-top:1px solid var(--filete); padding-top:1rem; margin-top:1rem;
+}
+.pagina-sec .despacho{margin-bottom:1rem}
 
 /* ── Fila superior: La discusión + Boletines ── */
 .fila-superior{display:grid; grid-template-columns:2fr 1fr; gap:1.4rem; margin-bottom:2.2rem}
@@ -248,6 +286,7 @@ span.org{color:#333}
   display:inline-block; margin-right:.5rem;
   font-style:italic; color:#e8b4a0;
 }
+.seccion h2 a{color:var(--papel)}
 .seccion .principio{
   font-size:.82rem; font-style:italic; color:var(--pizarra);
   padding:.45rem .2rem .9rem; border-bottom:1px solid var(--filete);
