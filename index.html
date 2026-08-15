@@ -23,17 +23,7 @@
   </div>
 
   <div class="fila-fecha">
-    <!-- Matasellos -->
-    <svg class="matasellos" viewBox="0 0 120 120" aria-hidden="true">
-      <circle cx="60" cy="60" r="56" fill="none" stroke="#8b1a1a" stroke-width="2.5"/>
-      <circle cx="60" cy="60" r="44" fill="none" stroke="#8b1a1a" stroke-width="1.2"/>
-      <text x="60" y="56" text-anchor="middle" font-size="12" fill="#8b1a1a" font-family="Georgia,serif" font-weight="bold">15 AGO 2026</text>
-      <text x="60" y="72" text-anchor="middle" font-size="9"  fill="#8b1a1a" font-family="Georgia,serif" letter-spacing="2">· LOCAL ·</text>
-      <line x1="8" y1="30" x2="46" y2="38" stroke="#8b1a1a" stroke-width="1.4"/>
-      <line x1="6" y1="42" x2="44" y2="50" stroke="#8b1a1a" stroke-width="1.4"/>
-      <line x1="8" y1="54" x2="46" y2="62" stroke="#8b1a1a" stroke-width="1.4"/>
-    </svg>
-    <p class="fecha-larga">sábado 15 de agosto de 2026 · <strong>13 despachos recibidos hoy</strong></p>
+    <p class="fecha-larga">sábado 15 de agosto de 2026 · <strong>14 despachos recibidos hoy</strong></p>
     <nav class="localizacion" aria-label="Localización">
       <a class="activa" href="#">Local</a>
       <a class="proxima" href="#" title="Próximamente">América Latina <small>pronto</small></a>
@@ -55,6 +45,16 @@
 </header>
 
 <main>
+
+  <!-- ══════════════ FRANJA: NUESTROS BOLETINES ══════════════ -->
+  <section class="franja-boletines" aria-label="Nuestros boletines">
+    <p class="rotulo">También circulan los boletines de <strong>Ediciones ¡Que Acontezca!</strong></p>
+    <div class="portadas">
+      <figure><img src="imagenes/boletin-01.jpg" alt="Portada del Boletín N°1"><figcaption>N°1 · Hace falta dignidad</figcaption></figure>
+      <figure><img src="imagenes/boletin-02.jpg" alt="Portada del Boletín N°2"><figcaption>N°2 · Marzo feminista</figcaption></figure>
+      <figure><img src="imagenes/boletin-03.jpg" alt="Portada del Boletín N°3"><figcaption>N°3 · Tiempos de libertad</figcaption></figure>
+    </div>
+  </section>
 
   <!-- ══════════════ LA DISCUSIÓN (síntesis editorial verificable) ══════════════ -->
   <section id="discusion" class="discusion">
@@ -115,13 +115,10 @@
       <h2><span class="numeral">I</span> Los medios comunes</h2>
       <p class="principio">Apropiación colectiva de los medios de producción y financieros.</p>
 
-      <article class="despacho con-imagen" id="d1">
-        <figure class="miniatura" aria-label="Imagen de la publicación original"></figure>
-        <div class="texto">
-          <p class="meta"><a class="org" href="#">Central unitaria de trabajadores</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
-          <h3><a href="#">Comunicado: jornada nacional por salario y jubilación, con asambleas previas en cada lugar de trabajo</a></h3>
-          <p class="extracto">«La mesa sindical acordó llamar a todas las federaciones a una jornada única el último viernes del mes…»</p>
-        </div>
+      <article class="despacho" id="d1">
+        <p class="meta"><a class="org" href="#">Central unitaria de trabajadores</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
+        <h3><a href="#">Comunicado: jornada nacional por salario y jubilación, con asambleas previas en cada lugar de trabajo</a></h3>
+        <p class="extracto">«La mesa sindical acordó llamar a todas las federaciones a una jornada única el último viernes del mes…»</p>
       </article>
 
       <article class="despacho" id="d2">
@@ -174,6 +171,15 @@
     <section id="estado" class="seccion">
       <h2><span class="numeral">IV</span> Marchitamiento del Estado</h2>
       <p class="principio">Extinción del Estado; la política ejercida a distancia del Estado.</p>
+
+      <article class="despacho con-imagen" id="d14">
+        <figure class="miniatura"><img src="imagenes/boletin-03.jpg" alt="Portada del Boletín N°3 · Tiempos de libertad"></figure>
+        <div class="texto">
+          <p class="meta"><a class="org" href="#">Boletín ¡Que Acontezca!</a> <span class="lugar">(Chile · RM)</span> · 14 ago · <a href="#">original</a></p>
+          <h3><a href="#">«Tiempos de libertad»: los cuatro desprendimientos son los cuatro principios dichos por nosotros mismos</a></h3>
+          <p class="extracto">«Solo hay libertad real si nos desprendemos del fanatismo patriótico, la privatización de los bienes comunes, la división del trabajo…»</p>
+        </div>
+      </article>
 
       <article class="despacho" id="d9">
         <p class="meta"><a class="org" href="#">Militante de base (reflexión personal)</a> <span class="lugar">(Chile · IX)</span> · 15 ago · <a href="#">original</a></p>
@@ -230,6 +236,10 @@
 <p class="aviso">Boceto funcional: organizaciones, titulares y fechas son de muestra, no publicaciones reales.</p>
 
 <script>
+// Enlaces de muestra (href="#"): no navegar — evita que la página salte al inicio
+document.querySelectorAll('a[href="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){ e.preventDefault(); });
+});
 // Síntesis por sección: botones General / I / II / III / IV / Puntos reales
 document.querySelectorAll('.botones-discusion button').forEach(function(btn){
   btn.addEventListener('click', function(){
