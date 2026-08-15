@@ -1,76 +1,60 @@
 # El Correo Comunista — Sitio
 
-Sitio estático listo para publicar en el repositorio **`queacontezca/elcorreocomunista`** (GitHub Pages, gratis).
+Sitio público de **El Correo Comunista · ¡Centralización de la discusión!**, proyecto de Ediciones ¡Que Acontezca! (Organización Acontecimiento), de fines públicos.
 
-**Idea clave:** el repositorio *es* la página. No hay que «subir» el sitio a otro lugar: GitHub Pages publica tal cual los archivos del repo, y cada vez que el repo se actualiza, la página se actualiza sola al minuto.
-
----
-
-## 1. Publicar por primera vez (5 minutos)
-
-### Camino A — GitHub Desktop (recomendado para el día a día)
-
-1. Instalar **GitHub Desktop** (desktop.github.com) e iniciar sesión con la cuenta `queacontezca`.
-2. Menú **File → Clone repository…** → elegir `queacontezca/elcorreocomunista` → elegir una carpeta local (sugerencia: dentro de `02 Que Acontezca/El Correo Comunista/`).
-3. Copiar **el contenido** de esta carpeta `Sitio/` (index.html, styles.css, README.md) dentro de la carpeta clonada.
-4. En GitHub Desktop: escribir un resumen («Sitio inicial») → **Commit to main** → **Push origin**.
-5. En github.com, entrar al repo → **Settings → Pages** → en *Build and deployment* elegir **Deploy from a branch** → rama `main`, carpeta `/ (root)` → **Save**.
-6. Esperar ~1 minuto: la página queda en **https://queacontezca.github.io/elcorreocomunista/**
-
-### Camino B — Solo navegador (sin instalar nada)
-
-1. Entrar a github.com/queacontezca/elcorreocomunista → botón **Add file → Upload files**.
-2. Arrastrar `index.html`, `styles.css` y `README.md` → **Commit changes**.
-3. Activar Pages igual que en el paso 5 del Camino A.
-
-### Camino C — Terminal (git)
-
-```bash
-git clone https://github.com/queacontezca/elcorreocomunista.git
-cp index.html styles.css README.md elcorreocomunista/
-cd elcorreocomunista
-git add -A && git commit -m "Sitio inicial" && git push
-# luego activar Pages en Settings → Pages
-```
+**Idea clave:** este repositorio *es* la página. GitHub Pages publica tal cual estos archivos en <https://queacontezca.github.io/elcorreocomunista/> — cada cambio subido al repo actualiza el sitio solo, al minuto.
 
 ---
 
-## 2. Actualizar el Correo (el día a día)
+## 1. Estado actual
 
-- **Agregar un despacho:** abrir `index.html`, copiar un bloque `<article class="despacho">…</article>` completo dentro de su sección, cambiar organización, fecha, título, extracto y enlace. Guardar, commit y push (GitHub Desktop lo hace con dos clics).
-- **Cambiar la fecha:** editar el matasellos (`<text …>15 AGO 2026</text>`) y la línea `fecha-larga`.
-- **Actualizar «La discusión»:** reemplazar los párrafos dentro de `<section id="discusion">`.
-- **Agregar imagen a un despacho:** subir la imagen a una carpeta `imagenes/` del repo y, en la tarjeta, cambiar la clase a `con-imagen` y poner `<img src="imagenes/archivo.jpg">` dentro de `<figure class="miniatura">`.
-- La automatización por RSS (GitHub Actions) viene en la fase 2; hasta entonces la actualización es manual (10-20 min diarios).
+- Sitio **ya publicado** y en circulación (15-08-2026).
+- Estructura permanente: la portada no cambia de número; solo avanza el debate. La cabecera muestra siempre la **última fecha de actualización** (ritmo: cada dos semanas).
+- Licencia de todo el repo: **CC BY 4.0** (ver `LICENSE`).
 
-## 3. Estructura
+## 2. Actualizar el sitio (flujo web, sin instalar nada)
+
+En github.com/queacontezca/elcorreocomunista:
+
+1. **Add file ▾ → Upload files**
+2. Arrastrar los archivos modificados (subir un archivo con el mismo nombre **lo sobrescribe**: eso es «actualizar»)
+3. **Commit changes** → esperar ~1 minuto → recargar con ⌘⇧R
+
+> Si se prefiere trabajar local: la carpeta `elcorreocomunista/` en el Mac es un clon del repo; se puede editar ahí y subir con GitHub Desktop (commit + Push origin). Ambos flujos conviven; el web basta para todo.
+
+## 3. Tareas frecuentes
+
+- **Agregar un despacho:** en `index.html`, copiar un bloque `<article class="despacho">…</article>` dentro de su sección y cambiar medio, lugar `(País)` o `(Chile · Región)`, fecha, título, extracto y URL del original. Actualizar el contador de la caja de fecha y la **fecha de última actualización** (banda superior + caja + aviso al pie).
+- **Actualizar «La discusión»:** reemplazar los párrafos de cada panel dentro de `<section id="discusion">`; citar siempre con enlaces `→ #dN` al despacho correspondiente (verificabilidad).
+- **Nuevo boletín** (p. ej. N°4 en octubre): subir el PDF a `boletines/` (comprimirlo antes para web, ~150 dpi), crear su página de edición copiando una existente (`boletines/n3-tiempos-de-libertad.html`), crear las páginas de sus artículos, y agregarlo al lateral «Boletines» de `index.html` quitando la marca «en preparación».
+- **Nueva fuente:** agregarla en `fuentes.html` con su licencia constatada (ver §5).
+- **Imagen en un despacho:** subir la imagen a `imagenes/`, poner al artículo la clase `con-imagen` y un `<figure class="miniatura"><img src="imagenes/archivo.jpg">`.
+
+## 4. Estructura
 
 ```
 elcorreocomunista/          ← el repositorio ES la página
-├── index.html              portada del día (secciones = cuatro principios + puntos reales)
-├── styles.css              estética postal, paleta de los boletines
+├── index.html              portada (manifiesto, La discusión + Boletines, secciones, puntos reales)
+├── styles.css              estética estafeta grabada, paleta de los boletines
+├── fuentes.html            directorio de fuentes con licencia constatada
+├── boletines/              ediciones HTML (n1, n2, n3…), páginas por artículo y los PDF
 ├── imagenes/               portadas e imágenes de despachos
-├── boletines/              PDF de los Boletines ¡Que Acontezca! (versión ligera para web)
+├── LICENSE                 CC BY 4.0 (todo el repo: código y contenido)
 └── README.md               este archivo
 ```
 
-## 4. Licencia
+## 5. Licencia y marco legal
 
-**Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0** (ver `LICENSE`): reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
+**Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0**: reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
 
-**Material de terceros** (los despachos): sigue siendo de sus autoras y autores; se cita con enlace al original (cita legítima, art. 38 Ley 17.336), nunca republicación íntegra sin permiso.
+**Material de terceros** (los despachos): sigue siendo de sus autoras y autores. Dos modos según la licencia constatada en `fuentes.html`:
 
-## 5. Notas
+1. **Enlace + extracto breve** (todas las fuentes): cita legítima, art. 38 Ley 17.336.
+2. **Espejo de texto completo** (solo fuentes con licencia abierta o autorización — hoy: Horizonte, Carcaj, Rebelión, Desinformémonos): respetando sus condiciones (atribución; no-comercial donde aplique; sin modificar donde sea ND).
 
-- Espejo político en Codeberg y dominio propio: postergados, sin costo.
+## 6. Pendientes del proyecto
 
-## 6. Marco legal y política de archivo (decidido 15-08-2026)
-
-**El Correo opera en dos modos, según la licencia de cada fuente:**
-
-1. **Enlace + extracto breve (modo por defecto).** Toda fuente puede despacharse así: título, fecha, medio, extracto corto entre comillas y enlace al original. Amparo: art. 38 de la Ley 17.336 (cita con fines informativos/críticos, indicando fuente y autor). No exige permiso ni licencia abierta.
-2. **Espejo de texto completo («repositorio de la discusión pública»).** SOLO para fuentes que lo permiten explícitamente: licencias Creative Commons (respetando sus condiciones: atribución, no-comercial si aplica, compartir igual) o declaraciones del propio medio («se permite la reproducción citando la fuente»). En esos casos el artículo completo puede guardarse en `archivo/` con su ficha (fuente, fecha, URL original, licencia) y presentarse con la estética del Correo, declarando siempre procedencia y licencia.
-
-**Registro de licencias:** cada fuente incorporada queda en el directorio `fuentes.html` con su licencia constatada (y la evidencia: pie de página o declaración del medio). Lo que no tenga licencia abierta constatada se considera «todos los derechos reservados» y opera solo en modo 1.
-
-**Fase 1:** al conversar con las organizaciones, pedir autorización escrita de extractos (y de espejo, si la quieren dar): deja el modo 2 disponible para ellas aunque no usen CC.
+- Página «Qué es» (estatuto) y «Archivo» por fecha.
+- Automatización RSS (GitHub Actions) para las fuentes con feed.
+- Observatorio de datos (`datos/chile/`): series del análisis de coyuntura, públicas para las luchas.
+- Espejo en Codeberg y dominio propio: postergados, sin costo.
