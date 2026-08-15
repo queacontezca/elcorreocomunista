@@ -133,21 +133,40 @@ a:hover{text-decoration:underline}
 .en-este-numero li{margin-bottom:.4rem}
 
 /* ── Páginas de sección y de escala ── */
-.pagina-sec{max-width:56rem; margin:0 auto; padding:0 1.2rem 4rem}
-.pagina-sec .volver{
-  display:block; padding:.9rem 0; font-size:.78rem;
-  letter-spacing:.12em; text-transform:uppercase;
+.pagina-sec{max-width:none; margin:0; padding:0 0 4rem}
+.mini-estafeta{
+  background:var(--negro); color:var(--papel);
+  border-bottom:6px double var(--rojo); margin-bottom:2rem;
 }
-.cab-sec{border-bottom:4px double var(--negro); padding-bottom:1rem; margin-bottom:1.4rem}
-.cab-sec .num{font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--rojo); font-weight:bold}
-.cab-sec h1{font-size:2rem; margin:.25rem 0 .35rem}
-.cab-sec .principio-sec{font-style:italic; color:#3d382f; font-size:1.02rem}
-.bloque{margin-bottom:1.8rem}
+.me-sup{
+  max-width:56rem; margin:0 auto; padding:.55rem 1.2rem;
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:#cbbf9f;
+  border-bottom:1px solid #3a3129;
+}
+.me-sup a{color:#e8b4a0}
+.me-titulo{max-width:56rem; margin:0 auto; padding:1.7rem 1.2rem 1.5rem}
+.kicker{
+  font-size:.74rem; letter-spacing:.2em; text-transform:uppercase;
+  color:#e8b4a0; font-weight:bold;
+}
+.me-titulo h1{font-size:2.2rem; color:var(--papel); margin:.3rem 0 .4rem}
+.principio-sec{font-style:italic; color:#cbbf9f; font-size:1.02rem; max-width:44rem}
+.contenido-sec{max-width:50rem; margin:0 auto; padding:0 1.2rem}
+.bloque{margin-bottom:1.6rem}
+.bloque.box{
+  background:#faf6e9; border:1px solid var(--filete); border-top:3px solid var(--rojo);
+  padding:1rem 1.3rem;
+}
 .bloque h3{
   font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo);
   border-bottom:1px solid var(--filete); padding-bottom:.3rem; margin-bottom:.7rem;
 }
 .bloque p{margin-bottom:.6rem}
+.despachos-sec h3{
+  font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo);
+  border-bottom:1px solid var(--filete); padding-bottom:.3rem; margin-bottom:1rem;
+}
 .cita-boletin{
   border-left:3px solid var(--rojo); margin:.9rem 0; padding:.5rem 0 .5rem 1.1rem;
   font-style:italic; color:#2c2820;
