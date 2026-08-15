@@ -104,6 +104,32 @@ main{max-width:74rem; margin:0 auto; padding:1.8rem 1.2rem 3rem}
   display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
   color:var(--pizarra); font-weight:normal; margin-top:.2rem;
 }
+/* ── Botones de síntesis por sección ── */
+.botones-discusion{
+  display:flex; flex-wrap:wrap; gap:.45rem;
+  margin:0 0 1rem;
+}
+.botones-discusion button{
+  font-family:inherit; font-size:.76rem; letter-spacing:.06em;
+  padding:.35rem .85rem; cursor:pointer;
+  background:transparent; color:var(--rojo);
+  border:1.5px solid var(--rojo); border-radius:999px;
+}
+.botones-discusion button:hover{background:#8b1a1a14}
+.botones-discusion button.activo{background:var(--rojo); color:var(--papel); font-weight:bold}
+
+/* ── Paneles de síntesis ── */
+.cuerpo-discusion .panel{display:none}
+.cuerpo-discusion .panel.visible{display:block}
+
+/* ── Lugar de publicación (país / región) ── */
+.lugar{color:var(--pizarra); font-style:italic; letter-spacing:0; text-transform:none}
+
+/* ── Realce al llegar desde una cita ── */
+.despacho:target, .indicio:target{
+  border-color:var(--rojo); box-shadow:3px 3px 0 #8b1a1a55;
+}
+
 .cuerpo-discusion p{margin-bottom:.6rem; max-width:60rem}
 .cuerpo-discusion .eje{font-size:1.05rem}
 .cuerpo-discusion .nota{

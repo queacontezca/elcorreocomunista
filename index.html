@@ -27,14 +27,13 @@
     <svg class="matasellos" viewBox="0 0 120 120" aria-hidden="true">
       <circle cx="60" cy="60" r="56" fill="none" stroke="#8b1a1a" stroke-width="2.5"/>
       <circle cx="60" cy="60" r="44" fill="none" stroke="#8b1a1a" stroke-width="1.2"/>
-      <text x="60" y="50" text-anchor="middle" font-size="13" fill="#8b1a1a" font-family="Georgia,serif" font-weight="bold">SANTIAGO</text>
-      <text x="60" y="66" text-anchor="middle" font-size="12" fill="#8b1a1a" font-family="Georgia,serif">15 AGO 2026</text>
-      <text x="60" y="80" text-anchor="middle" font-size="9"  fill="#8b1a1a" font-family="Georgia,serif" letter-spacing="2">· LOCAL ·</text>
+      <text x="60" y="56" text-anchor="middle" font-size="12" fill="#8b1a1a" font-family="Georgia,serif" font-weight="bold">15 AGO 2026</text>
+      <text x="60" y="72" text-anchor="middle" font-size="9"  fill="#8b1a1a" font-family="Georgia,serif" letter-spacing="2">· LOCAL ·</text>
       <line x1="8" y1="30" x2="46" y2="38" stroke="#8b1a1a" stroke-width="1.4"/>
       <line x1="6" y1="42" x2="44" y2="50" stroke="#8b1a1a" stroke-width="1.4"/>
       <line x1="8" y1="54" x2="46" y2="62" stroke="#8b1a1a" stroke-width="1.4"/>
     </svg>
-    <p class="fecha-larga">sábado 15 de agosto de 2026 · <strong>12 despachos recibidos hoy</strong></p>
+    <p class="fecha-larga">sábado 15 de agosto de 2026 · <strong>13 despachos recibidos hoy</strong></p>
     <nav class="localizacion" aria-label="Localización">
       <a class="activa" href="#">Local</a>
       <a class="proxima" href="#" title="Próximamente">América Latina <small>pronto</small></a>
@@ -43,10 +42,10 @@
   </div>
 
   <nav class="indice" aria-label="Secciones">
-    <a href="#comun">I · Lo común</a>
-    <a href="#jerarquias">II · Sin jerarquías</a>
-    <a href="#fronteras">III · Sin fronteras</a>
-    <a href="#estado">IV · Sin Estado</a>
+    <a href="#comun">I · Los medios comunes</a>
+    <a href="#jerarquias">II · Trabajo polimorfo</a>
+    <a href="#fronteras">III · Proletariado</a>
+    <a href="#estado">IV · Marchitamiento del Estado</a>
     <a href="#puntos" class="pr">Puntos reales</a>
     <a href="#discusion">La discusión</a>
     <a href="#">Archivo</a>
@@ -57,15 +56,55 @@
 
 <main>
 
-  <!-- ══════════════ LA DISCUSIÓN (síntesis editorial) ══════════════ -->
+  <!-- ══════════════ LA DISCUSIÓN (síntesis editorial verificable) ══════════════ -->
   <section id="discusion" class="discusion">
-    <h2>La discusión <span>síntesis de la semana · Ediciones ¡Que Acontezca!</span></h2>
+    <h2>La discusión <span>síntesis de la semana · Ediciones ¡Que Acontezca! · con citas verificables</span></h2>
+
+    <div class="botones-discusion" role="tablist" aria-label="Elegir sección de la síntesis">
+      <button class="activo" data-panel="general">General</button>
+      <button data-panel="comun">I · Los medios comunes</button>
+      <button data-panel="jerarquias">II · Trabajo polimorfo</button>
+      <button data-panel="fronteras">III · Proletariado</button>
+      <button data-panel="estado">IV · Marchitamiento del Estado</button>
+      <button data-panel="puntos">Puntos reales</button>
+    </div>
+
     <div class="cuerpo-discusion">
-      <p class="eje"><strong>Eje de la semana:</strong> salario, organización y Estado.</p>
-      <p><strong>Puntos comunes:</strong> las centrales y las coordinadoras de comercio coincide en que la negociación por rama es hoy el terreno donde lo común se hace visible; tres despachos distintos nombran la misma fecha de movilización sin haberse puesto de acuerdo.</p>
-      <p><strong>Tensión abierta:</strong> entre quienes llaman a institucionalizar la mesa sindical y quienes sostienen que toda mesa estable es ya una jerarquía del trabajo político. La discusión atraviesa las secciones I y IV.</p>
-      <p><strong>Diferencia registrada:</strong> la reflexión de militantes de base (ver despachos de «Sin Estado») habla de «asamblea permanente»; los comunicados de las direcciones hablan de «comando». No es un matiz de palabras.</p>
-      <p class="nota">Síntesis de muestra para el boceto: así se verá el resumen que la propia página formulará para hacer visible la discusión.</p>
+
+      <div class="panel visible" id="panel-general">
+        <p class="eje"><strong>Eje de la semana:</strong> salario, organización y Estado.</p>
+        <p><strong>Puntos comunes:</strong> la central y la coordinadora del comercio coinciden en que la negociación por rama es hoy el terreno donde lo común se hace visible (<a href="#d1">→ CUT</a>, <a href="#d2">→ Coordinadora</a>); y tres despachos distintos nombran la misma fecha de movilización sin haberse puesto de acuerdo.</p>
+        <p><strong>Tensión abierta:</strong> entre quienes llaman a institucionalizar la mesa sindical (<a href="#d1">→ CUT</a>) y quienes sostienen que toda mesa estable es ya una jerarquía del trabajo político (<a href="#d9">→ Militante de base</a>). La discusión atraviesa las secciones I y IV.</p>
+        <p><strong>Diferencia registrada:</strong> la reflexión de base habla de «asamblea permanente» (<a href="#d9">→ reflexión</a>); los comunicados de las direcciones hablan de «comando» (<a href="#d1">→ comunicado</a>). No es un matiz de palabras.</p>
+      </div>
+
+      <div class="panel" id="panel-comun">
+        <p class="eje"><strong>I · Los medios comunes — la semana:</strong></p>
+        <p>La jornada nacional por salario y jubilación (<a href="#d1">→ CUT</a>) y el boletín sobre negociación por rama (<a href="#d2">→ Coordinadora</a>) empujan en la misma dirección: la exigencia salarial como forma actual de la apropiación común. En otro terreno, la carta del humedal (<a href="#d3">→ Comité ambiental</a>) nombra el mismo principio fuera de la fábrica: el bien común contra el suelo disponible.</p>
+        <p><strong>Pregunta que queda abierta:</strong> ¿las tres luchas se piensan entre sí?</p>
+      </div>
+
+      <div class="panel" id="panel-jerarquias">
+        <p class="eje"><strong>II · Trabajo polimorfo — la semana:</strong></p>
+        <p>La escuela sindical afirma que «nadie estudia por nosotros» (<a href="#d4">→ Escuela de formación</a>), y el gremio docente reflexiona sobre el oficio de enseñar (<a href="#d5">→ Colegio de Profesores</a>): dos modos de disputar la división entre trabajo manual e intelectual, uno desde la formación obrera y otro desde la profesión.</p>
+      </div>
+
+      <div class="panel" id="panel-fronteras">
+        <p class="eje"><strong>III · Proletariado — la semana:</strong></p>
+        <p>La jornada continental coordinada en doce ciudades (<a href="#d6">→ Red de solidaridad</a>) y el comunicado de la asamblea de migrantes (<a href="#d7">→ Asamblea</a>) enfrentan el mismo dispositivo: la frontera como fábrica de sospecha. Desde fuera del territorio, el semanario hermano reporta la misma coordinación (<a href="#d8">→ Argentina</a>): el internacionalismo ya circula, aunque aún sin sección propia.</p>
+      </div>
+
+      <div class="panel" id="panel-estado">
+        <p class="eje"><strong>IV · Marchitamiento del Estado — la semana:</strong></p>
+        <p>La reflexión de base contra la «paranoia organizativa» (<a href="#d9">→ Militante</a>) y el año de autogestión del campamento (<a href="#d10">→ Pobladores</a>) ponen el mismo criterio: la respuesta se organiza, no se gestiona. La tensión con la sección I es explícita: mesa estable o asamblea permanente.</p>
+      </div>
+
+      <div class="panel" id="panel-puntos">
+        <p class="eje"><strong>Puntos reales — los indicios de la semana:</strong></p>
+        <p>Paros portuarios coincidentes sin convocatoria unitaria (<a href="#d11">→ Valparaíso</a>), acta común entre comunidades y sindicato de salud (<a href="#d12">→ Temuco</a>), y la réplica de asambleas de deudores (<a href="#d13">→ Santiago</a>): tres señales de organización que nace sin centro. El Correo las registra como indicios, no como triunfos.</p>
+      </div>
+
+      <p class="nota">Síntesis de muestra para el boceto: los enlaces «→» saltan al despacho citado dentro de esta misma página, de modo que toda afirmación de la síntesis queda verificable en su fuente.</p>
     </div>
   </section>
 
@@ -73,72 +112,77 @@
   <div class="columnas">
 
     <section id="comun" class="seccion">
-      <h2><span class="numeral">I</span> Lo común</h2>
+      <h2><span class="numeral">I</span> Los medios comunes</h2>
       <p class="principio">Apropiación colectiva de los medios de producción y financieros.</p>
 
-      <article class="despacho con-imagen">
+      <article class="despacho con-imagen" id="d1">
         <figure class="miniatura" aria-label="Imagen de la publicación original"></figure>
         <div class="texto">
-          <p class="meta"><a class="org" href="#">Central unitaria de trabajadores</a> · 15 ago · <a href="#">original</a></p>
+          <p class="meta"><a class="org" href="#">Central unitaria de trabajadores</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
           <h3><a href="#">Comunicado: jornada nacional por salario y jubilación, con asambleas previas en cada lugar de trabajo</a></h3>
           <p class="extracto">«La mesa sindical acordó llamar a todas las federaciones a una jornada única el último viernes del mes…»</p>
         </div>
       </article>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Coordinadora de trabajadores del comercio</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d2">
+        <p class="meta"><a class="org" href="#">Coordinadora de trabajadores del comercio</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Boletín: la negociación por rama y el fantasma del sueldo mínimo</a></h3>
       </article>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Comité ambiental y junta de vecinos</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d3">
+        <p class="meta"><a class="org" href="#">Comité ambiental y junta de vecinos</a> <span class="lugar">(Chile · V)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Carta abierta: el humedal es un bien común, no un suelo disponible</a></h3>
       </article>
     </section>
 
     <section id="jerarquias" class="seccion">
-      <h2><span class="numeral">II</span> Sin jerarquías</h2>
+      <h2><span class="numeral">II</span> Trabajo polimorfo</h2>
       <p class="principio">Fin de la división jerárquica del trabajo, manual e intelectual.</p>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Escuela de formación Solidaridad</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d4">
+        <p class="meta"><a class="org" href="#">Escuela de formación Solidaridad</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Programa del segundo ciclo: economía política leída por los propios trabajadores</a></h3>
         <p class="extracto">«Nadie estudia por nosotros: el ciclo parte de la experiencia del turno y del salario, no del manual…»</p>
       </article>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Colegio de profesores (regional)</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d5">
+        <p class="meta"><a class="org" href="#">Colegio de profesores regional</a> <span class="lugar">(Chile · VIII)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Jornada de reflexión: la deuda histórica y el oficio de enseñar</a></h3>
       </article>
     </section>
 
     <section id="fronteras" class="seccion">
-      <h2><span class="numeral">III</span> Sin fronteras</h2>
+      <h2><span class="numeral">III</span> Proletariado</h2>
       <p class="principio">Internacionalismo fuerte; fin de las identidades, en particular la nacional.</p>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Red de solidaridad con los pueblos</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d6">
+        <p class="meta"><a class="org" href="#">Red de solidaridad con los pueblos</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Jornada continental contra el bloqueo: coordinación en doce ciudades</a></h3>
       </article>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Asamblea de migrantes (local)</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d7">
+        <p class="meta"><a class="org" href="#">Asamblea de migrantes local</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Comunicado: contra la ley que nos convierte en sospecha permanente</a></h3>
+      </article>
+
+      <article class="despacho" id="d8">
+        <p class="meta"><a class="org" href="#">Semanario obrero hermano</a> <span class="lugar">(Argentina)</span> · 14 ago · <a href="#">original</a></p>
+        <h3><a href="#">Crónica: la jornada continental se sintió también del otro lado de la cordillera</a></h3>
       </article>
     </section>
 
     <section id="estado" class="seccion">
-      <h2><span class="numeral">IV</span> Sin Estado</h2>
+      <h2><span class="numeral">IV</span> Marchitamiento del Estado</h2>
       <p class="principio">Extinción del Estado; la política ejercida a distancia del Estado.</p>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Militante de base (reflexión personal)</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d9">
+        <p class="meta"><a class="org" href="#">Militante de base (reflexión personal)</a> <span class="lugar">(Chile · IX)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">«Asamblea permanente»: notas sobre la paranoia organizativa en tiempos de repliegue</a></h3>
         <p class="extracto">«Toda dirección que se eterniza termina hablando el idioma del Estado antes que el de su propia base…»</p>
       </article>
 
-      <article class="despacho">
-        <p class="meta"><a class="org" href="#">Movimiento de pobladores (local)</a> · 15 ago · <a href="#">original</a></p>
+      <article class="despacho" id="d10">
+        <p class="meta"><a class="org" href="#">Movimiento de pobladores local</a> <span class="lugar">(Chile · RM)</span> · 15 ago · <a href="#">original</a></p>
         <h3><a href="#">Un año del campamento: la respuesta la organizamos nosotros</a></h3>
       </article>
     </section>
@@ -149,18 +193,18 @@
   <section id="puntos" class="puntos-reales">
     <h2>Puntos reales <span>indicios de que algo está surgiendo u organizándose en sí</span></h2>
     <div class="rejilla">
-      <article class="indicio">
-        <p class="meta">Nota periodística · Valparaíso · 15 ago</p>
+      <article class="indicio" id="d11">
+        <p class="meta">Nota periodística · <span class="lugar">Chile · V</span> · 15 ago</p>
         <h3><a href="#">Estibadores de tres puertos paran el mismo día sin convocatoria unitaria: coordinación espontánea o inicio de algo</a></h3>
         <p class="extracto">Los paros coincidieron en fecha y exigencia sin pasar por las direcciones. Tres asambleas, un mismo pliego.</p>
       </article>
-      <article class="indicio">
-        <p class="meta">Nota periodística · Temuco · 14 ago</p>
+      <article class="indicio" id="d12">
+        <p class="meta">Nota periodística · <span class="lugar">Chile · IX</span> · 14 ago</p>
         <h3><a href="#">Comunidades y sindicato de salud firman acta común de defensa del hospital</a></h3>
         <p class="extracto">Primera instancia formal entre organización territorial y gremio: el documento habla de «gestión en común».</p>
       </article>
-      <article class="indicio">
-        <p class="meta">Registro · Santiago · 13 ago</p>
+      <article class="indicio" id="d13">
+        <p class="meta">Registro · <span class="lugar">Chile · RM</span> · 13 ago</p>
         <h3><a href="#">Cuatro nuevas asambleas de deudores CAE en un mes: la campaña crece por réplica</a></h3>
         <p class="extracto">El formato se copia sin centro: cada asamblea nace de la anterior y publica su propio acta.</p>
       </article>
@@ -184,6 +228,18 @@
 </footer>
 
 <p class="aviso">Boceto funcional: organizaciones, titulares y fechas son de muestra, no publicaciones reales.</p>
+
+<script>
+// Síntesis por sección: botones General / I / II / III / IV / Puntos reales
+document.querySelectorAll('.botones-discusion button').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    document.querySelectorAll('.botones-discusion button').forEach(function(b){ b.classList.remove('activo'); });
+    btn.classList.add('activo');
+    document.querySelectorAll('.cuerpo-discusion .panel').forEach(function(p){ p.classList.remove('visible'); });
+    document.getElementById('panel-' + btn.dataset.panel).classList.add('visible');
+  });
+});
+</script>
 
 </body>
 </html>
