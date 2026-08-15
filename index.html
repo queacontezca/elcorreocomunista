@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<!-- ══════════════ CABECERA-ESTAFETA ══════════════ -->
+<!-- ══════════════ CABECERA-ESTAFETA (portada A) ══════════════ -->
 <header class="estafeta">
   <div class="banda-superior">
     <span>Ediciones ¡Que Acontezca!</span>
@@ -18,12 +18,33 @@
   </div>
 
   <div class="masthead">
-    <h1>EL CORREO <span>COMUNISTA</span></h1>
-    <p class="bajada"><span class="sello">¡Centralización de la discusión!</span></p>
+    <!-- Marca grabada: estrella + hoz + martillo en líneas paralelas -->
+    <svg class="sello-grabado" viewBox="0 0 220 220" aria-hidden="true">
+      <defs>
+        <pattern id="hg" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="4" height="4" fill="none"/><line x1="0" y1="0" x2="0" y2="4" stroke="#d96c5f" stroke-width="1.1"/>
+        </pattern>
+      </defs>
+      <polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      <g fill="none" stroke="#d96c5f" stroke-width="1.5">
+        <path d="M43.5,136.5 A66,66 0 1 1 176.5,136.5"/>
+        <path d="M39.9,137.2 A70,70 0 1 1 180.1,137.2"/>
+        <path d="M36.3,137.9 A74,74 0 1 1 183.7,137.9"/>
+        <path d="M32.7,138.6 A78,78 0 1 1 187.3,138.6"/>
+      </g>
+      <g transform="rotate(-32 110 125)">
+        <rect x="84" y="90" width="52" height="20" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+        <rect x="105" y="108" width="10" height="88" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      </g>
+    </svg>
+    <div class="centro">
+      <h1>EL CORREO <span>COMUNISTA</span></h1>
+      <p class="bajada"><span class="sello">¡Centralización de la discusión!</span></p>
+    </div>
+    <div class="fecha-caja"><strong>sábado 15 de agosto de 2026</strong>18 despachos en esta edición · edición local</div>
   </div>
 
   <div class="fila-fecha">
-    <p class="fecha-larga">sábado 15 de agosto de 2026 · <strong>14 despachos recibidos hoy</strong></p>
     <nav class="localizacion" aria-label="Localización">
       <a class="activa">Local</a>
       <a class="proxima" title="Próximamente">América Latina <small>pronto</small></a>
@@ -39,65 +60,96 @@
     <a href="#puntos" class="pr">Puntos reales</a>
     <a href="#discusion">La discusión</a>
     <a href="#boletines">Boletines</a>
+    <a href="fuentes.html">Fuentes</a>
     <a class="pendiente">Archivo</a>
-    <a class="pendiente">Fuentes</a>
     <a class="pendiente">Qué es</a>
   </nav>
 </header>
 
 <main>
 
-  <!-- ══════════════ LA DISCUSIÓN (síntesis editorial verificable) ══════════════ -->
-  <section id="discusion" class="discusion">
-    <h2>La discusión <span>síntesis de la semana · Ediciones ¡Que Acontezca! · con citas verificables</span></h2>
+  <!-- ══════════════ FILA SUPERIOR: LA DISCUSIÓN + BOLETINES ══════════════ -->
+  <div class="fila-superior">
 
-    <div class="botones-discusion" role="tablist" aria-label="Elegir sección de la síntesis">
-      <button class="activo" data-panel="general">General</button>
-      <button data-panel="comun">I · Los medios comunes</button>
-      <button data-panel="jerarquias">II · Trabajo polimorfo</button>
-      <button data-panel="fronteras">III · Proletariado</button>
-      <button data-panel="estado">IV · Marchitamiento del Estado</button>
-      <button data-panel="puntos">Puntos reales</button>
-    </div>
+    <section id="discusion" class="discusion">
+      <h2>La discusión <span>síntesis de la edición · Ediciones ¡Que Acontezca! · con citas verificables</span></h2>
 
-    <div class="cuerpo-discusion">
-
-      <div class="panel visible" id="panel-general">
-        <p class="eje"><strong>Eje de la semana:</strong> salario, organización y Estado.</p>
-        <p><strong>Puntos comunes:</strong> la central y la coordinadora del comercio coinciden en que la negociación por rama es hoy el terreno donde lo común se hace visible (<a href="#d1">→ CUT</a>, <a href="#d2">→ Coordinadora</a>); y tres despachos distintos nombran la misma fecha de movilización sin haberse puesto de acuerdo.</p>
-        <p><strong>Tensión abierta:</strong> entre quienes llaman a institucionalizar la mesa sindical (<a href="#d1">→ CUT</a>) y quienes sostienen que toda mesa estable es ya una jerarquía del trabajo político (<a href="#d9">→ Militante de base</a>). La discusión atraviesa las secciones I y IV.</p>
-        <p><strong>Diferencia registrada:</strong> la reflexión de base habla de «asamblea permanente» (<a href="#d9">→ reflexión</a>); los comunicados de las direcciones hablan de «comando» (<a href="#d1">→ comunicado</a>). No es un matiz de palabras.</p>
+      <div class="botones-discusion" role="tablist" aria-label="Elegir sección de la síntesis">
+        <button class="activo" data-panel="general">General</button>
+        <button data-panel="comun">I · Los medios comunes</button>
+        <button data-panel="jerarquias">II · Trabajo polimorfo</button>
+        <button data-panel="fronteras">III · Proletariado</button>
+        <button data-panel="estado">IV · Marchitamiento del Estado</button>
+        <button data-panel="puntos">Puntos reales</button>
       </div>
 
-      <div class="panel" id="panel-comun">
-        <p class="eje"><strong>I · Los medios comunes — la semana:</strong></p>
-        <p>La jornada nacional por salario y jubilación (<a href="#d1">→ CUT</a>) y el boletín sobre negociación por rama (<a href="#d2">→ Coordinadora</a>) empujan en la misma dirección: la exigencia salarial como forma actual de la apropiación común. En otro terreno, la carta del humedal (<a href="#d3">→ Comité ambiental</a>) nombra el mismo principio fuera de la fábrica: el bien común contra el suelo disponible.</p>
-        <p><strong>Pregunta que queda abierta:</strong> ¿las tres luchas se piensan entre sí?</p>
-      </div>
+      <div class="cuerpo-discusion">
 
-      <div class="panel" id="panel-jerarquias">
-        <p class="eje"><strong>II · Trabajo polimorfo — la semana:</strong></p>
-        <p>La escuela sindical afirma que «nadie estudia por nosotros» (<a href="#d4">→ Escuela de formación</a>), y el gremio docente reflexiona sobre el oficio de enseñar (<a href="#d5">→ Colegio de Profesores</a>): dos modos de disputar la división entre trabajo manual e intelectual, uno desde la formación obrera y otro desde la profesión.</p>
-      </div>
+        <div class="panel visible" id="panel-general">
+          <p class="eje"><strong>Eje de la edición:</strong> la ofensiva y la organización.</p>
+          <p><strong>Puntos comunes:</strong> tres despachos chilenos de la semana nombran la organización como respuesta: la CUT presenta su hoja de ruta de mujeres trabajadoras (<a href="#d1">→ CUT</a>), UKAMAU editorializa «unidad política y articulación social» (<a href="#d11">→ UKAMAU</a>) y los gremios de la educación coordinan acciones conjuntas (<a href="#d5">→ Colegio de Profesores</a>). La ofensiva que enfrentan tiene nombre propio en El Porteño (<a href="#d18">→ la blitzkrieg de Kast</a>).</p>
+          <p><strong>Tensión abierta:</strong> la cuestión del Estado atraviesa la edición. Jacobinlat registra el debate cubano sobre las 176 medidas (<a href="#d7">→ Jacobinlat</a>); Desinformémonos da voz a los pueblos mayas que exigen autonomía frente a una ley que la tutela (<a href="#d13">→ Desinformémonos</a>); y UKAMAU llama a defender los espacios de base sin esperar nada del tablero (<a href="#d11">→ UKAMAU</a>).</p>
+          <p><strong>Diferencia registrada:</strong> Horizonte afirma que «todas las mujeres somos trabajadoras» (<a href="#d4">→ Horizonte</a>) y La Primera titula «El pueblo pasa la cuenta» (<a href="#d12">→ 8M</a>): dos modos de nombrar la misma cuenta — una desde el trabajo, otra desde el pueblo. La discusión queda abierta.</p>
+        </div>
 
-      <div class="panel" id="panel-fronteras">
-        <p class="eje"><strong>III · Proletariado — la semana:</strong></p>
-        <p>La jornada continental coordinada en doce ciudades (<a href="#d6">→ Red de solidaridad</a>) y el comunicado de la asamblea de migrantes (<a href="#d7">→ Asamblea</a>) enfrentan el mismo dispositivo: la frontera como fábrica de sospecha. Desde fuera del territorio, el semanario hermano reporta la misma coordinación (<a href="#d8">→ Argentina</a>): el internacionalismo ya circula, aunque aún sin sección propia.</p>
-      </div>
+        <div class="panel" id="panel-comun">
+          <p class="eje"><strong>I · Los medios comunes — la semana:</strong></p>
+          <p>La universidad como esquema piramidal de deuda (<a href="#d3">→ Cosmopolitican</a>) y la cobranza CAE documentada cifra a cifra (<a href="#d16">→ Deuda Injusta</a>): el mismo dispositivo leído como estafa y como dato. Frente a él, la CUT organiza a las mujeres trabajadoras (<a href="#d1">→ CUT</a>) y el modelo habitacional de UKAMAU entra al catálogo de buenas prácticas de ONU-Hábitat (<a href="#d2">→ UKAMAU</a>): la apropiación común ya tiene casos.</p>
+        </div>
 
-      <div class="panel" id="panel-estado">
-        <p class="eje"><strong>IV · Marchitamiento del Estado — la semana:</strong></p>
-        <p>La reflexión de base contra la «paranoia organizativa» (<a href="#d9">→ Militante</a>) y el año de autogestión del campamento (<a href="#d10">→ Pobladores</a>) ponen el mismo criterio: la respuesta se organiza, no se gestiona. La tensión con la sección I es explícita: mesa estable o asamblea permanente.</p>
-      </div>
+        <div class="panel" id="panel-jerarquias">
+          <p class="eje"><strong>II · Trabajo polimorfo — la semana:</strong></p>
+          <p>La división del trabajo leída desde dos extremos: el cuerpo de las mujeres (<a href="#d4">→ Horizonte</a>) y la cultura global del capital como primer producto de internet (<a href="#d6">→ Carcaj</a>). Entre ambos, los gremios de la educación coordinan la defensa de la educación pública (<a href="#d5">→ Colegio de Profesores</a>).</p>
+        </div>
 
-      <div class="panel" id="panel-puntos">
-        <p class="eje"><strong>Puntos reales — los indicios de la semana:</strong></p>
-        <p>Paros portuarios coincidentes sin convocatoria unitaria (<a href="#d11">→ Valparaíso</a>), acta común entre comunidades y sindicato de salud (<a href="#d12">→ Temuco</a>), y la réplica de asambleas de deudores (<a href="#d13">→ Santiago</a>): tres señales de organización que nace sin centro. El Correo las registra como indicios, no como triunfos.</p>
-      </div>
+        <div class="panel" id="panel-fronteras">
+          <p class="eje"><strong>III · Proletariado — la semana:</strong></p>
+          <p>Cuba concentra la discusión: el debate sobre las 176 medidas y lo que el mercado no decidirá (<a href="#d7">→ Jacobinlat</a>). Alrededor: la última línea de defensa del dólar (<a href="#d8">→ Huella del Sur</a>), el «plataformicidio» palestino documentado en Meta (<a href="#d10">→ Rebelión</a>) y el llamado colombiano a la unidad de los pueblos (<a href="#d9">→ Contracorriente</a>).</p>
+        </div>
 
-      <p class="nota">Síntesis de muestra para el boceto: los enlaces «→» saltan al despacho citado dentro de esta misma página, de modo que toda afirmación de la síntesis queda verificable en su fuente.</p>
-    </div>
-  </section>
+        <div class="panel" id="panel-estado">
+          <p class="eje"><strong>IV · Marchitamiento del Estado — la semana:</strong></p>
+          <p>Tres modos de decir que la respuesta se organiza a distancia del Estado: unidad política y articulación social (<a href="#d11">→ UKAMAU</a>), el pueblo que pasa la cuenta (<a href="#d12">→ La Primera, 8M</a>) y los pueblos mayas exigiendo autonomía real sobre sus territorios (<a href="#d13">→ Desinformémonos</a>). Nuestro Boletín N°3 lo discute como desprendimiento (<a href="#d14">→ ¡Que Acontezca!</a>).</p>
+        </div>
+
+        <div class="panel" id="panel-puntos">
+          <p class="eje"><strong>Puntos reales — los indicios de la semana:</strong></p>
+          <p>Trabajadores respaldando el paro de estudiantes del D'Halmar y valorando su organización (<a href="#d15">→ El Pincoyazo</a>); la cobranza CAE medida en convenios y embargos (<a href="#d16">→ Deuda Injusta</a>); un conversatorio sobre Fidel y Santucho en el norte (<a href="#d17">→ La Cuchara</a>); y la ofensiva laboral leída desde Valparaíso (<a href="#d18">→ El Porteño</a>). Señales, no triunfos: el Correo las registra como indicios.</p>
+        </div>
+
+        <p class="nota">Síntesis editorial de Ediciones ¡Que Acontezca! sobre material público de las fuentes citadas; los enlaces «→» saltan al despacho correspondiente, y cada despacho enlaza a la publicación original.</p>
+      </div>
+    </section>
+
+    <!-- ═══ BOLETINES: producción propia ═══ -->
+    <aside id="boletines" class="boletines-lateral">
+      <h2>Boletines<br>¡Que Acontezca!</h2>
+      <p class="bajada-lateral">Producción propia · Ediciones ¡Que Acontezca!</p>
+      <ul>
+        <li>
+          <span class="num">N°1</span>
+          <span class="titulo">Hace falta dignidad</span>
+          <span class="acciones"><a href="boletines/n1-hace-falta-dignidad.html">Leer</a> · <a href="boletines/boletin-01-hace-falta-dignidad.pdf" download>PDF</a></span>
+        </li>
+        <li>
+          <span class="num">N°2</span>
+          <span class="titulo">Marzo feminista</span>
+          <span class="acciones"><a href="boletines/n2-marzo-feminista.html">Leer</a> · <a href="boletines/boletin-02-marzo-feminista.pdf" download>PDF</a></span>
+        </li>
+        <li>
+          <span class="num">N°3</span>
+          <span class="titulo">Tiempos de libertad</span>
+          <span class="acciones"><a href="boletines/n3-tiempos-de-libertad.html">Leer</a> · <a href="boletines/boletin-03-tiempos-de-libertad.pdf" download>PDF</a></span>
+        </li>
+        <li class="proximo">
+          <span class="num">N°4</span>
+          <span class="titulo">Justicia y organización política</span>
+          <span class="acciones">en preparación</span>
+        </li>
+      </ul>
+      <p class="pie-lateral">Reproducción libre citando la fuente · CC BY 4.0</p>
+    </aside>
+  </div>
 
   <!-- ══════════════ SECCIONES = LOS CUATRO PRINCIPIOS ══════════════ -->
   <div class="columnas">
@@ -107,19 +159,21 @@
       <p class="principio">Apropiación colectiva de los medios de producción y financieros.</p>
 
       <article class="despacho" id="d1">
-        <p class="meta"><span class="org">Central unitaria de trabajadores</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Comunicado: jornada nacional por salario y jubilación, con asambleas previas en cada lugar de trabajo</h3>
-        <p class="extracto">«La mesa sindical acordó llamar a todas las federaciones a una jornada única el último viernes del mes…»</p>
+        <p class="meta"><a class="org" href="https://cut.cl/web/noticias/">Central Unitaria de Trabajadores</a> <span class="lugar">(Chile · RM)</span> · 19 jun · <a href="https://cut.cl/web/cut-presenta-hoja-de-ruta-de-mujeres-trabajadoras-organizacion-cuidados-y-trabajo-decente-para-enfrentar-la-precarizacion/">original</a></p>
+        <h3><a href="https://cut.cl/web/cut-presenta-hoja-de-ruta-de-mujeres-trabajadoras-organizacion-cuidados-y-trabajo-decente-para-enfrentar-la-precarizacion/">CUT presenta hoja de ruta de mujeres trabajadoras: organización, cuidados y trabajo decente</a></h3>
+        <p class="extracto">«Resoluciones del Congreso de Mujeres Trabajadoras, instancia que reunió a cerca de 350 participantes y definió una agenda sindical para enfrentar la violencia laboral y la sobrecarga de cuidados…»</p>
       </article>
 
       <article class="despacho" id="d2">
-        <p class="meta"><span class="org">Coordinadora de trabajadores del comercio</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Boletín: la negociación por rama y el fantasma del sueldo mínimo</h3>
+        <p class="meta"><a class="org" href="https://ukamau.cl/">Movimiento de Pobladores UKAMAU</a> <span class="lugar">(Chile · RM)</span> · 26 may · <a href="https://ukamau.cl/2026/05/26/onu-habitat-reconoce-modelo-ukamau/">original</a></p>
+        <h3><a href="https://ukamau.cl/2026/05/26/onu-habitat-reconoce-modelo-ukamau/">ONU-Hábitat incluye al Modelo Ukamau en su Catálogo de Buenas Prácticas para la Nueva Agenda Urbana</a></h3>
+        <p class="extracto">«El modelo de gestión habitacional construido en quince años de organización fue incluido entre los 382 casos del catálogo regional 2025 para América Latina y el Caribe.»</p>
       </article>
 
       <article class="despacho" id="d3">
-        <p class="meta"><span class="org">Comité ambiental y junta de vecinos</span> <span class="lugar">(Chile · V)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Carta abierta: el humedal es un bien común, no un suelo disponible</h3>
+        <p class="meta"><a class="org" href="https://cosmopolitican.cl/">Cosmopolitican</a> <span class="lugar">(Chile · RM)</span> · 23 jul · <a href="https://cosmopolitican.cl/revista/una-estafa-piramidal-llamada-universidad">original</a></p>
+        <h3><a href="https://cosmopolitican.cl/revista/una-estafa-piramidal-llamada-universidad">Una estafa piramidal llamada Universidad</a></h3>
+        <p class="extracto">«La deuda educativa y el CAE como esquema piramidal: la mercantilización de la universidad…» — Nico Castañeda.</p>
       </article>
     </section>
 
@@ -128,14 +182,21 @@
       <p class="principio">Fin de la división jerárquica del trabajo, manual e intelectual.</p>
 
       <article class="despacho" id="d4">
-        <p class="meta"><span class="org">Escuela de formación Solidaridad</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Programa del segundo ciclo: economía política leída por los propios trabajadores</h3>
-        <p class="extracto">«Nadie estudia por nosotros: el ciclo parte de la experiencia del turno y del salario, no del manual…»</p>
+        <p class="meta"><a class="org" href="https://revistahorizonte.cl/">Revista Horizonte</a> <span class="lugar">(Chile · RM)</span> · 14 ago · <a href="https://revistahorizonte.cl/mujer-y-trabajo/">original</a></p>
+        <h3><a href="https://revistahorizonte.cl/mujer-y-trabajo/">Mujer y trabajo</a></h3>
+        <p class="extracto">«Todas las mujeres somos trabajadoras. Asalariadas, independientes, informales o dueñas de casa…»</p>
       </article>
 
       <article class="despacho" id="d5">
-        <p class="meta"><span class="org">Colegio de profesores regional</span> <span class="lugar">(Chile · VIII)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Jornada de reflexión: la deuda histórica y el oficio de enseñar</h3>
+        <p class="meta"><a class="org" href="https://www.colegiodeprofesores.cl/">Colegio de Profesores</a> <span class="lugar">(Chile · RM)</span> · 11 ago · <a href="https://www.colegiodeprofesores.cl/2026/08/11/gremios-de-la-educacion-coordinan-acciones-en-defensa-de-la-educacion-chilena/">original</a></p>
+        <h3><a href="https://www.colegiodeprofesores.cl/2026/08/11/gremios-de-la-educacion-coordinan-acciones-en-defensa-de-la-educacion-chilena/">Gremios de la educación coordinan acciones en defensa de la educación chilena</a></h3>
+        <p class="extracto">«Las dirigencias están elaborando acciones conjuntas para ir en defensa especialmente de la Educación Pública chilena…»</p>
+      </article>
+
+      <article class="despacho" id="d6">
+        <p class="meta"><a class="org" href="https://carcaj.cl/">Carcaj</a> <span class="lugar">(Chile · RM)</span> · 7 ago · <a href="https://carcaj.cl/un-1-producto-de-internet/">original</a></p>
+        <h3><a href="https://carcaj.cl/un-1-producto-de-internet/">Un (1) producto de internet</a></h3>
+        <p class="extracto">«El capitalismo fue y sigue siendo la primera cultura global…»</p>
       </article>
     </section>
 
@@ -143,19 +204,28 @@
       <h2><span class="numeral">III</span> Proletariado</h2>
       <p class="principio">Internacionalismo fuerte; fin de las identidades, en particular la nacional.</p>
 
-      <article class="despacho" id="d6">
-        <p class="meta"><span class="org">Red de solidaridad con los pueblos</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Jornada continental contra el bloqueo: coordinación en doce ciudades</h3>
-      </article>
-
       <article class="despacho" id="d7">
-        <p class="meta"><span class="org">Asamblea de migrantes local</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Comunicado: contra la ley que nos convierte en sospecha permanente</h3>
+        <p class="meta"><a class="org" href="https://jacobinlat.com/">Jacobin América Latina</a> <span class="lugar">(América Latina)</span> · 15 ago · <a href="https://jacobinlat.com/2026/08/las-176-medidas-lo-que-el-mercado-no-va-a-decidir-por-cuba/">original</a></p>
+        <h3><a href="https://jacobinlat.com/2026/08/las-176-medidas-lo-que-el-mercado-no-va-a-decidir-por-cuba/">Las 176 medidas: lo que el mercado no va a decidir por Cuba</a></h3>
+        <p class="extracto">«Frente a las 176 medidas aprobadas por el gobierno cubano en junio de 2026, buena parte del debate público se organiza en torno a un falso dilema.»</p>
       </article>
 
       <article class="despacho" id="d8">
-        <p class="meta"><span class="org">Semanario obrero hermano</span> <span class="lugar">(Argentina)</span> · 14 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Crónica: la jornada continental se sintió también del otro lado de la cordillera</h3>
+        <p class="meta"><a class="org" href="https://huelladelsur.ar/">Huella del Sur</a> <span class="lugar">(Argentina)</span> · 15 ago · <a href="https://huelladelsur.ar/2026/08/15/la-ultima-linea-de-defensa-del-dolar/">original</a></p>
+        <h3><a href="https://huelladelsur.ar/2026/08/15/la-ultima-linea-de-defensa-del-dolar/">La última línea de defensa del dólar</a></h3>
+        <p class="extracto">««El dominio del dólar es esencial», declaró el secretario del Tesoro, Scott Bessent…»</p>
+      </article>
+
+      <article class="despacho" id="d9">
+        <p class="meta"><a class="org" href="https://www.instagram.com/revista_contracorriente/">Contracorriente</a> <span class="lugar">(Colombia · Instagram)</span> · 23 jul · <a href="https://www.instagram.com/p/DbJDaAURTJB/">original</a></p>
+        <h3><a href="https://www.instagram.com/p/DbJDaAURTJB/">Ante el ataque imperialista: resistencia civil</a></h3>
+        <p class="extracto">«Contra el imperialismo y la agresión trumpista, insistimos en la unidad de los pueblos latinoamericanos.»</p>
+      </article>
+
+      <article class="despacho" id="d10">
+        <p class="meta"><a class="org" href="https://rebelion.org/">Rebelión</a> <span class="lugar">(Internacional)</span> · 15 ago · <a href="https://rebelion.org/meta-y-el-plataformicidio-palestino-cinco-anos-de-restricciones-a-las-voces-de-gaza/">original</a></p>
+        <h3><a href="https://rebelion.org/meta-y-el-plataformicidio-palestino-cinco-anos-de-restricciones-a-las-voces-de-gaza/">Meta y el «plataformicidio» palestino: cinco años de restricciones a las voces de Gaza</a></h3>
+        <p class="extracto">«Un informe de 7amleh y la Universidad de Utrecht documenta 3.520 casos de restricciones a contenidos palestinos entre 2021 y 2025.»</p>
       </article>
     </section>
 
@@ -163,24 +233,31 @@
       <h2><span class="numeral">IV</span> Marchitamiento del Estado</h2>
       <p class="principio">Extinción del Estado; la política ejercida a distancia del Estado.</p>
 
+      <article class="despacho" id="d11">
+        <p class="meta"><a class="org" href="https://ukamau.cl/">Movimiento de Pobladores UKAMAU</a> <span class="lugar">(Chile · RM)</span> · 8 jul · <a href="https://ukamau.cl/2026/07/08/para-defender-los-derechos-sociales-unidad-politica-y-articulacion-social/">original</a></p>
+        <h3><a href="https://ukamau.cl/2026/07/08/para-defender-los-derechos-sociales-unidad-politica-y-articulacion-social/">Para defender los derechos sociales, unidad política y articulación social</a></h3>
+        <p class="extracto">«La respuesta debe ser unidad política, articulación social y defensa de los espacios de base: comités, movimientos y organización popular.»</p>
+      </article>
+
+      <article class="despacho" id="d12">
+        <p class="meta"><a class="org" href="https://cf8m.cl/">Coordinadora Feminista 8M</a> <span class="lugar">(Chile · RM)</span> · 30 may · <a href="https://cf8m.cl/la-primera-n23-edicion-1-de-junio-2026-el-pueblo-pasa-la-cuenta/">original</a></p>
+        <h3><a href="https://cf8m.cl/la-primera-n23-edicion-1-de-junio-2026-el-pueblo-pasa-la-cuenta/">La Primera N°23: «El pueblo pasa la cuenta»</a></h3>
+        <p class="extracto">Boletín La Primera, edición 1 de junio de 2026, con PDF descargable desde la página de la coordinadora.</p>
+      </article>
+
+      <article class="despacho" id="d13">
+        <p class="meta"><a class="org" href="https://desinformemonos.org/">Desinformémonos</a> <span class="lugar">(México)</span> · 14 ago · <a href="https://desinformemonos.org/pueblos-mayas-cuestionan-propuesta-de-ley-general-indigena-y-exigen-mayor-autonomia-sobre-sus-territorios/">original</a></p>
+        <h3><a href="https://desinformemonos.org/pueblos-mayas-cuestionan-propuesta-de-ley-general-indigena-y-exigen-mayor-autonomia-sobre-sus-territorios/">Pueblos mayas cuestionan propuesta de Ley General Indígena y exigen mayor autonomía</a></h3>
+        <p class="extracto">«La propuesta de Ley representa un contrasentido ya que no se aleja de visiones que tutelan la libre determinación, la autonomía, el territorio, la consulta y el consentimiento indígena.»</p>
+      </article>
+
       <article class="despacho con-imagen" id="d14">
         <figure class="miniatura"><img src="imagenes/boletin-03.jpg" alt="Portada del Boletín N°3 · Tiempos de libertad"></figure>
         <div class="texto">
-          <p class="meta"><span class="org">Boletín ¡Que Acontezca!</span> <span class="lugar">(Chile · RM)</span> · 14 ago · <a href="boletines/boletin-03-tiempos-de-libertad.pdf">original</a></p>
-          <h3>«Tiempos de libertad»: los cuatro desprendimientos son los cuatro principios dichos por nosotros mismos</h3>
-          <p class="extracto">«Solo hay libertad real si nos desprendemos del fanatismo patriótico, la privatización de los bienes comunes, la división del trabajo…»</p>
+          <p class="meta"><a class="org" href="boletines/n3-tiempos-de-libertad.html">Boletín ¡Que Acontezca!</a> <span class="lugar">(Chile · RM)</span> · edición propia · <a href="boletines/n3-tiempos-de-libertad.html">original</a></p>
+          <h3><a href="boletines/n3-tiempos-de-libertad.html">«Tiempos de libertad»: los cuatro desprendimientos son los cuatro principios dichos por nosotros mismos</a></h3>
+          <p class="extracto">«Solo hay libertad real si nos desprendemos del fanatismo patriótico, la privatización de los bienes comunes, la división del trabajo manual e intelectual y el Estado como fin último de la política.»</p>
         </div>
-      </article>
-
-      <article class="despacho" id="d9">
-        <p class="meta"><span class="org">Militante de base (reflexión personal)</span> <span class="lugar">(Chile · IX)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>«Asamblea permanente»: notas sobre la paranoia organizativa en tiempos de repliegue</h3>
-        <p class="extracto">«Toda dirección que se eterniza termina hablando el idioma del Estado antes que el de su propia base…»</p>
-      </article>
-
-      <article class="despacho" id="d10">
-        <p class="meta"><span class="org">Movimiento de pobladores local</span> <span class="lugar">(Chile · RM)</span> · 15 ago · <span class="enlace-muestra" title="Enlace de muestra: aquí irá la URL real de la publicación">original</span></p>
-        <h3>Un año del campamento: la respuesta la organizamos nosotros</h3>
       </article>
     </section>
 
@@ -190,57 +267,35 @@
   <section id="puntos" class="puntos-reales">
     <h2>Puntos reales <span>indicios de que algo está surgiendo u organizándose en sí</span></h2>
     <div class="rejilla">
-      <article class="indicio" id="d11">
-        <p class="meta">Nota periodística · <span class="lugar">Chile · V</span> · 15 ago</p>
-        <h3>Estibadores de tres puertos paran el mismo día sin convocatoria unitaria: coordinación espontánea o inicio de algo</h3>
-        <p class="extracto">Los paros coincidieron en fecha y exigencia sin pasar por las direcciones. Tres asambleas, un mismo pliego.</p>
+      <article class="indicio" id="d15">
+        <p class="meta"><a href="https://www.pincoyazo.cl/">El Pincoyazo</a> · <span class="lugar">Chile · RM</span> · 14 ago · <a href="https://www.pincoyazo.cl/post/liceo-augusto-d-halmar-trabajadores-respaldan-paro-de-estudiantes-y-valoran-la-organizacion">original</a></p>
+        <h3><a href="https://www.pincoyazo.cl/post/liceo-augusto-d-halmar-trabajadores-respaldan-paro-de-estudiantes-y-valoran-la-organizacion">Liceo Augusto D'Halmar: trabajadores respaldan paro de estudiantes y valoran la organización</a></h3>
+        <p class="extracto">«NO nos hemos sentido vulnerados, violentados ni amedrentados por los estudiantes…»</p>
       </article>
-      <article class="indicio" id="d12">
-        <p class="meta">Nota periodística · <span class="lugar">Chile · IX</span> · 14 ago</p>
-        <h3>Comunidades y sindicato de salud firman acta común de defensa del hospital</h3>
-        <p class="extracto">Primera instancia formal entre organización territorial y gremio: el documento habla de «gestión en común».</p>
+      <article class="indicio" id="d16">
+        <p class="meta"><a href="https://deudainjusta.github.io/">Deuda Injusta</a> · <span class="lugar">Chile · RM</span> · corte 11 jun · <a href="https://deudainjusta.github.io/#cobranza">original</a></p>
+        <h3><a href="https://deudainjusta.github.io/#cobranza">Cobranza 2026: el embargo funciona como presión material para convenir el pago</a></h3>
+        <p class="extracto">«Las propias cifras oficiales muestran muchos más convenios que embargos ejecutados, mientras permanecen ocultos los montos recuperados por cada vía.»</p>
       </article>
-      <article class="indicio" id="d13">
-        <p class="meta">Registro · <span class="lugar">Chile · RM</span> · 13 ago</p>
-        <h3>Cuatro nuevas asambleas de deudores CAE en un mes: la campaña crece por réplica</h3>
-        <p class="extracto">El formato se copia sin centro: cada asamblea nace de la anterior y publica su propio acta.</p>
+      <article class="indicio" id="d17">
+        <p class="meta"><a href="https://www.instagram.com/revista_lacuchara/">La Cuchara</a> · <span class="lugar">Chile · Instagram</span> · 12 ago · <a href="https://instagram.com/p/Db8MrYXESxU/">original</a></p>
+        <h3><a href="https://instagram.com/p/Db8MrYXESxU/">Conversatorio «Homenaje a Fidel y Santucho», con Hernán Ouviña</a></h3>
+        <p class="extracto">El colectivo del norte conversa sobre revoluciones en la Editorial Quimantú.</p>
+      </article>
+      <article class="indicio" id="d18">
+        <p class="meta"><a href="https://elporteno.cl/">El Porteño</a> · <span class="lugar">Chile · V</span> · 13 ago · <a href="https://elporteno.cl/la-blitzkrieg-de-kast-la-ofensiva-mas-formidable-contra-los-trabajadores-desde-1973/">original</a></p>
+        <h3><a href="https://elporteno.cl/la-blitzkrieg-de-kast-la-ofensiva-mas-formidable-contra-los-trabajadores-desde-1973/">La blitzkrieg de Kast: la ofensiva más formidable contra los trabajadores desde 1973</a></h3>
+        <p class="extracto">La revista digital de la izquierda en Valparaíso nombra la ofensiva que esta edición registra.</p>
       </article>
     </div>
   </section>
 
-  <!-- ══════════════ BOLETINES ¡QUE ACONTEZCA! ══════════════ -->
-  <section id="boletines" class="boletines">
-    <h2>Boletines ¡Que Acontezca! <span>ediciones propias · leer en línea o descargar</span></h2>
-    <ul>
-      <li>
-        <span class="num">N°1</span>
-        <span class="titulo">Hace falta dignidad</span>
-        <span class="acciones"><a href="boletines/boletin-01-hace-falta-dignidad.pdf">Leer</a> · <a href="boletines/boletin-01-hace-falta-dignidad.pdf" download>Descargar PDF</a></span>
-      </li>
-      <li>
-        <span class="num">N°2</span>
-        <span class="titulo">Marzo feminista</span>
-        <span class="acciones"><a href="boletines/boletin-02-marzo-feminista.pdf">Leer</a> · <a href="boletines/boletin-02-marzo-feminista.pdf" download>Descargar PDF</a></span>
-      </li>
-      <li>
-        <span class="num">N°3</span>
-        <span class="titulo">Tiempos de libertad</span>
-        <span class="acciones"><a href="boletines/boletin-03-tiempos-de-libertad.pdf">Leer</a> · <a href="boletines/boletin-03-tiempos-de-libertad.pdf" download>Descargar PDF</a></span>
-      </li>
-      <li class="proximo">
-        <span class="num">N°4</span>
-        <span class="titulo">Justicia y organización política</span>
-        <span class="acciones">en preparación</span>
-      </li>
-    </ul>
-  </section>
-
   <!-- ══════════════ SERVICIOS ══════════════ -->
   <section class="servicios">
-    <article><h3>Archivo por día</h3><p>Todos los despachos desde el N° 1, navegables por fecha.</p></article>
-    <article><h3>Directorio de fuentes</h3><p>Organizaciones y militantes monitoreados; cómo proponer una fuente nueva.</p></article>
-    <article><h3>Suscribirse (RSS)</h3><p>El Correo en tu lector, cada mañana.</p></article>
-    <article><h3>Qué es</h3><p>Estatuto: proyecto de Ediciones ¡Que Acontezca!, de fines públicos.</p></article>
+    <article><h3 class="pendiente">Archivo por día</h3><p>Todos los despachos desde el N° 1, navegables por fecha. Próximamente.</p></article>
+    <article><h3><a href="fuentes.html">Directorio de fuentes</a></h3><p>Revistas y organizaciones monitoreadas, con su licencia constatada; cómo proponer una fuente nueva.</p></article>
+    <article><h3 class="pendiente">Suscribirse (RSS)</h3><p>El Correo en tu lector, cada mañana. Próximamente.</p></article>
+    <article><h3 class="pendiente">Qué es</h3><p>Estatuto: proyecto de Ediciones ¡Que Acontezca!, de fines públicos. Próximamente.</p></article>
   </section>
 
 </main>
@@ -249,9 +304,10 @@
   <p><strong>EL CORREO COMUNISTA</strong> · ¡Centralización de la discusión!</p>
   <p>Un proyecto de <strong>Ediciones ¡Que Acontezca!</strong> — Organización Acontecimiento · fines públicos</p>
   <p>Sin publicidad · sin rastreadores · código y archivo públicos · las citas enlazan siempre a su fuente original</p>
+  <p>Reproducción libre, total o parcial, citando la fuente · <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a></p>
 </footer>
 
-<p class="aviso">Boceto funcional: organizaciones, titulares y fechas son de muestra, no publicaciones reales.</p>
+<p class="aviso">Despacho N°1 · 15 de agosto de 2026 · Todos los titulares y extractos provienen de las publicaciones originales enlazadas; la síntesis «La discusión» es editorial de Ediciones ¡Que Acontezca!.</p>
 
 <script>
 // Síntesis por sección: botones General / I / II / III / IV / Puntos reales

@@ -54,13 +54,23 @@ elcorreocomunista/          ← el repositorio ES la página
 └── README.md               este archivo
 ```
 
-## 4. Licencias
+## 4. Licencia
 
-- **Código del sitio** (HTML, CSS, estructura): **GNU GPL v3** — ver `LICENSE`. Puedes copiarlo y montar tu propio correo; si lo republicas, debe seguir libre y abierto.
-- **Contenido propio** (textos, síntesis «La discusión», manifiestos de Ediciones ¡Que Acontezca!): **Creative Commons BY-SA 4.0** — circulación libre con atribución; quien reedita, comparte igual.
-- **Extractos de otras organizaciones**: siguen siendo de sus autoras y autores; se citan con enlace al original (cita legítima), nunca republicación íntegra sin permiso.
+**Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0** (ver `LICENSE`): reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
+
+**Material de terceros** (los despachos): sigue siendo de sus autoras y autores; se cita con enlace al original (cita legítima, art. 38 Ley 17.336), nunca republicación íntegra sin permiso.
 
 ## 5. Notas
 
-- Todo el contenido de muestra es ficticio hasta la fase 1 (conversación con las organizaciones).
 - Espejo político en Codeberg y dominio propio: postergados, sin costo.
+
+## 6. Marco legal y política de archivo (decidido 15-08-2026)
+
+**El Correo opera en dos modos, según la licencia de cada fuente:**
+
+1. **Enlace + extracto breve (modo por defecto).** Toda fuente puede despacharse así: título, fecha, medio, extracto corto entre comillas y enlace al original. Amparo: art. 38 de la Ley 17.336 (cita con fines informativos/críticos, indicando fuente y autor). No exige permiso ni licencia abierta.
+2. **Espejo de texto completo («repositorio de la discusión pública»).** SOLO para fuentes que lo permiten explícitamente: licencias Creative Commons (respetando sus condiciones: atribución, no-comercial si aplica, compartir igual) o declaraciones del propio medio («se permite la reproducción citando la fuente»). En esos casos el artículo completo puede guardarse en `archivo/` con su ficha (fuente, fecha, URL original, licencia) y presentarse con la estética del Correo, declarando siempre procedencia y licencia.
+
+**Registro de licencias:** cada fuente incorporada queda en el directorio `fuentes.html` con su licencia constatada (y la evidencia: pie de página o declaración del medio). Lo que no tenga licencia abierta constatada se considera «todos los derechos reservados» y opera solo en modo 1.
+
+**Fase 1:** al conversar con las organizaciones, pedir autorización escrita de extractos (y de espejo, si la quieren dar): deja el modo 2 disponible para ellas aunque no usen CC.

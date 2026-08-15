@@ -41,8 +41,20 @@ a:hover{text-decoration:underline}
 }
 .masthead{
   max-width:74rem; margin:0 auto; padding:2rem 1.2rem 1.4rem;
-  text-align:center;
+  display:flex; align-items:center; gap:2rem;
   border-bottom:1px solid #3a3129;
+}
+.centro{flex:1; text-align:center}
+.sello-grabado{flex:none; width:132px; height:132px}
+.fecha-caja{
+  flex:none; width:11rem; text-align:center;
+  font-size:.74rem; color:#cbbf9f; font-style:italic;
+  border-left:1px solid #3a3129; padding-left:1.2rem;
+}
+.fecha-caja strong{display:block; color:var(--papel); font-style:normal; font-size:.95rem; margin-bottom:.3rem}
+@media (max-width:760px){
+  .masthead{flex-direction:column; gap:1rem}
+  .fecha-caja{border:none; padding:0; width:auto}
 }
 .masthead h1{
   font-size:clamp(2.4rem,7vw,4.6rem);
@@ -65,7 +77,7 @@ a:hover{text-decoration:underline}
 }
 .fila-fecha{
   max-width:74rem; margin:0 auto; padding:1rem 1.2rem;
-  display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;
+  display:flex; align-items:center; justify-content:center; gap:1.4rem; flex-wrap:wrap;
 }
 .fecha-larga{font-style:italic; color:#cbbf9f; flex:1; min-width:14rem}
 .fecha-larga strong{color:var(--papel); font-style:normal}
@@ -85,22 +97,46 @@ a:hover{text-decoration:underline}
 .indice a{color:var(--papel)}
 .indice a.pr{color:#e8b4a0; font-weight:bold}
 
-/* ── Boletines ¡Que Acontezca! ── */
-.boletines{margin-top:2.4rem; border-top:3px solid var(--negro); padding-top:1rem}
-.boletines h2{font-size:1.2rem}
-.boletines h2 span{
-  display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--pizarra); font-weight:normal; margin-top:.25rem;
+/* ── Fila superior: La discusión + Boletines ── */
+.fila-superior{display:grid; grid-template-columns:2fr 1fr; gap:1.4rem; margin-bottom:2.2rem}
+@media (max-width:820px){ .fila-superior{grid-template-columns:1fr} }
+.fila-superior .discusion{margin-bottom:0}
+.boletines-lateral{
+  background:var(--negro); color:var(--papel);
+  border:2px solid var(--rojo); box-shadow:4px 4px 0 var(--rojo);
+  padding:1.2rem 1.3rem; align-self:start;
 }
-.boletines ul{list-style:none; margin-top:.6rem}
-.boletines li{
-  display:flex; align-items:baseline; gap:1rem;
-  padding:.65rem .2rem; border-bottom:1px dotted var(--filete);
+.boletines-lateral h2{font-size:1.3rem; line-height:1.15}
+.boletines-lateral .bajada-lateral{
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:#cbbf9f; margin:.4rem 0 .9rem; border-bottom:1px solid #3a3129; padding-bottom:.6rem;
 }
-.boletines .num{font-weight:bold; font-style:italic; color:var(--rojo); min-width:2.6rem}
-.boletines .titulo{flex:1}
-.boletines .acciones{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; color:var(--pizarra)}
-.boletines li.proximo{opacity:.55}
+.boletines-lateral ul{list-style:none}
+.boletines-lateral li{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:.5rem;
+  padding:.55rem 0; border-bottom:1px dotted #3a3129;
+}
+.boletines-lateral .num{font-weight:bold; font-style:italic; color:#e8b4a0; min-width:2.2rem}
+.boletines-lateral .titulo{flex:1; font-size:.92rem}
+.boletines-lateral .acciones{font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; white-space:nowrap}
+.boletines-lateral .acciones a{color:#e8b4a0}
+.boletines-lateral li.proximo{opacity:.55}
+.boletines-lateral .pie-lateral{font-size:.7rem; color:#cbbf9f; font-style:italic; margin-top:.8rem}
+
+/* ── Página de fuentes ── */
+.fuentes-pag{max-width:60rem; margin:0 auto; padding:0 1.2rem 4rem}
+.fuentes-pag h1{font-size:1.8rem; border-bottom:4px double var(--negro); padding-bottom:.5rem; margin-bottom:.4rem}
+.fuentes-pag .intro{font-size:.92rem; color:#3d382f; margin-bottom:1.6rem}
+.fuentes-pag h2{
+  font-size:1.1rem; margin:1.8rem 0 .6rem;
+  background:var(--rojo); color:var(--papel); padding:.4rem .8rem;
+}
+.fuentes-pag table{width:100%; border-collapse:collapse; font-size:.82rem}
+.fuentes-pag th, .fuentes-pag td{border:1px solid var(--filete); padding:.45rem .55rem; vertical-align:top; text-align:left}
+.fuentes-pag th{background:var(--papel-oscuro); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase}
+.fuentes-pag .modo2{color:var(--rojo); font-weight:bold}
+.fuentes-pag .notas{font-size:.8rem; color:var(--pizarra); margin-top:1.4rem; border-top:1px solid var(--filete); padding-top:.8rem}
+.fuentes-pag .notas li{margin-bottom:.4rem}
 
 /* ────────── CUERPO ────────── */
 main{max-width:74rem; margin:0 auto; padding:1.8rem 1.2rem 3rem}
