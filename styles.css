@@ -45,7 +45,7 @@ a:hover{text-decoration:underline}
   border-bottom:1px solid #3a3129;
 }
 .centro{flex:1; text-align:center}
-.sello-grabado{flex:none; width:132px; height:132px}
+.sello-grabado{flex:none; width:108px; height:108px}
 .fecha-caja{
   flex:none; width:11rem; text-align:center;
   font-size:.74rem; color:#cbbf9f; font-style:italic;
