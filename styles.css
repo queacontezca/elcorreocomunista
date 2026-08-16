@@ -631,3 +631,41 @@ footer strong{color:var(--papel)}
 .sw-punteada{border-top:3px dashed #b3543f; height:0}
 .cierre-obs{border-top:2px solid var(--negro); margin-top:2.2rem; padding-top:1.2rem}
 .term-titulo{font-size:.88rem; color:var(--negro); background:#f7f3ea; border:1px solid var(--filete); border-left:4px solid var(--rojo); padding:.55rem .9rem; margin:1rem 0 .6rem}
+
+/* ── Franja: La Idea del comunismo ─────────────────────────────── */
+.indice-idea{border-top:1px solid #3a3129; margin-top:.1rem; padding-top:.55rem}
+.indice-idea .etiqueta{color:#e8b4a0}
+
+/* ── Boletines lateral con portadas ────────────────────────────── */
+.boletines-lateral h2 a{color:var(--papel)}
+.boletines-lateral li{display:flex; gap:.9rem; align-items:flex-start}
+.bol-textos{display:flex; flex-direction:column; gap:.18rem; flex:1}
+.bol-textos .titulo a{color:var(--papel); font-weight:bold; font-size:.95rem}
+.bol-textos .arts{display:block; font-size:.76rem}
+.bol-tapa{flex:none}
+.bol-tapa img{width:98px; display:block; border:1px solid #6b5f4a; box-shadow:2px 2px 0 #00000055}
+@media (max-width:520px){ .bol-tapa img{width:72px} }
+
+/* ── Despachos: lectura desde las categorías + debate ──────────── */
+.despacho .lectura{
+  font-size:.87rem; margin:.45rem 0 0; padding:.5rem .8rem;
+  background:#fbf7ec; border-left:3px solid var(--filete);
+}
+.despacho .lectura strong{color:var(--negro)}
+.despacho .lectura .cat{color:var(--rojo); font-style:italic}
+.bloque-debate{
+  margin-top:1rem; border:1px dashed var(--rojo); background:#f7f3ea;
+  padding:.8rem 1rem;
+}
+.bloque-debate h4{margin:0 0 .4rem; font-size:.86rem; color:var(--rojo); letter-spacing:.04em}
+.bloque-debate p{font-size:.87rem; margin:.3rem 0}
+.bloque-debate .versus{font-weight:bold; color:var(--negro)}
+
+/* ── Botón de comentarios / propuestas ─────────────────────────── */
+.btn-comentarios{
+  display:inline-block; margin-top:.5rem; padding:.55rem 1.1rem;
+  background:var(--rojo); color:var(--papel); font-weight:bold;
+  border:2px solid var(--negro); box-shadow:3px 3px 0 var(--negro);
+  text-transform:uppercase; letter-spacing:.08em; font-size:.78rem;
+}
+.btn-comentarios:hover{background:#6d1111}

@@ -6,11 +6,13 @@ Sitio público de **El Correo Comunista · ¡Centralización de la discusión!**
 
 ## Nota editorial
 
-Este correo nace de una convicción: la discusión comunista existe, pero circula dispersa entre organizaciones, revistas y militantes que escriben. Aquí la reunimos día a día para hacer visibles sus tensiones, sus puntos comunes y sus diferencias — no para dirimir quién tiene la razón, sino para empujar el debate, continuarlo, abrirle caminos. Este espacio es también el órgano de difusión de la Organización Acontecimiento: en él circulan nuestros boletines y nuestra propia voz, como una voz más entre las que apuestan por reorientar la Idea del comunismo en nuestro tiempo.
+Este correo nace de una convicción: la discusión comunista existe, pero circula dispersa entre organizaciones, revistas y militantes que escriben. Aquí la reunimos mes a mes para hacer visibles sus tensiones, sus puntos comunes y sus diferencias — no para dirimir quién tiene la razón, sino para empujar el debate, continuarlo, abrirle caminos. Este espacio es también el órgano de difusión de la Organización Acontecimiento: en él circulan nuestros boletines y nuestra propia voz, como una voz más entre las que apuestan por reorientar la Idea del comunismo en nuestro tiempo.
 
-El sitio se organiza así: la **portada local** (Chile) despacha lo publicado por organizaciones, revistas y militantes; las **secciones** ordenan esa discusión por los cuatro principios del comunismo —los medios comunes, el trabajo polimorfo, el proletariado, el marchitamiento del Estado— más los **puntos reales**; el **observatorio** expone los datos del análisis de coyuntura; y los **boletines** son la producción propia. La fecha de la portada es la de su **última actualización**: la estructura es permanente y avanza el debate.
+No es un diario de noticias: es un **repositorio del estado de la discusión** — qué es el Estado, qué hace un movimiento de masas, qué hace una organización —, porque ese es el eje de la discusión para reactivar la Idea del comunismo. Una vez al mes este repositorio queda en **revisión cero**.
 
-**Próxima edición del boletín:** N°4 · **«La Idea de justicia»** — prevista para **octubre de 2026**. Allí discutiremos: educación, movimientos de masa, Estado y organización política.
+El sitio se organiza así: la **portada local** (Chile) despacha lo publicado por organizaciones, revistas y militantes; las **secciones** ordenan esa discusión por los cuatro principios del comunismo —los medios comunes, el trabajo polimorfo, el proletariado, el marchitamiento del Estado— más los **puntos reales**; la fila **La Idea del comunismo** lee los tres elementos del eje — movimientos de masas (lo real), Estado (lo simbólico) y organización política (el anudamiento) —; el **observatorio** expone los datos del análisis de coyuntura; y los **boletines** son la producción propia. La fecha de la portada es la de su **última actualización**: la estructura es permanente y avanza el debate.
+
+**Próxima edición del boletín:** N°4 · **«Justicia y política»** — prevista para **octubre de 2026**. Allí discutiremos: educación, movimientos de masa, Estado y organización política.
 
 ## 1. Estructura del repositorio
 
