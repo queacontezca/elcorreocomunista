@@ -45,23 +45,30 @@
   </div>
 
   <div class="fila-fecha">
-    <nav class="localizacion" aria-label="Localización">
+    <nav class="clasif" aria-label="Escala de análisis">
+      <span class="etiqueta">Escala de análisis</span>
       <a class="activa" href="index.html">Local</a>
       <a href="america-latina.html">América Latina</a>
       <a href="mundo.html">Mundo</a>
     </nav>
   </div>
 
-  <nav class="indice" aria-label="Secciones">
+  <nav class="indice" aria-label="Principios del comunismo">
+    <span class="etiqueta">Principios del comunismo</span>
     <a href="secciones/los-medios-comunes.html">I · Los medios comunes</a>
     <a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a>
     <a href="secciones/proletariado.html">III · Proletariado</a>
     <a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a>
+  </nav>
+  <nav class="indice indice-b" aria-label="Circulación">
     <a href="puntos-reales.html" class="pr">Puntos reales</a>
     <a href="#discusion">La discusión</a>
     <a href="#boletines">Boletines</a>
+    <a href="#observatorio">Observatorio</a>
+  </nav>
+  <nav class="indice indice-c" aria-label="Del Correo">
     <a href="fuentes.html">Fuentes</a>
-    <a href="quienes-somos.html">Nota editorial y quiénes somos</a>
+    <a href="nota-editorial.html">Nota editorial</a>
   </nav>
 </header>
 
@@ -328,12 +335,138 @@
     </div>
   </section>
 
+  <!-- ══════════════ OBSERVATORIO DE COYUNTURA ══════════════ -->
+  <section id="observatorio" class="observatorio">
+    <h2>Observatorio de coyuntura <span>los datos del análisis, públicos para las luchas</span></h2>
+    <p class="nota-obs">Módulos interactivos del trabajo de análisis de coyuntura. Las series marcadas <span class="tag-obs">muestra metodológica</span> ilustran la forma de lectura: el corte oficial se incorpora desde el Reporte mensual. La transferencia Norte–Sur cita literatura publicada (fuente en el módulo).</p>
+    <div class="botones-obs" role="tablist" aria-label="Módulos del observatorio">
+      <button class="activo" data-obs="tasas">Tasas de explotación</button>
+      <button data-obs="horas">Horas de trabajo</button>
+      <button data-obs="circuitos">Circuitos de acumulación</button>
+      <button data-obs="retencion">Retención estatal</button>
+      <button data-obs="transferencia">Transferencia de plusvalor</button>
+    </div>
+
+    <div class="panel-obs visible" id="obs-tasas">
+      <div class="graf" id="g-tasas"></div>
+      <p class="leyenda"><span style="color:#8b1a1a">—</span> productiva · <span style="color:#b3543f">—</span> reproductiva · <span style="color:#17110c">—</span> general <span class="tag-obs">muestra metodológica</span></p>
+    </div>
+    <div class="panel-obs" id="obs-horas">
+      <div class="graf" id="g-horas"></div>
+      <p class="leyenda">Jornada semanal descompuesta: necesario / más allá del necesario / no remunerado <span class="tag-obs">muestra metodológica</span></p>
+    </div>
+    <div class="panel-obs" id="obs-circuitos">
+      <div class="graf" id="g-circuitos"></div>
+      <p class="leyenda">Participación de los circuitos principales de acumulación <span class="tag-obs">muestra metodológica</span></p>
+    </div>
+    <div class="panel-obs" id="obs-retencion">
+      <div class="graf" id="g-retencion"></div>
+      <p class="leyenda">% del plusvalor retenido por el Estado; hito: «megarreforma» Kast <span class="tag-obs">muestra metodológica — el corte histórico oficial se incorpora desde el Reporte</span></p>
+    </div>
+    <div class="panel-obs" id="obs-transferencia">
+      <div class="sel-obs">
+        <label for="vista-trans">Ver por:</label>
+        <select id="vista-trans">
+          <option value="ns">Norte–Sur (estimación de literatura)</option>
+          <option value="pais">Por Estado (en incorporación)</option>
+        </select>
+      </div>
+      <div id="trans-ns">
+        <div class="graf" id="g-trans"></div>
+        <p class="leyenda">Flujo anual 2015 en US$ billones. Fuente: Hickel, Sullivan y Zoomkawala (2021), «Plunder in the Post-Colonial Era: Quantifying Drain from the Global South Through Unequal Exchange, 1990–2015», <em>New Political Economy</em> 26(6): drenaje neto del Sur al Norte de US$ 10,8 billones en 2015 (≈15 % del PIB del Norte); US$ 242 billones acumulados 1990–2015.</p>
+      </div>
+      <div id="trans-pais" style="display:none">
+        <table class="tabla-obs">
+          <tr><th>Estado</th><th>Sale como plusvalor</th><th>Recibe</th><th>Neto</th></tr>
+          <tr><td>Chile</td><td colspan="3" class="pendiente-celda">en incorporación desde el Reporte de Análisis de Coyuntura (matriz r/LTDTG)</td></tr>
+        </table>
+        <p class="leyenda">La desagregación por Estado requiere el cálculo país por país con la matriz de categorías; se publica aquí cuando el Reporte lo entregue.</p>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function(){
+const ROJO='#8b1a1a', SAL='#b3543f', NEGRO='#17110c', PIZ='#5c554d', REJ='#d8d2c4';
+const fmt=v=>String(v).replace('.',',');
+function svgL(id, anos, series, hito){
+  const W=760,H=300,P=46;
+  const max=Math.max(...series.flatMap(s=>s.puntos))*1.15;
+  const x=i=>P+(W-P-18)*i/(anos.length-1), y=v=>(H-P)-(H-2*P)*v/max;
+  let g='';
+  for(let t=0;t<=4;t++){const vv=max*t/4, yy=y(vv);
+    g+=`<line x1="${P}" y1="${yy}" x2="${W-18}" y2="${yy}" stroke="${REJ}"/>`;
+    g+=`<text x="${P-6}" y="${yy+4}" font-size="10" text-anchor="end" fill="${PIZ}">${fmt(vv.toFixed(2))}</text>`;}
+  anos.forEach((a,i)=>{g+=`<text x="${x(i)}" y="${H-P+16}" font-size="10" text-anchor="middle" fill="${PIZ}">${a}</text>`;});
+  series.forEach(s=>{
+    g+=`<polyline points="${s.puntos.map((v,i)=>x(i)+','+y(v)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2.5"/>`;
+    s.puntos.forEach((v,i)=>{g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${s.color}"/>`;});
+  });
+  if(hito){const i=hito.i; g+=`<line x1="${x(i)}" y1="${y(series[0].puntos[i])}" x2="${x(i)}" y2="${H-P}" stroke="${ROJO}" stroke-dasharray="4 3"/>`;
+    g+=`<text x="${x(i)}" y="${y(series[0].puntos[i])-10}" font-size="11" text-anchor="end" fill="${ROJO}" font-style="italic">${hito.texto}</text>`;}
+  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
+}
+function svgB(id, items, unidad){
+  const W=760,bh=32,gap=14,P=210,max=Math.max(...items.map(i=>i.valor))*1.08,H=items.length*(bh+gap)+8;
+  let g='';
+  items.forEach((it,i)=>{const y=4+i*(bh+gap), w=(W-P-96)*Math.abs(it.valor)/max;
+    g+=`<text x="${P-8}" y="${y+bh/2+4}" font-size="12" text-anchor="end" fill="${NEGRO}">${it.nombre}</text>`;
+    g+=`<rect x="${P}" y="${y}" width="${w}" height="${bh}" fill="${it.color||ROJO}"/>`;
+    g+=`<text x="${P+w+8}" y="${y+bh/2+4}" font-size="12" fill="${NEGRO}">${fmt(it.valor)}${unidad||''}</text>`;});
+  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
+}
+function svgStack(id, items){
+  const W=760,H=128,P=40,total=items.reduce((a,i)=>a+i.valor,0);
+  let x=P,g='';
+  items.forEach(it=>{const w=(W-2*P)*it.valor/total;
+    g+=`<rect x="${x}" y="26" width="${w}" height="46" fill="${it.color}"/>`;
+    g+=`<text x="${x+w/2}" y="54" font-size="11.5" text-anchor="middle" fill="#f3edda">${fmt(it.valor)} h</text>`;
+    g+=`<text x="${x+w/2}" y="96" font-size="11" text-anchor="middle" fill="${NEGRO}">${it.nombre}</text>`;
+    x+=w;});
+  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
+}
+const ANOS=[1990,1995,2000,2005,2010,2015,2020,2025];
+svgL('g-tasas',ANOS,[
+  {color:ROJO,puntos:[1.05,1.12,1.18,1.24,1.30,1.36,1.41,1.47]},
+  {color:SAL,puntos:[0.82,0.86,0.91,0.95,1.01,1.06,1.10,1.15]},
+  {color:NEGRO,puntos:[0.95,1.01,1.07,1.12,1.18,1.24,1.29,1.35]}]);
+svgStack('g-horas',[
+  {nombre:'Trabajo necesario',valor:22,color:NEGRO},
+  {nombre:'Más allá del necesario (plustrabajo)',valor:15,color:ROJO},
+  {nombre:'No remunerado (reproductivo)',valor:8,color:SAL}]);
+svgB('g-circuitos',[
+  {nombre:'Financiero-inmobiliario',valor:34,color:ROJO},
+  {nombre:'Comercial y servicios',valor:26,color:NEGRO},
+  {nombre:'Extractivista (minería, forestal)',valor:22,color:SAL},
+  {nombre:'Productivo restante',valor:18,color:PIZ}],'%');
+svgL('g-retencion',[1990,2000,2010,2019,2026],[
+  {color:ROJO,puntos:[8,10,12,13,17]}],{i:4,texto:'«megarreforma» Kast'});
+svgB('g-trans',[
+  {nombre:'Sale del Sur (plusvalor bruto)',valor:10.8,color:ROJO},
+  {nombre:'Recibe el Sur',valor:0.0,color:PIZ},
+  {nombre:'Neto del Sur',valor:-10.8,color:NEGRO}],' US$ bill');
+// corrección visual para barra negativa: se dibuja con abs(); el signo queda en la etiqueta
+document.querySelectorAll('.botones-obs button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.botones-obs button').forEach(x=>x.classList.remove('activo'));
+    b.classList.add('activo');
+    document.querySelectorAll('.panel-obs').forEach(p=>p.classList.remove('visible'));
+    document.getElementById('obs-'+b.dataset.obs).classList.add('visible');
+  });
+});
+document.getElementById('vista-trans').addEventListener('change',function(){
+  document.getElementById('trans-ns').style.display=this.value==='ns'?'block':'none';
+  document.getElementById('trans-pais').style.display=this.value==='pais'?'block':'none';
+});
+})();
+</script>
+
   <!-- ══════════════ SERVICIOS ══════════════ -->
   <section class="servicios">
     <article><h3 class="pendiente">Archivo por día</h3><p>Todos los despachos desde el inicio, navegables por fecha. Próximamente.</p></article>
     <article><h3><a href="fuentes.html">Directorio de fuentes</a></h3><p>Revistas y organizaciones monitoreadas, con su licencia constatada.</p></article>
     <article><h3 class="pendiente">Suscribirse (RSS)</h3><p>El Correo en tu lector, cada mañana. Próximamente.</p></article>
-    <article><h3><a href="quienes-somos.html">Nota editorial y quiénes somos</a></h3><p>La idea del Correo y nuestras hipótesis políticas.</p></article>
+    <article><h3><a href="nota-editorial.html">Nota editorial y quiénes somos</a></h3><p>La idea del Correo y nuestras hipótesis políticas.</p></article>
   </section>
 
 </main>

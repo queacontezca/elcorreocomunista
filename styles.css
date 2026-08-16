@@ -122,6 +122,17 @@ a:hover{text-decoration:underline}
 }
 .fecha-larga{font-style:italic; color:#cbbf9f; flex:1; min-width:14rem}
 .fecha-larga strong{color:var(--papel); font-style:normal}
+.clasif{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.etiqueta{
+  font-size:.64rem; letter-spacing:.16em; text-transform:uppercase;
+  color:#8a7f68; font-style:normal; margin-right:.3rem;
+}
+.clasif a{
+  font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  padding:.35rem .8rem; border:1px solid #6b5f4a; color:#cbbf9f;
+}
+.clasif a.activa{background:var(--papel); color:var(--negro); font-weight:bold; border-color:var(--papel)}
+.clasif a:not(.activa):hover{color:var(--papel)}
 .localizacion{display:flex; gap:.5rem}
 .localizacion a{
   font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
@@ -130,6 +141,9 @@ a:hover{text-decoration:underline}
 .localizacion a.activa{background:var(--papel); color:var(--negro); font-weight:bold; border-color:var(--papel)}
 .localizacion a.proxima{opacity:.55}
 .localizacion a small{text-transform:none; letter-spacing:0; font-style:italic}
+.indice .etiqueta{width:100%; text-align:center; margin-bottom:.15rem}
+.indice-b{border-top:1px solid #3a3129; margin-top:.1rem; padding-top:.55rem}
+.indice-c{font-size:.68rem; opacity:.85; padding-top:0; margin-top:-.3rem}
 .indice{
   max-width:74rem; margin:0 auto; padding:.55rem 1.2rem .8rem;
   display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; justify-content:center;
@@ -415,6 +429,47 @@ span.org{color:#333}
 .indicio h3 a{color:var(--tinta)}
 .indicio h3 a:hover{color:var(--rojo)}
 .indicio .extracto{font-size:.84rem; color:#3d382f; margin-top:.4rem}
+
+/* ── Observatorio de coyuntura ── */
+.observatorio{
+  margin-top:2.4rem; background:#faf6e9;
+  border:2px solid var(--negro); box-shadow:4px 4px 0 var(--negro);
+  padding:1.3rem 1.6rem 1.6rem;
+}
+.observatorio h2{font-size:1.3rem; color:var(--negro)}
+.observatorio h2 span{
+  display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--pizarra); font-weight:normal; margin-top:.25rem;
+}
+.nota-obs{font-size:.82rem; color:var(--pizarra); font-style:italic; margin:.6rem 0 1rem}
+.botones-obs{display:flex; flex-wrap:wrap; gap:.45rem; margin-bottom:1.1rem}
+.botones-obs button{
+  font-family:inherit; font-size:.76rem; letter-spacing:.06em;
+  padding:.35rem .85rem; cursor:pointer;
+  background:transparent; color:var(--rojo);
+  border:1.5px solid var(--rojo); border-radius:999px;
+}
+.botones-obs button:hover{background:#8b1a1a14}
+.botones-obs button.activo{background:var(--rojo); color:var(--papel); font-weight:bold}
+.panel-obs{display:none}
+.panel-obs.visible{display:block}
+.graf{background:var(--papel); border:1px solid var(--filete); padding:.9rem}
+.leyenda{font-size:.78rem; color:var(--pizarra); margin-top:.5rem}
+.tag-obs{
+  display:inline-block; font-size:.66rem; letter-spacing:.1em; text-transform:uppercase;
+  border:1px dashed var(--rojo); color:var(--rojo); padding:.1rem .5rem; margin-left:.5rem;
+  vertical-align:middle;
+}
+.sel-obs{margin-bottom:.9rem; font-size:.85rem}
+.sel-obs select{
+  font-family:inherit; font-size:.85rem; padding:.3rem .6rem;
+  border:1.5px solid var(--rojo); background:var(--papel); color:var(--tinta);
+}
+.tabla-obs{width:100%; border-collapse:collapse; font-size:.85rem; background:var(--papel)}
+.tabla-obs th,.tabla-obs td{border:1px solid var(--filete); padding:.5rem .7rem; text-align:left}
+.tabla-obs th{background:var(--papel-oscuro)}
+.pendiente-celda{color:var(--pizarra); font-style:italic; text-align:center}
+.sin-despachos{font-size:.85rem; color:var(--pizarra); font-style:italic; padding:.6rem .2rem}
 
 /* ── Servicios ── */
 .servicios{

@@ -4,38 +4,124 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mundo — El Correo Comunista</title>
+<meta name="description" content="Escala Mundo de El Correo Comunista: la discusión ordenada a partir de los acontecimientos comunistas.">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body class="pagina-sec">
-
-<header class="mini-estafeta">
-  <div class="me-sup">
-    <a href="index.html">← El Correo Comunista</a>
+<body>
+<header class="estafeta">
+  <div class="banda-superior">
     <span>Ediciones ¡Que Acontezca!</span>
+    <span>Circulación continua · acceso libre</span>
+    <span>Actualización: 15·08·2026</span>
   </div>
-  <div class="me-titulo">
-    <p class="kicker">Página de síntesis · Escala</p>
-    <h1 class="titulo-sec">Mundo</h1>
-    <p class="principio-sec">Próximamente · La misma brújula: los acontecimientos comunistas.</p>
+
+  <div class="masthead">
+    <!-- Marca comunista: estrella + hoz + martillo en líneas de grabado -->
+    <svg class="sello-grabado" viewBox="0 0 220 220" aria-hidden="true">
+      <defs>
+        <pattern id="hg" width="4" height="4" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="4" height="4" fill="none"/><line x1="0" y1="0" x2="0" y2="4" stroke="#d96c5f" stroke-width="1.1"/>
+        </pattern>
+      </defs>
+      <polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      <g fill="none" stroke="#d96c5f" stroke-width="1.5">
+        <path d="M43.5,136.5 A66,66 0 1 1 176.5,136.5"/>
+        <path d="M39.9,137.2 A70,70 0 1 1 180.1,137.2"/>
+        <path d="M36.3,137.9 A74,74 0 1 1 183.7,137.9"/>
+        <path d="M32.7,138.6 A78,78 0 1 1 187.3,138.6"/>
+      </g>
+      <g transform="rotate(-32 110 125)">
+        <rect x="84" y="90" width="52" height="20" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+        <rect x="105" y="108" width="10" height="88" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      </g>
+    </svg>
+    <div class="centro">
+      <h1>EL CORREO <span>COMUNISTA</span></h1>
+      <p class="bajada"><span class="sello">¡Centralización de la discusión!</span></p>
+    </div>
+    <div class="fecha-caja"><img class="logo-act" src="imagenes/logo-organizacion.png" alt="Logo de la Organización Acontecimiento"></div>
   </div>
-  <nav class="indice-sub"><a href="index.html">Portada</a><a href="secciones/los-medios-comunes.html">I · Medios comunes</a><a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a><a href="secciones/proletariado.html">III · Proletariado</a><a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a><a href="puntos-reales.html">Puntos reales</a></nav>
+
+  <div class="fila-fecha">
+    <nav class="clasif" aria-label="Escala de análisis">
+      <span class="etiqueta">Escala de análisis</span>
+      <a href="index.html">Local</a>
+      <a href="america-latina.html">América Latina</a>
+      <a class="activa" href="mundo.html">Mundo</a>
+    </nav>
+  </div>
+
+  <nav class="indice" aria-label="Principios del comunismo">
+    <span class="etiqueta">Principios del comunismo</span>
+    <a href="secciones/los-medios-comunes.html">I · Los medios comunes</a>
+    <a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a>
+    <a href="secciones/proletariado.html">III · Proletariado</a>
+    <a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a>
+  </nav>
+  <nav class="indice indice-b" aria-label="Circulación">
+    <a href="puntos-reales.html" class="pr">Puntos reales</a>
+    <a href="#discusion">La discusión</a>
+    <a href="#boletines">Boletines</a>
+    <a href="#observatorio">Observatorio</a>
+  </nav>
+  <nav class="indice indice-c" aria-label="Del Correo">
+    <a href="fuentes.html">Fuentes</a>
+    <a href="nota-editorial.html">Nota editorial</a>
+  </nav>
 </header>
-<main class="contenido-sec">
+<main>
 
-<section class="bloque">
-  <h3>Cómo se ordenará esta escala</h3>
-  <p>El Correo ordenará la discusión mundial con el mismo criterio con que ordena lo local y lo continental: <strong>los cuatro principios anudados y los puntos reales, por continentes y sus luchas</strong>. No un mapa de noticias, sino el lugar donde la discusión comunista mundial se haga legible día a día, con sus tensiones, sus puntos comunes y sus diferencias.</p>
-  <p>La brújula no cambia de escala: centralizar y ordenar la discusión a partir de los acontecimientos comunistas — aquello que, estando en la situación, la organiza desde sí mismo. Cuando esta escala se active, sus fuentes quedarán fichadas con su licencia en el <a href="fuentes.html">directorio de fuentes</a>.</p>
-</section>
-<figure class="figura-poster">
-  <img src="imagenes/poster-contratapa.jpg" alt="Contratapa del Boletín N°3 — los cuatro desprendimientos">
-  <figcaption>Contratapa del Boletín N°3 — los cuatro desprendimientos</figcaption>
-</figure>
-<nav class="nav-sec"><a href="america-latina.html">← América Latina</a><a href="index.html">Local (Chile)</a></nav>
+  <div class="fila-superior">
+    <section class="discusion">
+      <h2>La discusión · Mundo <span>escala en formación · Ediciones ¡Que Acontezca!</span></h2>
+      <div class="cuerpo-discusion">
+        <div class="panel visible">
+          <p class="eje"><strong>Próximamente.</strong></p>
+          <p>El Correo ordenará la discusión mundial con el mismo criterio con que ordena lo local y lo continental: <strong>los cuatro principios anudados y los puntos reales, por continentes y sus luchas</strong>. No un mapa de noticias, sino el lugar donde la discusión comunista mundial se haga legible día a día, con sus tensiones, sus puntos comunes y sus diferencias.</p>
+          <p>La brújula no cambia de escala: centralizar y ordenar la discusión a partir de los acontecimientos comunistas — aquello que, estando en la situación, la organiza desde sí mismo. Cuando esta escala se active, sus fuentes quedarán fichadas con su licencia en el <a href="fuentes.html">directorio de fuentes</a>.</p>
+        </div>
+      </div>
+    </section>
+<aside id="boletines" class="boletines-lateral">
+      <h2>Boletines<br>¡Que Acontezca!</h2>
+      <p class="bajada-lateral">Producción propia · Ediciones ¡Que Acontezca!</p>
+      <ul>
+        <li>
+          <span class="num">N°1</span>
+          <span class="titulo">Hace falta dignidad</span>
+          <span class="acciones"><a href="boletines/n1-hace-falta-dignidad.html">Leer</a> · <a href="boletines/boletin-01-hace-falta-dignidad.pdf" download>PDF</a></span>
+          <span class="arts">En este número: <a href="boletines/n1-cadenas-del-presente.html">Las cadenas del presente</a> · <a href="boletines/n1-las-potencias-y-la-impotencia.html">Las potencias y la impotencia</a> · <a href="boletines/n1-que-pasa-con-la-politica-hoy.html">¿Qué pasa con la política hoy?</a></span>
+        </li>
+        <li>
+          <span class="num">N°2</span>
+          <span class="titulo">Marzo feminista</span>
+          <span class="acciones"><a href="boletines/n2-marzo-feminista.html">Leer</a> · <a href="boletines/boletin-02-marzo-feminista.pdf" download>PDF</a></span>
+          <span class="arts">En este número: <a href="boletines/n2-psicoanalisis-o-politica.html">¿Psicoanálisis o política?</a> · <a href="boletines/n2-continuar-el-movimiento-estudiantil.html">Continuar el movimiento estudiantil</a> · <a href="boletines/n2-que-entendemos-por-izquierda.html">¿Qué entendemos por «izquierda»?</a></span>
+        </li>
+        <li>
+          <span class="num">N°3</span>
+          <span class="titulo">Tiempos de libertad</span>
+          <span class="acciones"><a href="boletines/n3-tiempos-de-libertad.html">Leer</a> · <a href="boletines/boletin-03-tiempos-de-libertad.pdf" download>PDF</a></span>
+          <span class="arts">En este número: <a href="boletines/n3-burbuja-de-la-ia.html">Burbuja de la IA</a> · <a href="boletines/n3-educacion-por-verdades.html">Educación por verdades</a> · <a href="boletines/n3-18-de-octubre-sitio-de-intervencion.html">El 18 de octubre como sitio</a></span>
+        </li>
+        <li class="proximo">
+          <span class="num">N°4</span>
+          <span class="titulo">Justicia y organización política</span>
+          <span class="acciones">en preparación</span>
+        </li>
+      </ul>
+      <p class="pie-lateral">Reproducción libre citando la fuente · CC BY 4.0</p>
+    </aside>
+  </div>
+  <figure class="figura-poster" style="margin-top:0">
+    <img src="imagenes/poster-contratapa.jpg" alt="Contratapa del Boletín N°3 — los cuatro desprendimientos">
+    <figcaption>Contratapa del Boletín N°3 · Tiempos de libertad — los cuatro desprendimientos: nuestra formulación de los cuatro principios.</figcaption>
+  </figure>
+
 </main>
-
 <footer>
-  <p><strong>EL CORREO COMUNISTA</strong> · ¡Centralización de la discusión! · Ediciones ¡Que Acontezca!</p>
+  <p><strong>EL CORREO COMUNISTA</strong> · ¡Centralización de la discusión!</p>
+  <p>Un proyecto de <strong>Ediciones ¡Que Acontezca!</strong> — Organización Acontecimiento · fines públicos</p>
   <p>Reproducción libre, total o parcial, citando la fuente · <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a></p>
 </footer>
 </body>
