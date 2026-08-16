@@ -554,6 +554,11 @@ span.org{color:#333}
 .kpi-nombre{display:block; font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pizarra)}
 .kpi-valor{display:block; font-size:1.35rem; color:var(--rojo); margin:.25rem 0 .2rem}
 .kpi-nota{font-size:.74rem; color:var(--pizarra)}
+.duo-graf{display:grid; grid-template-columns:auto 1fr; gap:1.4rem; align-items:start; margin-bottom:1rem}
+@media (max-width:720px){ .duo-graf{grid-template-columns:1fr} }
+.concepto{font-size:.95rem}
+.cita-marx{border-color:var(--negro); background:#faf6e9}
+.botones-mapa button[disabled]{opacity:.55; cursor:default}
 
 /* ── Justificación de prosa ── */
 .manifiesto p, .cuerpo-discusion p, .bloque p, .anudados p,

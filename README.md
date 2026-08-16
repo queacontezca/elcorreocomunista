@@ -2,59 +2,38 @@
 
 Sitio público de **El Correo Comunista · ¡Centralización de la discusión!**, proyecto de Ediciones ¡Que Acontezca! (Organización Acontecimiento), de fines públicos.
 
-**Idea clave:** este repositorio *es* la página. GitHub Pages publica tal cual estos archivos en <https://queacontezca.github.io/elcorreocomunista/> — cada cambio subido al repo actualiza el sitio solo, al minuto.
+**URL:** https://queacontezca.github.io/elcorreocomunista
 
----
+## Nota editorial
 
-## 1. Estado actual
+Este correo nace de una convicción: la discusión comunista existe, pero circula dispersa entre organizaciones, revistas y militantes que escriben. Aquí la reunimos día a día para hacer visibles sus tensiones, sus puntos comunes y sus diferencias — no para dirimir quién tiene la razón, sino para empujar el debate, continuarlo, abrirle caminos. Este espacio es también el órgano de difusión de la Organización Acontecimiento: en él circulan nuestros boletines y nuestra propia voz, como una voz más entre las que apuestan por reorientar la Idea del comunismo en nuestro tiempo.
 
-- Sitio **ya publicado** y en circulación (15-08-2026).
-- Estructura permanente: la portada no cambia de número; solo avanza el debate. La cabecera muestra siempre la **última fecha de actualización** (ritmo: cada dos semanas).
-- Licencia de todo el repo: **CC BY 4.0** (ver `LICENSE`).
+El sitio se organiza así: la **portada local** (Chile) despacha lo publicado por organizaciones, revistas y militantes; las **secciones** ordenan esa discusión por los cuatro principios del comunismo —los medios comunes, el trabajo polimorfo, el proletariado, el marchitamiento del Estado— más los **puntos reales**; el **observatorio** expone los datos del análisis de coyuntura; y los **boletines** son la producción propia. La fecha de la portada es la de su **última actualización**: la estructura es permanente y avanza el debate.
 
-## 2. Actualizar el sitio (flujo web, sin instalar nada)
+**Próxima edición del boletín:** N°4 · **«La Idea de justicia»** — prevista para **octubre de 2026**. Allí discutiremos: educación, movimientos de masa, Estado y organización política.
 
-En github.com/queacontezca/elcorreocomunista:
-
-1. **Add file ▾ → Upload files**
-2. Arrastrar los archivos modificados (subir un archivo con el mismo nombre **lo sobrescribe**: eso es «actualizar»)
-3. **Commit changes** → esperar ~1 minuto → recargar con ⌘⇧R
-
-> Si se prefiere trabajar local: la carpeta `elcorreocomunista/` en el Mac es un clon del repo; se puede editar ahí y subir con GitHub Desktop (commit + Push origin). Ambos flujos conviven; el web basta para todo.
-
-## 3. Tareas frecuentes
-
-- **Agregar un despacho:** en `index.html`, copiar un bloque `<article class="despacho">…</article>` dentro de su sección y cambiar medio, lugar `(País)` o `(Chile · Región)`, fecha, título, extracto y URL del original. Actualizar el contador de la caja de fecha y la **fecha de última actualización** (banda superior + caja + aviso al pie).
-- **Actualizar «La discusión»:** reemplazar los párrafos de cada panel dentro de `<section id="discusion">`; citar siempre con enlaces `→ #dN` al despacho correspondiente (verificabilidad).
-- **Nuevo boletín** (p. ej. N°4 en octubre): subir el PDF a `boletines/` (comprimirlo antes para web, ~150 dpi), crear su página de edición copiando una existente (`boletines/n3-tiempos-de-libertad.html`), crear las páginas de sus artículos, y agregarlo al lateral «Boletines» de `index.html` quitando la marca «en preparación».
-- **Nueva fuente:** agregarla en `fuentes.html` con su licencia constatada (ver §5).
-- **Imagen en un despacho:** subir la imagen a `imagenes/`, poner al artículo la clase `con-imagen` y un `<figure class="miniatura"><img src="imagenes/archivo.jpg">`.
-
-## 4. Estructura
+## 1. Estructura del repositorio
 
 ```
-elcorreocomunista/          ← el repositorio ES la página
-├── index.html              portada (manifiesto, La discusión + Boletines, secciones, puntos reales)
-├── styles.css              estética estafeta grabada, paleta de los boletines
-├── fuentes.html            directorio de fuentes con licencia constatada
-├── boletines/              ediciones HTML (n1, n2, n3…), páginas por artículo y los PDF
-├── imagenes/               portadas e imágenes de despachos
-├── LICENSE                 CC BY 4.0 (todo el repo: código y contenido)
-└── README.md               este archivo
+elcorreocomunista/
+├── index.html            ← portada local (Chile)
+├── styles.css            ← hoja de estilos única (paleta boletín)
+├── america-latina.html   ← escala América Latina
+├── mundo.html            ← escala Mundo (en formación)
+├── puntos-reales.html    ← subsección Puntos reales
+├── observatorio.html     ← observatorio de coyuntura (gráficos + mapa)
+├── boletines.html        ← página principal de los boletines
+├── fuentes.html          ← directorio de fuentes con licencia constatada
+├── nota-editorial.html   ← nota editorial y quiénes somos
+├── README.md             ← este archivo
+├── LICENSE               ← CC BY 4.0
+├── boletines/            ← ediciones y artículos HTML + PDF descargables
+├── secciones/            ← las 4 páginas de principios del comunismo
+└── imagenes/             ← logos, portadas y láminas de los boletines
 ```
 
-## 5. Licencia y marco legal
+## 2. Licencia
 
-**Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0**: reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
+**Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0** (ver `LICENSE`): reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
 
-**Material de terceros** (los despachos): sigue siendo de sus autoras y autores. Dos modos según la licencia constatada en `fuentes.html`:
-
-1. **Enlace + extracto breve** (todas las fuentes): cita legítima, art. 38 Ley 17.336.
-2. **Espejo de texto completo** (solo fuentes con licencia abierta o autorización — hoy: Horizonte, Carcaj, Rebelión, Desinformémonos): respetando sus condiciones (atribución; no-comercial donde aplique; sin modificar donde sea ND).
-
-## 6. Pendientes del proyecto
-
-- Página «Qué es» (estatuto) y «Archivo» por fecha.
-- Automatización RSS (GitHub Actions) para las fuentes con feed.
-- Observatorio de datos (`datos/chile/`): series del análisis de coyuntura, públicas para las luchas.
-- Espejo en Codeberg y dominio propio: postergados, sin costo.
+**Contenido de terceros:** cada despacho enlaza a su publicación original y cita un extracto breve — el derecho de cita con fines informativos y críticos (art. 38, Ley 17.336). Los textos completos de terceros solo se reproducen cuando su licencia lo permite explícitamente (ver el registro por fuente en `fuentes.html`).
