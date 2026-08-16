@@ -1,0 +1,83 @@
+# Metadatos de la capa de datos del Observatorio — El Correo Comunista
+# Regla: toda cifra del observatorio.html sale de estos CSV (fuente única de verdad).
+# Convención de números en CSV: punto decimal, sin separador de miles (formato máquina).
+# En la página se muestran con punto de miles y coma decimal (formato es-CL).
+ultima_descarga: "2026-08-16"
+estatus_leyenda:
+  O: "operativa — variable fresca con fuente oficial declarada"
+  P: "proxy — mide por aproximación declarada, no el concepto mismo"
+  C: "calibración — base envejecida recalculada (nivel de fondo, no variación)"
+  X: "placeholder — sin variable operativa aún (no titula módulos)"
+
+series:
+  rentas_primarias_chile.csv:
+    descripcion: "Rentas primarias de la balanza de pagos de Chile (débito, crédito, balance y componentes), millones US$ corrientes, suma anual de trimestres"
+    fuente: "CEPALSTAT (CEPAL), indicador 547 «Balanza de pagos trimestral», que compila las cifras del Banco Central de Chile"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
+    frecuencia: "trimestral (agregada a anual; 2026 solo T1)"
+    estatus: "O"
+    notas: "Débitos en magnitud positiva (salida de recursos). «ied_utilidades_dividendos» = utilidades y dividendos de la inversión extranjera directa pagados al exterior (correa financiera). 2020: el crédito cae a 486 por la pandemia."
+
+  rentas_primarias_al20.csv:
+    descripcion: "Rentas primarias de América Latina (20 países), millones US$, suma simple de países"
+    fuente: "elaboración propia sobre CEPALSTAT ind. 547 (suma de países con registros)"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
+    frecuencia: "anual (suma de trimestres)"
+    estatus: "O"
+    notas: "«ied_utilidades_piso» es un PISO — Perú registra 0 en esa línea del cubo (no desagrega) y Venezuela/Cuba/Haití no reportan. El «debito_total» sí incluye a Perú."
+
+  rentas_debito_pais_2024.csv:
+    descripcion: "Renta (débito) total por país latinoamericano, 2024, millones US$"
+    fuente: "elaboración propia sobre CEPALSTAT ind. 547"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
+    frecuencia: "anual"
+    estatus: "O"
+    notas: "Venezuela, Cuba y Haití sin registros en el cubo (se reportan como 0 con nota, no como ausencia de flujo real)."
+
+  drenaje_mundial_hickel.csv:
+    descripcion: "Cifras verificadas del drenaje Sur→Norte por intercambio desigual (abstracts cotejados vía OpenAlex el 16-08-2026)"
+    fuente: "Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6) · Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73"
+    url: "https://doi.org/10.1080/13563467.2021.1899153 y https://doi.org/10.1016/j.gloenvcha.2022.102467"
+    frecuencia: "literatura (series 1960-2018 y 1990-2015)"
+    estatus: "O"
+    notas: "¡ATENCIÓN! El «US$ 10,8 billones (2015)» es del artículo de 2022 (GEC), NO del de 2021 (NPE: US$ 2,2 billones en 2018 y US$ 62 billones acumulados 1960-2018). Citar cada cifra con su artículo. La serie año a año no se grafica: vive en los anexos de los artículos (pendiente declarado)."
+
+  ied_entradas_cepal.csv:
+    descripcion: "Entradas de IED en AL y Chile, y razón utilidades pagadas / IED entrante"
+    fuente: "CEPAL, La Inversión Extranjera Directa en América Latina y el Caribe 2025 (LC/PUB.2025/7-P/Rev.1, nov-2025, pp. 33 y 65) + CEPALSTAT"
+    url: "https://www.cepal.org/es/publicaciones/82116-la-inversion-extranjera-directa-america-latina-caribe-2025"
+    frecuencia: "anual"
+    estatus: "O"
+    notas: "Chile 2024: por cada US$ 1 de IED que entró salieron US$ 1,51 en utilidades. AL 2024: utilidades pagadas (piso) US$ 197.783 M > IED entrante US$ 188.962 M."
+
+  impuesto_primera_categoria.csv:
+    descripcion: "Tasa legal del impuesto de primera categoría (renta empresas), serie de hitos legales"
+    fuente: "Ley 18.985 (1990), Ley 20.469 (2010), Ley 20.780 (2014); proyecto Boletín 18216-05 (Senado)"
+    url: "https://www.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18216-05"
+    frecuencia: "hitos legales"
+    estatus: "O"
+    notas: "2030 = proyecto en tramitación (rebaja gradual a 23 % + invariabilidad 10-20 años), no ley."
+
+  jornada_semana_obrera.csv:
+    descripcion: "Composición de la semana obrera y tasas (s/v-jornada, TETV, labor share)"
+    fuente: "Reporte de Análisis de Coyuntura N°1 (jul-2026), anexo técnico, sobre metodología Fundación SOL (2022, Tiempo Robado); insumo 2026.2; ENUT-INE"
+    url: "https://fundacionsol.cl"
+    frecuencia: "calibración (base 2022)"
+    estatus: "C"
+    notas: "Nivel de fondo, NO variación mensual. La TETV no se suma a s/v (el traslado no produce valor). Labor share oficial = cota superior; depurado 28-30 %."
+
+  kpi_corte.csv:
+    descripcion: "Indicadores del corte con fecha y fuente (grilla KPI)"
+    fuente: "Reporte N°1 (jul-2026) con diccionario de datos (SP, Comisión Ingresa, TGR, INE, Cochilco, SIPRI)"
+    url: "https://www.spensiones.cl · https://www.ine.gob.cl · https://www.cochilco.cl"
+    frecuencia: "mensual/trimestral según indicador"
+    estatus: "O"
+    notas: "El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado."
+
+  mapa_base_paises.svg:
+    descripcion: "Geometría de 179 países (paths SVG, proyección equirectangular 980×500) con clasificación céntrico/periférico"
+    fuente: "Natural Earth (geometría) · clasificación: economías avanzadas según FMI"
+    url: "https://www.imf.org/external/pubs/ft/weo/"
+    frecuencia: "estática"
+    estatus: "P"
+    notas: "La dicotomía FMI es una PROXY de la teoría de la dependencia — se declara en la propia página."

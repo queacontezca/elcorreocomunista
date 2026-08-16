@@ -590,3 +590,43 @@ footer strong{color:var(--papel)}
   text-align:center; font-size:.75rem; font-style:italic;
   color:var(--pizarra); padding:.8rem 1rem 1.5rem;
 }
+
+/* ── Observatorio v5: continuidad y trazabilidad ─────────────────── */
+.termometro{display:grid; grid-template-columns:repeat(6,1fr); gap:.6rem; margin:1.2rem 0 1.6rem}
+@media (max-width:900px){ .termometro{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:560px){ .termometro{grid-template-columns:repeat(2,1fr)} }
+.term-chip{border:1px solid var(--filete); border-top:3px solid var(--rojo); background:var(--papel); padding:.55rem .65rem; display:flex; flex-direction:column; gap:.15rem}
+.term-nom{font-size:.68rem; letter-spacing:.07em; text-transform:uppercase; color:var(--pizarra)}
+.term-val{font-size:1.05rem; font-weight:bold; color:var(--rojo); line-height:1.15}
+.term-fec{font-size:.66rem; color:var(--pizarra)}
+.transicion{font-style:italic; color:var(--pizarra); border-left:3px solid var(--filete); padding-left:.9rem; margin:1.8rem 0 .4rem; font-size:.95rem}
+.dato-incomodo{background:#f7f3ea; border:1px dashed var(--rojo); padding:.6rem .9rem; font-size:.88rem; margin-top:.7rem}
+.ficha-dato{margin-top:.7rem; border:1px solid var(--filete); background:#faf6ea}
+.ficha-dato summary{cursor:pointer; padding:.55rem .9rem; font-size:.82rem; font-weight:bold; color:var(--negro); list-style:none}
+.ficha-dato summary::before{content:"▸ "; color:var(--rojo)}
+.ficha-dato[open] summary::before{content:"▾ "}
+.ficha-dato dl{padding:0 .9rem .8rem; margin:0; font-size:.8rem}
+.ficha-dato dt{font-weight:bold; color:var(--pizarra); margin-top:.45rem; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em}
+.ficha-dato dd{margin:.1rem 0 0}
+.estatus{display:inline-block; font-size:.7rem; font-weight:bold; border:1px solid; padding:.05rem .4rem; border-radius:2px; letter-spacing:.04em}
+.est-o{color:#1d5c1d; border-color:#1d5c1d}
+.est-p{color:#8a6d1a; border-color:#8a6d1a}
+.est-c{color:#4a4a8b; border-color:#4a4a8b}
+.est-x{color:#777; border-color:#777}
+.magnitud-grid{display:grid; grid-template-columns:1fr 1fr; gap:.9rem}
+@media (max-width:720px){ .magnitud-grid{grid-template-columns:1fr} }
+.magnitud{border:1px solid var(--filete); border-left:4px solid var(--rojo); background:var(--papel); padding:.75rem .95rem; display:flex; flex-direction:column; gap:.25rem}
+.mag-val{font-size:1.3rem; font-weight:bold; color:var(--rojo); line-height:1.1}
+.mag-que{font-size:.85rem}
+.mag-src{font-size:.72rem; color:var(--pizarra); font-style:italic}
+.tabla-circuitos{width:100%; border-collapse:collapse; font-size:.84rem}
+.tabla-circuitos th{text-align:left; border-bottom:2px solid var(--negro); padding:.3rem .4rem; font-size:.74rem; text-transform:uppercase; letter-spacing:.05em}
+.tabla-circuitos td{border-bottom:1px dotted var(--filete); padding:.32rem .4rem; vertical-align:top}
+.leyenda-mapa{display:flex; flex-wrap:wrap; gap:1.1rem; font-size:.78rem; color:var(--pizarra); margin-top:.4rem}
+.leyenda-mapa .lg{display:flex; align-items:center; gap:.35rem}
+.leyenda-mapa .sw{display:inline-block; width:16px; height:10px}
+.sw-negro{background:#2b2b2b}
+.sw-rojo{background:#b3543f}
+.sw-flecha{background:linear-gradient(90deg,#8b1a1a 70%,transparent 70%); height:4px}
+.sw-punteada{border-top:3px dashed #b3543f; height:0}
+.cierre-obs{border-top:2px solid var(--negro); margin-top:2.2rem; padding-top:1.2rem}

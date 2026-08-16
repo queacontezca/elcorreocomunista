@@ -1,0 +1,13 @@
+indicador,valor,unidad,periodo,articulo,doi
+drenaje_ultimo_anio_serie,2.2,billones US$ (precios del Norte),2018,"Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6)",10.1080/13563467.2021.1899153
+drenaje_acumulado,62,billones US$ constantes 2011,1960-2018,"Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6)",10.1080/13563467.2021.1899153
+drenaje_acumulado_con_crecimiento_perdido,152,billones US$ constantes 2011,1960-2018,"Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6)",10.1080/13563467.2021.1899153
+apropiacion_neta_valor,10.8,billones US$ (precios del Norte),2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+trabajo_apropiado,188,millones de años-persona,2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+materiales_apropiados,12000,millones de toneladas (equiv. materia prima),2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+tierra_apropiada,822,millones de hectáreas,2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+energia_apropiada,21,exajulios,2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+drenaje_acumulado,242,billones US$ constantes 2010,1990-2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+razon_perdidas_vs_ayuda,30,veces (pérdidas del Sur / ayuda recibida),1990-2015,"Hickel, Dorninger, Wieland y Suwandi (2022), Global Environmental Change 73",10.1016/j.gloenvcha.2022.102467
+apropiacion_sobre_pib_norte,7,% del PIB del Norte (hasta),1960-2018,"Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6)",10.1080/13563467.2021.1899153
+apropiacion_sobre_pib_sur,9,% del PIB del Sur (hasta),1960-2018,"Hickel, Sullivan y Zoomkawala (2021), New Political Economy 26(6)",10.1080/13563467.2021.1899153

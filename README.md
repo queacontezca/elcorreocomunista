@@ -21,16 +21,20 @@ elcorreocomunista/
 ├── america-latina.html   ← escala América Latina
 ├── mundo.html            ← escala Mundo (en formación)
 ├── puntos-reales.html    ← subsección Puntos reales
-├── observatorio.html     ← observatorio de coyuntura (gráficos + mapa)
+├── observatorio.html     ← observatorio de coyuntura (gráficos + mapa del drenaje)
 ├── boletines.html        ← página principal de los boletines
 ├── fuentes.html          ← directorio de fuentes con licencia constatada
 ├── nota-editorial.html   ← nota editorial y quiénes somos
 ├── README.md             ← este archivo
 ├── LICENSE               ← CC BY 4.0
+├── datos/observatorio/   ← capa de datos del observatorio (CSV + metadatos.yml)
+├── scripts/              ← build_observatorio.py (CSV → observatorio.html)
 ├── boletines/            ← ediciones y artículos HTML + PDF descargables
 ├── secciones/            ← las 4 páginas de principios del comunismo
 └── imagenes/             ← logos, portadas y láminas de los boletines
 ```
+
+**El observatorio es reproducible:** ninguna cifra de `observatorio.html` se escribe a mano; todas salen de `datos/observatorio/` (CSV con fuente, URL, fecha de descarga y estatus de medición en `metadatos.yml`), y la página se regenera con `python3 scripts/build_observatorio.py`. Cada figura declara su ficha del dato (definición, fuente, fecha de corte, estatus O/P/C/X, método y pendientes).
 
 ## 2. Licencia
 

@@ -1,0 +1,10 @@
+concepto,valor,unidad,nota
+trabajo_necesario,15.75,horas/semana,repite el salario
+plustrabajo,26.25,horas/semana,no pagado: plusvalor
+traslado_no_remunerado,10.0,horas/semana,expropia tiempo vital sin producir valor
+reproductivo_no_remunerado,20.0,horas/semana (aprox.),hogar y cuidados
+carga_global_real,62.0,horas/semana,insumo de coyuntura 2026.2
+tasa_explotacion_sv,166.7,%,s/v-jornada; calibración SOL 2022 recalculada
+TETV,230.2,%,tasa de expropiación del tiempo vital
+labor_share_oficial,38.5,% del PIB,cota superior de v
+labor_share_depurado,29.0,% del PIB (rango 28-30),salario obrero productivo
