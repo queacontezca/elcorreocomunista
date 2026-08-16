@@ -545,6 +545,21 @@ span.org{color:#333}
 .vec-txt{font-size:12.5px; fill:#6d1111; font-weight:bold; paint-order:stroke; stroke:#efe8d2; stroke-width:3}
 .polo{fill:#6d1111; stroke:#efe8d2; stroke-width:2}
 .centro-polo{fill:#17110c}
+.chip{fill:#f7f3ea; stroke:#d8d2c4; opacity:.94}
+.ley-mapa{font-size:12px; fill:#17110c}
+/* KPIs de circuitos */
+.kpi-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem}
+@media (max-width:640px){ .kpi-grid{grid-template-columns:1fr} }
+.kpi{border:1px solid var(--filete); border-left:4px solid var(--rojo); background:var(--papel); padding:.8rem 1rem}
+.kpi-nombre{display:block; font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; color:var(--pizarra)}
+.kpi-valor{display:block; font-size:1.35rem; color:var(--rojo); margin:.25rem 0 .2rem}
+.kpi-nota{font-size:.74rem; color:var(--pizarra)}
+
+/* ── Justificación de prosa ── */
+.manifiesto p, .cuerpo-discusion p, .bloque p, .anudados p,
+.analisis, .observatorio-teaser p, .hipotesis li{
+  text-align:justify; text-justify:inter-word;
+}
 
 /* ── Servicios ── */
 .servicios{
