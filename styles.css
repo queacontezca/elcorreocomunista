@@ -54,6 +54,45 @@ a:hover{text-decoration:underline}
 .fecha-caja strong{display:block; color:var(--papel); font-style:normal; font-size:.95rem; margin-bottom:.3rem}
 .logo-act{width:84px; display:block; margin:0 auto .35rem; border:1px solid #3a3129}
 .logo-txt{font-size:.66rem; letter-spacing:.1em; text-transform:uppercase; font-style:normal; color:#cbbf9f}
+.sello-img{width:132px; height:132px; object-fit:cover; flex:none; border:1px solid #3a3129}
+
+/* ── Barra de navegación en subpáginas (paleta variante) ── */
+.indice-sub{
+  background:var(--rojo-prof); padding:.5rem 1.2rem;
+  display:flex; flex-wrap:wrap; gap:.3rem 1.2rem; justify-content:center;
+  font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+}
+.indice-sub a{color:var(--papel); opacity:.85}
+.indice-sub a:hover{opacity:1; text-decoration:underline}
+.indice-sub a.actual{opacity:1; font-weight:bold; border-bottom:2px solid var(--papel)}
+
+/* ── Rejilla con lateral pegajoso ── */
+.rejilla-sec{display:grid; grid-template-columns:1fr 290px; gap:1.5rem; align-items:start}
+@media (max-width:820px){ .rejilla-sec{grid-template-columns:1fr} }
+.lateral-sec{
+  position:sticky; top:1rem;
+  background:#faf6e9; border:1px solid var(--filete); border-top:3px solid var(--rojo);
+  padding:1rem 1.1rem;
+}
+.lateral-sec h4{
+  font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; color:var(--rojo);
+  border-bottom:1px solid var(--filete); padding-bottom:.4rem; margin-bottom:.7rem; line-height:1.4;
+}
+.lateral-sec .lamina{width:100%; border:1px solid var(--filete); display:block}
+.lateral-sec .pie-lamina{font-size:.7rem; color:var(--pizarra); font-style:italic; margin:.35rem 0 .8rem}
+
+/* ── Desarrollo de despachos ── */
+.relacion{
+  font-size:.8rem; color:var(--rojo); font-style:italic;
+  border-top:1px dotted var(--filete); padding-top:.4rem; margin-top:.5rem;
+}
+.despacho .banner{margin:0 0 .6rem}
+.despacho .banner img{width:100%; display:block; border:1px solid var(--filete)}
+
+/* ── Bloque pregunta e hipótesis ── */
+.bloque.pregunta h3{font-size:1.15rem; letter-spacing:0; text-transform:none}
+.bloque .hipotesis{padding-left:1.2rem}
+.bloque .hipotesis li{margin-bottom:.6rem}
 @media (max-width:760px){
   .masthead{flex-direction:column; gap:1rem}
   .fecha-caja{border:none; padding:0; width:auto}
@@ -148,16 +187,16 @@ a:hover{text-decoration:underline}
 .me-titulo{max-width:56rem; margin:0 auto; padding:1.7rem 1.2rem 1.5rem}
 .kicker{
   font-size:.74rem; letter-spacing:.2em; text-transform:uppercase;
-  color:#e8b4a0; font-weight:bold;
+  color:#e8b4a0; font-weight:bold; margin-bottom:.9rem;
 }
-.me-titulo h1{font-size:2.2rem; color:var(--papel); margin:.3rem 0 .4rem}
+.titulo-sec{
+  display:inline-block; background:var(--rojo); color:var(--papel);
+  font-size:1.5rem; letter-spacing:.04em; padding:.5rem 1rem; margin:0 0 .6rem;
+}
+.titulo-sec .numeral{font-style:italic; color:#e8b4a0; margin-right:.4rem}
 .principio-sec{font-style:italic; color:#cbbf9f; font-size:1.02rem; max-width:44rem}
 .contenido-sec{max-width:50rem; margin:0 auto; padding:0 1.2rem}
 .bloque{margin-bottom:1.6rem}
-.bloque.box{
-  background:#faf6e9; border:1px solid var(--filete); border-top:3px solid var(--rojo);
-  padding:1rem 1.3rem;
-}
 .bloque h3{
   font-size:.82rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo);
   border-bottom:1px solid var(--filete); padding-bottom:.3rem; margin-bottom:.7rem;
