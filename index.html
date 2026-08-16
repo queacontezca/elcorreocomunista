@@ -25,12 +25,18 @@
           <rect width="4" height="4" fill="none"/><line x1="0" y1="0" x2="0" y2="4" stroke="#d96c5f" stroke-width="1.1"/>
         </pattern>
       </defs>
-      <polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      <g transform="translate(-14,-2)">
+        <polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
+      </g>
       <g fill="none" stroke="#d96c5f" stroke-width="1.5">
         <path d="M43.5,136.5 A66,66 0 1 1 176.5,136.5"/>
         <path d="M39.9,137.2 A70,70 0 1 1 180.1,137.2"/>
         <path d="M36.3,137.9 A74,74 0 1 1 183.7,137.9"/>
         <path d="M32.7,138.6 A78,78 0 1 1 187.3,138.6"/>
+      </g>
+      <!-- mango de la hoz, a la derecha -->
+      <g transform="rotate(24 182 128)">
+        <rect x="176" y="112" width="12" height="34" rx="5" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
       </g>
       <g transform="rotate(-32 110 125)">
         <rect x="84" y="90" width="52" height="20" fill="url(#hg)" stroke="#d96c5f" stroke-width="1.4"/>
@@ -63,8 +69,8 @@
   <nav class="indice indice-b" aria-label="Circulación">
     <a href="puntos-reales.html" class="pr">Puntos reales</a>
     <a href="#discusion">La discusión</a>
-    <a href="#boletines">Boletines</a>
-    <a href="#observatorio">Observatorio</a>
+    <a href="boletines.html">Boletines</a>
+    <a href="observatorio.html">Observatorio</a>
   </nav>
   <nav class="indice indice-c" aria-label="Del Correo">
     <a href="fuentes.html">Fuentes</a>
@@ -84,7 +90,7 @@
   <div class="fila-superior">
 
     <section id="discusion" class="discusion">
-      <h2>La discusión <span>síntesis de la edición · Ediciones ¡Que Acontezca! · con citas verificables</span></h2>
+      <h2>La discusión <span>síntesis de la edición · con citas verificables</span></h2>
 
       <div class="botones-discusion" role="tablist" aria-label="Elegir sección de la síntesis">
         <button class="activo" data-panel="general">General</button>
@@ -137,7 +143,7 @@
     <!-- ═══ BOLETINES: producción propia ═══ -->
     <aside id="boletines" class="boletines-lateral">
       <h2>Boletines<br>¡Que Acontezca!</h2>
-      <p class="bajada-lateral">Producción propia · Ediciones ¡Que Acontezca!</p>
+      <p class="bajada-lateral">Producción propia de la editorial</p>
       <ul>
         <li>
           <span class="num">N°1</span>
@@ -335,131 +341,15 @@
     </div>
   </section>
 
-  <!-- ══════════════ OBSERVATORIO DE COYUNTURA ══════════════ -->
-  <section id="observatorio" class="observatorio">
-    <h2>Observatorio de coyuntura <span>los datos del análisis, públicos para las luchas</span></h2>
-    <p class="nota-obs">Módulos interactivos del trabajo de análisis de coyuntura. Las series marcadas <span class="tag-obs">muestra metodológica</span> ilustran la forma de lectura: el corte oficial se incorpora desde el Reporte mensual. La transferencia Norte–Sur cita literatura publicada (fuente en el módulo).</p>
-    <div class="botones-obs" role="tablist" aria-label="Módulos del observatorio">
-      <button class="activo" data-obs="tasas">Tasas de explotación</button>
-      <button data-obs="horas">Horas de trabajo</button>
-      <button data-obs="circuitos">Circuitos de acumulación</button>
-      <button data-obs="retencion">Retención estatal</button>
-      <button data-obs="transferencia">Transferencia de plusvalor</button>
+  <!-- ══════════════ OBSERVATORIO (teaser a la página) ══════════════ -->
+  <section class="observatorio-teaser">
+    <div>
+      <h2><a href="observatorio.html">Observatorio de coyuntura</a> <span>los datos del análisis, públicos para las luchas</span></h2>
+      <p>Tasas de explotación, horas de trabajo, circuitos de acumulación, retención estatal y el <strong>mapa interactivo de la transferencia de plusvalor</strong> entre países — con fuente y elaboración declaradas en cada gráfico.</p>
     </div>
-
-    <div class="panel-obs visible" id="obs-tasas">
-      <div class="graf" id="g-tasas"></div>
-      <p class="leyenda"><span style="color:#8b1a1a">—</span> productiva · <span style="color:#b3543f">—</span> reproductiva · <span style="color:#17110c">—</span> general <span class="tag-obs">muestra metodológica</span></p>
-    </div>
-    <div class="panel-obs" id="obs-horas">
-      <div class="graf" id="g-horas"></div>
-      <p class="leyenda">Jornada semanal descompuesta: necesario / más allá del necesario / no remunerado <span class="tag-obs">muestra metodológica</span></p>
-    </div>
-    <div class="panel-obs" id="obs-circuitos">
-      <div class="graf" id="g-circuitos"></div>
-      <p class="leyenda">Participación de los circuitos principales de acumulación <span class="tag-obs">muestra metodológica</span></p>
-    </div>
-    <div class="panel-obs" id="obs-retencion">
-      <div class="graf" id="g-retencion"></div>
-      <p class="leyenda">% del plusvalor retenido por el Estado; hito: «megarreforma» Kast <span class="tag-obs">muestra metodológica — el corte histórico oficial se incorpora desde el Reporte</span></p>
-    </div>
-    <div class="panel-obs" id="obs-transferencia">
-      <div class="sel-obs">
-        <label for="vista-trans">Ver por:</label>
-        <select id="vista-trans">
-          <option value="ns">Norte–Sur (estimación de literatura)</option>
-          <option value="pais">Por Estado (en incorporación)</option>
-        </select>
-      </div>
-      <div id="trans-ns">
-        <div class="graf" id="g-trans"></div>
-        <p class="leyenda">Flujo anual 2015 en US$ billones. Fuente: Hickel, Sullivan y Zoomkawala (2021), «Plunder in the Post-Colonial Era: Quantifying Drain from the Global South Through Unequal Exchange, 1990–2015», <em>New Political Economy</em> 26(6): drenaje neto del Sur al Norte de US$ 10,8 billones en 2015 (≈15 % del PIB del Norte); US$ 242 billones acumulados 1990–2015.</p>
-      </div>
-      <div id="trans-pais" style="display:none">
-        <table class="tabla-obs">
-          <tr><th>Estado</th><th>Sale como plusvalor</th><th>Recibe</th><th>Neto</th></tr>
-          <tr><td>Chile</td><td colspan="3" class="pendiente-celda">en incorporación desde el Reporte de Análisis de Coyuntura (matriz r/LTDTG)</td></tr>
-        </table>
-        <p class="leyenda">La desagregación por Estado requiere el cálculo país por país con la matriz de categorías; se publica aquí cuando el Reporte lo entregue.</p>
-      </div>
-    </div>
+    <a class="boton-obs" href="observatorio.html">Entrar al observatorio →</a>
   </section>
 
-<script>
-(function(){
-const ROJO='#8b1a1a', SAL='#b3543f', NEGRO='#17110c', PIZ='#5c554d', REJ='#d8d2c4';
-const fmt=v=>String(v).replace('.',',');
-function svgL(id, anos, series, hito){
-  const W=760,H=300,P=46;
-  const max=Math.max(...series.flatMap(s=>s.puntos))*1.15;
-  const x=i=>P+(W-P-18)*i/(anos.length-1), y=v=>(H-P)-(H-2*P)*v/max;
-  let g='';
-  for(let t=0;t<=4;t++){const vv=max*t/4, yy=y(vv);
-    g+=`<line x1="${P}" y1="${yy}" x2="${W-18}" y2="${yy}" stroke="${REJ}"/>`;
-    g+=`<text x="${P-6}" y="${yy+4}" font-size="10" text-anchor="end" fill="${PIZ}">${fmt(vv.toFixed(2))}</text>`;}
-  anos.forEach((a,i)=>{g+=`<text x="${x(i)}" y="${H-P+16}" font-size="10" text-anchor="middle" fill="${PIZ}">${a}</text>`;});
-  series.forEach(s=>{
-    g+=`<polyline points="${s.puntos.map((v,i)=>x(i)+','+y(v)).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2.5"/>`;
-    s.puntos.forEach((v,i)=>{g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3" fill="${s.color}"/>`;});
-  });
-  if(hito){const i=hito.i; g+=`<line x1="${x(i)}" y1="${y(series[0].puntos[i])}" x2="${x(i)}" y2="${H-P}" stroke="${ROJO}" stroke-dasharray="4 3"/>`;
-    g+=`<text x="${x(i)}" y="${y(series[0].puntos[i])-10}" font-size="11" text-anchor="end" fill="${ROJO}" font-style="italic">${hito.texto}</text>`;}
-  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
-}
-function svgB(id, items, unidad){
-  const W=760,bh=32,gap=14,P=210,max=Math.max(...items.map(i=>i.valor))*1.08,H=items.length*(bh+gap)+8;
-  let g='';
-  items.forEach((it,i)=>{const y=4+i*(bh+gap), w=(W-P-96)*Math.abs(it.valor)/max;
-    g+=`<text x="${P-8}" y="${y+bh/2+4}" font-size="12" text-anchor="end" fill="${NEGRO}">${it.nombre}</text>`;
-    g+=`<rect x="${P}" y="${y}" width="${w}" height="${bh}" fill="${it.color||ROJO}"/>`;
-    g+=`<text x="${P+w+8}" y="${y+bh/2+4}" font-size="12" fill="${NEGRO}">${fmt(it.valor)}${unidad||''}</text>`;});
-  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
-}
-function svgStack(id, items){
-  const W=760,H=128,P=40,total=items.reduce((a,i)=>a+i.valor,0);
-  let x=P,g='';
-  items.forEach(it=>{const w=(W-2*P)*it.valor/total;
-    g+=`<rect x="${x}" y="26" width="${w}" height="46" fill="${it.color}"/>`;
-    g+=`<text x="${x+w/2}" y="54" font-size="11.5" text-anchor="middle" fill="#f3edda">${fmt(it.valor)} h</text>`;
-    g+=`<text x="${x+w/2}" y="96" font-size="11" text-anchor="middle" fill="${NEGRO}">${it.nombre}</text>`;
-    x+=w;});
-  document.getElementById(id).innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">${g}</svg>`;
-}
-const ANOS=[1990,1995,2000,2005,2010,2015,2020,2025];
-svgL('g-tasas',ANOS,[
-  {color:ROJO,puntos:[1.05,1.12,1.18,1.24,1.30,1.36,1.41,1.47]},
-  {color:SAL,puntos:[0.82,0.86,0.91,0.95,1.01,1.06,1.10,1.15]},
-  {color:NEGRO,puntos:[0.95,1.01,1.07,1.12,1.18,1.24,1.29,1.35]}]);
-svgStack('g-horas',[
-  {nombre:'Trabajo necesario',valor:22,color:NEGRO},
-  {nombre:'Más allá del necesario (plustrabajo)',valor:15,color:ROJO},
-  {nombre:'No remunerado (reproductivo)',valor:8,color:SAL}]);
-svgB('g-circuitos',[
-  {nombre:'Financiero-inmobiliario',valor:34,color:ROJO},
-  {nombre:'Comercial y servicios',valor:26,color:NEGRO},
-  {nombre:'Extractivista (minería, forestal)',valor:22,color:SAL},
-  {nombre:'Productivo restante',valor:18,color:PIZ}],'%');
-svgL('g-retencion',[1990,2000,2010,2019,2026],[
-  {color:ROJO,puntos:[8,10,12,13,17]}],{i:4,texto:'«megarreforma» Kast'});
-svgB('g-trans',[
-  {nombre:'Sale del Sur (plusvalor bruto)',valor:10.8,color:ROJO},
-  {nombre:'Recibe el Sur',valor:0.0,color:PIZ},
-  {nombre:'Neto del Sur',valor:-10.8,color:NEGRO}],' US$ bill');
-// corrección visual para barra negativa: se dibuja con abs(); el signo queda en la etiqueta
-document.querySelectorAll('.botones-obs button').forEach(function(b){
-  b.addEventListener('click',function(){
-    document.querySelectorAll('.botones-obs button').forEach(x=>x.classList.remove('activo'));
-    b.classList.add('activo');
-    document.querySelectorAll('.panel-obs').forEach(p=>p.classList.remove('visible'));
-    document.getElementById('obs-'+b.dataset.obs).classList.add('visible');
-  });
-});
-document.getElementById('vista-trans').addEventListener('change',function(){
-  document.getElementById('trans-ns').style.display=this.value==='ns'?'block':'none';
-  document.getElementById('trans-pais').style.display=this.value==='pais'?'block':'none';
-});
-})();
-</script>
 
   <!-- ══════════════ SERVICIOS ══════════════ -->
   <section class="servicios">
