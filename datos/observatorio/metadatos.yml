@@ -74,6 +74,38 @@ series:
     estatus: "O"
     notas: "El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado."
 
+  gasto_social_chile.csv:
+    descripcion: "Gasto público social del Gobierno Central de Chile, en % del PIB, por función (total, salud, educación, vivienda, protección social)"
+    fuente: "CEPALSTAT, indicador 3127 «Gasto público social según clasificación por funciones del gobierno» (compila DIPRES)"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/3127/records?lang=es"
+    frecuencia: "anual (serie 2012-2023)"
+    estatus: "O"
+    notas: "Cobertura: Gobierno Central. 2020-2021 reflejan el gasto de pandemia (peak 24,9 %). Último año disponible: 2023."
+
+  renta_ied_chile_pais_2024.csv:
+    descripcion: "Renta de la inversión extranjera directa pagada por Chile al exterior, por país/destino (principio direccional), y recibida del exterior, 2024, millones US$"
+    fuente: "Banco Central de Chile, «Inversión extranjera directa por país, sector y región» (hoja Renta Direccional)"
+    url: "https://si3.bcentral.cl/estadisticas/Principal1/excel/SE/BDP/Excel/Anual/IED_pais_sector_region.xlsx"
+    frecuencia: "anual"
+    estatus: "O"
+    notas: "Utilidades distribuidas (el total con utilidades reinvertidas es el de la balanza de pagos, CEPALSTAT: 18.948 pagado / 7.959 recibido en 2024). «No asignados» = 4.247. Por sector: minería 8.379 (43 %), servicios financieros 2.671, electricidad-gas-agua 2.399."
+
+  pib_y_mineria_chile.csv:
+    descripcion: "PIB de Chile en dólares corrientes y participación de la explotación de minas y canteras (% del PIB)"
+    fuente: "CEPALSTAT, indicador 2215 «PIB anual por actividad económica a precios corrientes en dólares» (compila Banco Central)"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2215/records?lang=es"
+    frecuencia: "anual"
+    estatus: "O"
+    notas: "La participación minera oscila 10,3-14,1 % en 2021-2025 según el precio del cobre."
+
+  ajuste_fiscal_2026.csv:
+    descripcion: "Programa de ajuste fiscal del gobierno de Kast (ministro Quiroz): montos y programas en revisión"
+    fuente: "prensa (2+ medios por cifra): BioBioChile, Ex-ante, El Desconcierto, La Tercera"
+    url: "https://www.biobiochile.cl"
+    frecuencia: "coyuntura 2026"
+    estatus: "O"
+    notas: "US$ 6.000 M total prometido; US$ 3.800 M el primer año; PGU, gratuidad y bonos en revisión (recortes hasta 15 %)."
+
   mapa_base_paises.svg:
     descripcion: "Geometría de 179 países (paths SVG, proyección equirectangular 980×500) con clasificación céntrico/periférico"
     fuente: "Natural Earth (geometría) · clasificación: economías avanzadas según FMI"

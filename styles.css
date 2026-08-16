@@ -630,3 +630,4 @@ footer strong{color:var(--papel)}
 .sw-flecha{background:linear-gradient(90deg,#8b1a1a 70%,transparent 70%); height:4px}
 .sw-punteada{border-top:3px dashed #b3543f; height:0}
 .cierre-obs{border-top:2px solid var(--negro); margin-top:2.2rem; padding-top:1.2rem}
+.term-titulo{font-size:.88rem; color:var(--negro); background:#f7f3ea; border:1px solid var(--filete); border-left:4px solid var(--rojo); padding:.55rem .9rem; margin:1rem 0 .6rem}
