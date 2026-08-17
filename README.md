@@ -1,4 +1,4 @@
-# El Correo Comunista — Sitio
+# El Correo Comunista — Sitio (en proceso de construcción; versión publicada actualmente no corresponde a la definitiva que se proyecta lanzar en octubre de este año)
 
 Sitio público de **El Correo Comunista · ¡Centralización de la discusión!**, proyecto de Ediciones ¡Que Acontezca! (Organización Acontecimiento), de fines públicos.
 
