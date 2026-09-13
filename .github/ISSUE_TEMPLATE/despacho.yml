@@ -1,0 +1,60 @@
+name: "Proponer un despacho"
+description: "Un artículo, comunicado o publicación ya existente para que El Correo lo sintetice en la próxima revisión mensual."
+title: "[Despacho] "
+labels: ["despacho"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de enviar, revisa [CONTRIBUTING.md](../../CONTRIBUTING.md) — en especial el límite del derecho de cita.
+        Un despacho es organización + fecha + extracto breve + enlace, nunca la publicación íntegra.
+  - type: input
+    id: organizacion
+    attributes:
+      label: Organización o autoría
+      placeholder: "Ej: Movimiento de Pobladores Ukamau"
+    validations:
+      required: true
+  - type: input
+    id: fecha
+    attributes:
+      label: Fecha de publicación
+      placeholder: "Ej: 14 ago 2026"
+    validations:
+      required: true
+  - type: dropdown
+    id: principio
+    attributes:
+      label: Principio en juego
+      description: "¿Con cuál de los ejes del Correo conecta este despacho?"
+      options:
+        - "I · Los medios comunes"
+        - "II · Trabajo polimorfo"
+        - "III · Proletariado"
+        - "IV · Marchitamiento del Estado"
+        - "Puntos reales"
+        - "No estoy seguro / que lo decida la editorial"
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL original
+      placeholder: "https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: extracto
+    attributes:
+      label: Extracto breve
+      description: "Un párrafo que dé cuenta del contenido — no el artículo completo. Ver el límite del derecho de cita en CONTRIBUTING.md."
+      placeholder: "«...»"
+    validations:
+      required: true
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto adicional (opcional)
+      description: "Por qué te parece que este despacho aporta a la discusión, o cualquier otra nota para la editorial."
+    validations:
+      required: false

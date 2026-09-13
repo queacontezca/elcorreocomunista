@@ -1,0 +1,46 @@
+name: "Sumar una fuente o enviar un documento"
+description: "Registra tu organización o sitio en el directorio de fuentes, o envía un documento propio (boletín, comunicado, PDF)."
+title: "[Fuente] "
+labels: ["fuente"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Usa esta plantilla si quieres que tu organización aparezca en el directorio de [fuentes.html](../../fuentes.html),
+        o si quieres enviar directamente un documento (puedes adjuntarlo a este issue).
+  - type: input
+    id: organizacion
+    attributes:
+      label: Nombre de la organización
+    validations:
+      required: true
+  - type: input
+    id: sitio
+    attributes:
+      label: Sitio web o RSS
+      placeholder: "https://..."
+    validations:
+      required: false
+  - type: dropdown
+    id: escala
+    attributes:
+      label: Escala
+      options:
+        - "Chile"
+        - "América Latina"
+        - "Mundo"
+    validations:
+      required: true
+  - type: textarea
+    id: documento
+    attributes:
+      label: Documento a enviar (opcional)
+      description: "Puedes arrastrar un PDF u otro archivo directamente en este campo — GitHub lo adjunta al issue."
+    validations:
+      required: false
+  - type: textarea
+    id: notas
+    attributes:
+      label: Notas para la editorial (opcional)
+    validations:
+      required: false
