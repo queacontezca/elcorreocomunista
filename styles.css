@@ -93,6 +93,7 @@ a:hover{text-decoration:underline}
 .bloque.pregunta h3{font-size:1.15rem; letter-spacing:0; text-transform:none}
 .bloque .hipotesis{padding-left:1.2rem}
 .bloque .hipotesis li{margin-bottom:.6rem}
+.cita-fuente{display:block; font-size:.78rem; color:var(--pizarra); margin-top:.3rem}
 @media (max-width:760px){
   .masthead{flex-direction:column; gap:1rem}
   .fecha-caja{border:none; padding:0; width:auto}

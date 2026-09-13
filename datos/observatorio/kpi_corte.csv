@@ -1,7 +1,8 @@
-indicador,valor,fecha_corte,fuente,nota
-AFP — stock de fondos,US$ 254.140 M,jun-2026,Superintendencia de Pensiones,≈ 71 % del PIB 2025 (PIB CEPALSTAT); −US$ 3.804 M en el mes (revaluación de mercado)
-CAE — cartera / mora,"UF 310 M · 71,7 %",dic-2025,"Comisión Ingresa, Cuenta Pública 2025",966.795 deudores
-TGR — retenciones OR-2026,$ 20.208 M,07-07-2026,Tesorería General de la República,a 131.119 personas
-Desempleo / informalidad,"9,4 % / 27,0 %",MAM-2026,INE (30-06-2026),"mujeres 10,5 %"
-Cobre,"US$ 6,18/lb",semana 20-24 jul-2026,Cochilco,"máximo US$ 6,29 (may-2026)"
-Gasto militar mundial,"US$ 2,9 billones",2025,SIPRI,récord
+indicador,valor_numerico,decimales,valor2_numerico,decimales2,plantilla,fecha_corte,fuente,nota,estatus
+AFP — stock de fondos,254140,0,,,US$ {v} M,jun-2026,Superintendencia de Pensiones,≈ 71 % del PIB 2025 (PIB CEPALSTAT); −US$ 3.804 M en el mes (revaluación de mercado),O
+CAE — cartera / mora,310,0,71.7,1,UF {v} M · {v2} %,dic-2025,"Comisión Ingresa, Cuenta Pública 2025",966.795 deudores,O
+TGR — retenciones OR-2026,20208,0,,,$ {v} M,07-07-2026,Tesorería General de la República,a 131.119 personas,O
+Desempleo / informalidad,9.4,1,27.0,1,{v} % / {v2} %,MAM-2026,INE (30-06-2026),"mujeres 10,5 %",O
+Cobre,6.18,2,,,US$ {v}/lb,semana 20-24 jul-2026,Cochilco,"máximo US$ 6,29 (may-2026)",O
+Gasto militar mundial,2.9,1,,,US$ {v} billones,2025,SIPRI,récord,O
+Digital/IA — capex hyperscalers,,,,,fuente pendiente de confirmar,2026,PENDIENTE — la editorial debe indicar la fuente exacta que consultó,"Cifra citada antes en el sitio (US$ 725.000 M) sin trazabilidad verificada en datos/observatorio/; no graficar con esa cifra hasta declarar fuente y fecha de corte",X

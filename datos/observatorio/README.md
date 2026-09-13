@@ -17,7 +17,7 @@ Reproducción libre, total o parcial, citando la fuente (CC BY 4.0).
 | `ied_entradas_cepal.csv` | Entradas de IED en AL y Chile; razones de drenaje | CEPAL, *La IED en ALyC 2025* + CEPALSTAT | O |
 | `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2030 proyecto) | leyes citadas; Senado (Boletín 18216-05) | O |
 | `jornada_semana_obrera.csv` | Composición de la semana obrera y tasas | Fundación SOL 2022 recalculada (Reporte N°1) | C |
-| `kpi_corte.csv` | Indicadores del corte (AFP, CAE, TGR, empleo, cobre, gasto militar) | SP · Comisión Ingresa · TGR · INE · Cochilco · SIPRI | O |
+| `kpi_corte.csv` | Indicadores del corte (AFP, CAE, TGR, empleo, cobre, gasto militar, capex digital/IA) — formato máquina: `valor_numerico` + `plantilla` de despliegue | SP · Comisión Ingresa · TGR · INE · Cochilco · SIPRI | O (capex digital/IA: X, pendiente) |
 | `mapa_base_paises.svg` | Geometría de 179 países + clasificación céntrico/periférico | Natural Earth · FMI (proxy declarado) | P |
 
 El detalle por serie (definición, URL, frecuencia, fecha de descarga y notas

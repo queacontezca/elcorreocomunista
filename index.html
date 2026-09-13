@@ -97,17 +97,17 @@
       <h2>Síntesis de la edición</h2>
 
       <div class="botones-discusion" role="tablist" aria-label="Elegir sección de la síntesis">
-        <button class="activo" data-panel="general">General</button>
-        <button data-panel="comun">I · Los medios comunes</button>
-        <button data-panel="jerarquias">II · Trabajo polimorfo</button>
-        <button data-panel="fronteras">III · Proletariado</button>
-        <button data-panel="estado">IV · Marchitamiento del Estado</button>
-        <button data-panel="puntos">Puntos reales</button>
+        <button class="activo" id="tab-general" role="tab" aria-selected="true" aria-controls="panel-general" data-panel="general">General</button>
+        <button id="tab-comun" role="tab" aria-selected="false" aria-controls="panel-comun" tabindex="-1" data-panel="comun">I · Los medios comunes</button>
+        <button id="tab-jerarquias" role="tab" aria-selected="false" aria-controls="panel-jerarquias" tabindex="-1" data-panel="jerarquias">II · Trabajo polimorfo</button>
+        <button id="tab-fronteras" role="tab" aria-selected="false" aria-controls="panel-fronteras" tabindex="-1" data-panel="fronteras">III · Proletariado</button>
+        <button id="tab-estado" role="tab" aria-selected="false" aria-controls="panel-estado" tabindex="-1" data-panel="estado">IV · Marchitamiento del Estado</button>
+        <button id="tab-puntos" role="tab" aria-selected="false" aria-controls="panel-puntos" tabindex="-1" data-panel="puntos">Puntos reales</button>
       </div>
 
       <div class="cuerpo-discusion">
 
-        <div class="panel visible" id="panel-general">
+        <div class="panel visible" id="panel-general" role="tabpanel" aria-labelledby="tab-general">
           <p class="eje"><strong>Eje de la edición:</strong> la ofensiva y la organización.</p>
           <p><strong>Puntos comunes:</strong> tres despachos chilenos de la semana nombran la organización como respuesta: la CUT presenta su hoja de ruta de mujeres trabajadoras (<a href="https://cut.cl/web/cut-presenta-hoja-de-ruta-de-mujeres-trabajadoras-organizacion-cuidados-y-trabajo-decente-para-enfrentar-la-precarizacion/" target="_blank" rel="noopener">→ CUT</a>), UKAMAU editorializa «unidad política y articulación social» (<a href="https://ukamau.cl/2026/07/08/para-defender-los-derechos-sociales-unidad-politica-y-articulacion-social/" target="_blank" rel="noopener">→ UKAMAU</a>) y los gremios de la educación coordinan acciones conjuntas (<a href="https://www.colegiodeprofesores.cl/2026/08/11/gremios-de-la-educacion-coordinan-acciones-en-defensa-de-la-educacion-chilena/" target="_blank" rel="noopener">→ Colegio de Profesores</a>). La ofensiva que enfrentan tiene nombre propio en El Porteño (<a href="https://elporteno.cl/la-blitzkrieg-de-kast-la-ofensiva-mas-formidable-contra-los-trabajadores-desde-1973/" target="_blank" rel="noopener">→ la blitzkrieg de Kast</a>).</p>
           <p><strong>Tensión abierta:</strong> la cuestión del Estado atraviesa la edición. Jacobinlat registra el debate cubano sobre las 176 medidas (<a href="https://jacobinlat.com/2026/08/las-176-medidas-lo-que-el-mercado-no-va-a-decidir-por-cuba/" target="_blank" rel="noopener">→ Jacobinlat</a>); Desinformémonos da voz a los pueblos mayas que exigen autonomía frente a una ley que la tutela (<a href="https://desinformemonos.org/pueblos-mayas-cuestionan-propuesta-de-ley-general-indigena-y-exigen-mayor-autonomia-sobre-sus-territorios/" target="_blank" rel="noopener">→ Desinformémonos</a>); y UKAMAU llama a defender los espacios de base sin esperar nada del tablero (<a href="https://ukamau.cl/2026/07/08/para-defender-los-derechos-sociales-unidad-politica-y-articulacion-social/" target="_blank" rel="noopener">→ UKAMAU</a>).</p>
@@ -115,27 +115,27 @@
           <p><strong>Voz propia en la edición:</strong> las cadenas de la deuda (<a href="boletines/n1-cadenas-del-presente.html">→ Boletín N°1</a>), la educación por verdades (<a href="boletines/n3-educacion-por-verdades.html">→ N°3</a>), Palestina y la impotencia de la ONU (<a href="boletines/n1-las-potencias-y-la-impotencia.html">→ N°1</a>), qué entendemos por izquierda (<a href="boletines/n2-que-entendemos-por-izquierda.html">→ N°2</a>) y el 18 de octubre como sitio de intervención (<a href="boletines/n3-18-de-octubre-sitio-de-intervencion.html">→ N°3</a>): lo que hemos dicho, ofrecido al debate que este Correo centraliza — no para tener la razón, sino para continuarla.</p>
         </div>
 
-        <div class="panel" id="panel-comun">
+        <div class="panel" id="panel-comun" role="tabpanel" aria-labelledby="tab-comun">
           <p class="eje"><strong>I · Los medios comunes — la semana:</strong></p>
           <p>La universidad como esquema piramidal de deuda (<a href="https://cosmopolitican.cl/revista/una-estafa-piramidal-llamada-universidad" target="_blank" rel="noopener">→ Cosmopolitican</a>) y la cobranza CAE documentada cifra a cifra (<a href="https://deudainjusta.github.io/#cobranza" target="_blank" rel="noopener">→ Deuda Injusta</a>): el mismo dispositivo leído como estafa y como dato. Frente a él, la CUT organiza a las mujeres trabajadoras (<a href="https://cut.cl/web/cut-presenta-hoja-de-ruta-de-mujeres-trabajadoras-organizacion-cuidados-y-trabajo-decente-para-enfrentar-la-precarizacion/" target="_blank" rel="noopener">→ CUT</a>) y el modelo habitacional de UKAMAU entra al catálogo de buenas prácticas de ONU-Hábitat (<a href="https://ukamau.cl/2026/05/26/onu-habitat-reconoce-modelo-ukamau/" target="_blank" rel="noopener">→ UKAMAU</a>): la apropiación común ya tiene casos.</p>
         </div>
 
-        <div class="panel" id="panel-jerarquias">
+        <div class="panel" id="panel-jerarquias" role="tabpanel" aria-labelledby="tab-jerarquias">
           <p class="eje"><strong>II · Trabajo polimorfo — la semana:</strong></p>
           <p>La división del trabajo leída desde dos extremos: el cuerpo de las mujeres (<a href="https://revistahorizonte.cl/mujer-y-trabajo/" target="_blank" rel="noopener">→ Horizonte</a>) y la cultura global del capital como primer producto de internet (<a href="https://carcaj.cl/un-1-producto-de-internet/" target="_blank" rel="noopener">→ Carcaj</a>). Entre ambos, los gremios de la educación coordinan la defensa de la educación pública (<a href="https://www.colegiodeprofesores.cl/2026/08/11/gremios-de-la-educacion-coordinan-acciones-en-defensa-de-la-educacion-chilena/" target="_blank" rel="noopener">→ Colegio de Profesores</a>).</p>
         </div>
 
-        <div class="panel" id="panel-fronteras">
+        <div class="panel" id="panel-fronteras" role="tabpanel" aria-labelledby="tab-fronteras">
           <p class="eje"><strong>III · Proletariado — la semana:</strong></p>
           <p>Cuba concentra la discusión: el debate sobre las 176 medidas y lo que el mercado no decidirá (<a href="https://jacobinlat.com/2026/08/las-176-medidas-lo-que-el-mercado-no-va-a-decidir-por-cuba/" target="_blank" rel="noopener">→ Jacobinlat</a>). Alrededor: la última línea de defensa del dólar (<a href="https://huelladelsur.ar/2026/08/15/la-ultima-linea-de-defensa-del-dolar/" target="_blank" rel="noopener">→ Huella del Sur</a>), el «plataformicidio» palestino documentado en Meta (<a href="https://rebelion.org/meta-y-el-plataformicidio-palestino-cinco-anos-de-restricciones-a-las-voces-de-gaza/" target="_blank" rel="noopener">→ Rebelión</a>) y el llamado colombiano a la unidad de los pueblos (<a href="https://www.instagram.com/p/DbJDaAURTJB/" target="_blank" rel="noopener">→ Contracorriente</a>).</p>
         </div>
 
-        <div class="panel" id="panel-estado">
+        <div class="panel" id="panel-estado" role="tabpanel" aria-labelledby="tab-estado">
           <p class="eje"><strong>IV · Marchitamiento del Estado — la semana:</strong></p>
           <p>Tres modos de decir que la respuesta se organiza a distancia del Estado: unidad política y articulación social (<a href="https://ukamau.cl/2026/07/08/para-defender-los-derechos-sociales-unidad-politica-y-articulacion-social/" target="_blank" rel="noopener">→ UKAMAU</a>), el pueblo que pasa la cuenta (<a href="https://cf8m.cl/la-primera-n23-edicion-1-de-junio-2026-el-pueblo-pasa-la-cuenta/" target="_blank" rel="noopener">→ La Primera, 8M</a>) y los pueblos mayas exigiendo autonomía real sobre sus territorios (<a href="https://desinformemonos.org/pueblos-mayas-cuestionan-propuesta-de-ley-general-indigena-y-exigen-mayor-autonomia-sobre-sus-territorios/" target="_blank" rel="noopener">→ Desinformémonos</a>). Nuestro Boletín N°3 lo discute como desprendimiento (<a href="boletines/n3-tiempos-de-libertad.html">→ ¡Que Acontezca!</a>).</p>
         </div>
 
-        <div class="panel" id="panel-puntos">
+        <div class="panel" id="panel-puntos" role="tabpanel" aria-labelledby="tab-puntos">
           <p class="eje"><strong>Puntos reales — los indicios de la semana:</strong></p>
           <p>Trabajadores respaldando el paro de estudiantes del D'Halmar y valorando su organización (<a href="https://www.pincoyazo.cl/post/liceo-augusto-d-halmar-trabajadores-respaldan-paro-de-estudiantes-y-valoran-la-organizacion" target="_blank" rel="noopener">→ El Pincoyazo</a>); la cobranza CAE medida en convenios y embargos (<a href="https://deudainjusta.github.io/#cobranza" target="_blank" rel="noopener">→ Deuda Injusta</a>); un conversatorio sobre Fidel y Santucho en el norte (<a href="https://instagram.com/p/Db8MrYXESxU/" target="_blank" rel="noopener">→ La Cuchara</a>); y la ofensiva laboral leída desde Valparaíso (<a href="https://elporteno.cl/la-blitzkrieg-de-kast-la-ofensiva-mas-formidable-contra-los-trabajadores-desde-1973/" target="_blank" rel="noopener">→ El Porteño</a>). Señales, no triunfos: el Correo las registra como indicios.</p>
         </div>
@@ -389,8 +389,14 @@
 // Síntesis por sección: botones General / I / II / III / IV / Puntos reales
 document.querySelectorAll('.botones-discusion button').forEach(function(btn){
   btn.addEventListener('click', function(){
-    document.querySelectorAll('.botones-discusion button').forEach(function(b){ b.classList.remove('activo'); });
+    document.querySelectorAll('.botones-discusion button').forEach(function(b){
+      b.classList.remove('activo');
+      b.setAttribute('aria-selected', 'false');
+      b.setAttribute('tabindex', '-1');
+    });
     btn.classList.add('activo');
+    btn.setAttribute('aria-selected', 'true');
+    btn.setAttribute('tabindex', '0');
     document.querySelectorAll('.cuerpo-discusion .panel').forEach(function(p){ p.classList.remove('visible'); });
     document.getElementById('panel-' + btn.dataset.panel).classList.add('visible');
   });

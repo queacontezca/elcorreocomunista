@@ -1,4 +1,4 @@
-# El Correo Comunista — Sitio (en proceso de construcción; versión publicada actualmente no corresponde a la definitiva que se proyecta lanzar en octubre de este año)
+# El Correo Comunista — Sitio
 
 Sitio público de **El Correo Comunista · ¡Centralización de la discusión!**, proyecto de Ediciones ¡Que Acontezca! (Organización Acontecimiento), de fines públicos.
 
@@ -28,7 +28,9 @@ elcorreocomunista/
 ├── fuentes.html          ← directorio de fuentes con licencia constatada
 ├── nota-editorial.html   ← nota editorial y quiénes somos
 ├── README.md             ← este archivo
+├── CONTRIBUTING.md       ← cómo proponer un despacho, una fuente o un documento
 ├── LICENSE               ← CC BY 4.0
+├── .github/ISSUE_TEMPLATE/ ← plantillas «despacho» y «fuente/documento» para issues
 ├── datos/observatorio/   ← capa de datos del observatorio (CSV + metadatos.yml)
 ├── scripts/              ← build_observatorio.py (CSV → observatorio.html)
 ├── boletines/            ← ediciones y artículos HTML + PDF descargables
@@ -43,3 +45,7 @@ elcorreocomunista/
 **Todo este repositorio — código y contenido — está bajo Creative Commons BY 4.0** (ver `LICENSE`): reproducción libre, total o parcial, citando la fuente («El Correo Comunista · Ediciones ¡Que Acontezca!»). Es la fórmula agit-prop: las ideas circulan sin fricción y el nombre viaja con ellas.
 
 **Contenido de terceros:** cada despacho enlaza a su publicación original y cita un extracto breve — el derecho de cita con fines informativos y críticos (art. 38, Ley 17.336). Los textos completos de terceros solo se reproducen cuando su licencia lo permite explícitamente (ver el registro por fuente en `fuentes.html`).
+
+## 3. Cómo aportar
+
+¿Quieres proponer un despacho, sumar tu organización al directorio de fuentes o enviar un documento propio? Ver [`CONTRIBUTING.md`](CONTRIBUTING.md) — se recibe como «issue» en este repositorio, con plantilla guiada.

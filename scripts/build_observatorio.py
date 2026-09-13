@@ -49,6 +49,33 @@ def h(indicador, periodo=None):
             return float(r["valor"])
     raise KeyError(indicador)
 
+def kpi(nombre):
+    """Fila cruda de kpi_corte.csv por indicador (KeyError si no existe)."""
+    for r in kpis:
+        if r["indicador"] == nombre:
+            return r
+    raise KeyError(nombre)
+
+def kpi_valor(nombre):
+    """Valor numérico principal de un KPI (float). Falla si está pendiente (estatus X sin valor)."""
+    r = kpi(nombre)
+    if not r["valor_numerico"]:
+        raise ValueError(f"«{nombre}» no tiene valor_numerico — está pendiente (estatus {r['estatus']})")
+    return float(r["valor_numerico"])
+
+def _fmt_kpi_row(r):
+    """Cifra formateada de una fila cruda de kpi_corte.csv según su propia plantilla."""
+    if not r["valor_numerico"]:
+        return "fuente pendiente"
+    s = r["plantilla"].replace("{v}", fmt(float(r["valor_numerico"]), int(r["decimales"] or 0)))
+    if r["valor2_numerico"]:
+        s = s.replace("{v2}", fmt(float(r["valor2_numerico"]), int(r["decimales2"] or 0)))
+    return s
+
+def kpi_fmt(nombre):
+    """Cifra formateada de un KPI por nombre (p. ej. 'US$ 254.140 M')."""
+    return _fmt_kpi_row(kpi(nombre))
+
 CL_2025 = next(r for r in rentas_cl if r["anio"] == "2025")
 CL_2024 = next(r for r in rentas_cl if r["anio"] == "2024")
 CL_2026 = next(r for r in rentas_cl if r["anio"] == "2026")
@@ -72,7 +99,7 @@ razon_al = float(AL_2024["ied_utilidades_piso"]) / IED_AL
 pib_pct24 = float(CL_2024["debito_total"]) / PIB24 * 100
 pib_pct25 = deb25 / PIB25 * 100
 mult = deb25 / deb16
-afp_stock = 254140.0  # kpi_corte.csv (jun-2026)
+afp_stock = kpi_valor("AFP — stock de fondos")  # datos/observatorio/kpi_corte.csv (jun-2026)
 afp_pct = afp_stock / PIB25 * 100
 
 def ip(destino):
@@ -122,8 +149,8 @@ def barras_circuitos():
     y2 = 18 + 3 * 44 + 8
     g += (f'<text x="20" y="{y2+12}" font-size="11" fill="{PIZ}" font-style="italic">Circuitos mundiales (sobredeterminan a los nacionales):</text>'
           f'<rect x="20" y="{y2+20}" width="350" height="40" fill="#f7f3ea" stroke="{REJ}"/>'
-          f'<text x="30" y="{y2+36}" font-size="11.5" fill="{NEGRO}">Industrial-militar: US$ 2,9 billones de gasto militar (2025, SIPRI)</text>'
-          f'<text x="30" y="{y2+51}" font-size="11.5" fill="{NEGRO}">Digital/IA: capex hyperscalers &gt; US$ 725.000 M (2026)</text>')
+          f'<text x="30" y="{y2+36}" font-size="11.5" fill="{NEGRO}">Industrial-militar: gasto militar mundial {kpi_fmt("Gasto militar mundial")} ({kpi("Gasto militar mundial")["fecha_corte"]}, {kpi("Gasto militar mundial")["fuente"]})</text>'
+          f'<text x="30" y="{y2+51}" font-size="11.5" fill="{PIZ}" font-style="italic">Digital/IA: capex hyperscalers — {kpi_fmt("Digital/IA — capex hyperscalers")} (ver ficha del dato)</text>')
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Peso de los circuitos de acumulación en Chile">{g}</svg>'
 
 def barras_rentas_chile():
@@ -314,10 +341,10 @@ term = f'''<p class="term-titulo"><strong>El termómetro del corte:</strong> las
 <div class="termometro" role="region" aria-label="Termómetro del corte">
   <div class="term-chip"><span class="term-nom">s/v-jornada</span><span class="term-val">{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
   <div class="term-chip"><span class="term-nom">TETV</span><span class="term-val">{fmt(float(jornada["TETV"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
-  <div class="term-chip"><span class="term-nom">AFP — stock</span><span class="term-val">US$ 254.140 M</span><span class="term-fec">jun-2026 · SP · O</span></div>
+  <div class="term-chip"><span class="term-nom">AFP — stock</span><span class="term-val">{kpi_fmt("AFP — stock de fondos")}</span><span class="term-fec">{kpi("AFP — stock de fondos")["fecha_corte"]} · SP · O</span></div>
   <div class="term-chip"><span class="term-nom">Rentas primarias</span><span class="term-val">US$ {fmt(deb25)} M/año</span><span class="term-fec">2025 · CEPALSTAT-BC · O</span></div>
-  <div class="term-chip"><span class="term-nom">Impuesto empresas</span><span class="term-val">27 % → 23 %</span><span class="term-fec">proyecto 2030 · O</span></div>
-  <div class="term-chip"><span class="term-nom">Drenaje Sur→Norte</span><span class="term-val">US$ 10,8 bill.</span><span class="term-fec">2015 · Hickel 2022 · O</span></div>
+  <div class="term-chip"><span class="term-nom">Impuesto empresas</span><span class="term-val">{fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2025")),0)} % → {fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2030")),0)} %</span><span class="term-fec">proyecto 2030 · O</span></div>
+  <div class="term-chip"><span class="term-nom">Drenaje Sur→Norte</span><span class="term-val">US$ {fmt(h("apropiacion_neta_valor"),1)} bill.</span><span class="term-fec">2015 · Hickel 2022 · O</span></div>
 </div>'''
 
 m1 = f'''<section class="modulo-obs" id="m1">
@@ -334,25 +361,27 @@ m1 = f'''<section class="modulo-obs" id="m1">
     "C",
     "Calibración de fondo recalculada: nivel de referencia, no variación mensual. Labor share oficial 38,5 % = cota superior de v; depurado 28-30 %.",
     "recalibrar con la próxima ENUT-INE y la actualización SOL anual.")}
-  <p class="fuente-obs">Fuentes: Reporte N°1 (jul-2026) sobre Fundación SOL (2022) · jornada legal: Ley 19.759 (2005) y Ley 21.561 (2024) · Elaboración propia.</p>
+  <p class="fuente-obs">Fuentes: Reporte N°1 (jul-2026) sobre Fundación SOL (2022) · jornada legal: Ley 19.759 (2005) y Ley 21.561 (2024) · Elaboración propia. Ver también: Harnecker y Uribe, <em>Cuadernos de Educación Popular 02 — Explotación capitalista</em> (1971), pp. 23-24 (fórmula operativa de la tasa de explotación).</p>
 </section>'''
 
 m2 = f'''<section class="modulo-obs" id="m2">
   <h3>2 · Los circuitos de acumulación: qué concentra Chile y con qué peso</h3>
-  <p class="concepto">El capital no es una cosa sino un circuito: figuras D–D′ (dinero que se redobla sin mercancía), M–D′ (mercancía vendida), renta. La cartografía completa tiene <strong>siete circuitos</strong> (financiero, industrial-militar, minero-rentístico, logístico, agroindustrial, digital/IA y reproducción privatizada); aquí se muestran <strong>los cinco donde la acumulación se condensa en esta coyuntura</strong>, con su peso medido. Los circuitos no son sectores del PIB ni un ranking: se interpenetran — el capital ficticio atraviesa a todos. Desde 1981 la estructura chilena es <em>primario-exportador + financiero-AFP</em>; los dos circuitos mundiales la sobredeterminan.</p>
+  <p class="concepto">El capital no es una cosa sino un circuito: figuras D–D′ (dinero que se redobla sin mercancía), M–D′ (mercancía vendida), renta. La cartografía completa tiene <strong>siete circuitos</strong> (financiero, industrial-militar, minero-rentístico, logístico, agroindustrial, digital/IA y reproducción privatizada). La tabla los muestra los siete: <strong>cinco con peso medido en esta coyuntura</strong>, y dos — logístico y agroindustrial — todavía sin dato propio, marcados como pendientes en vez de omitidos. Los circuitos no son sectores del PIB ni un ranking: se interpenetran — el capital ficticio atraviesa a todos. Desde 1981 la estructura chilena es <em>primario-exportador + financiero-AFP</em>; los dos circuitos mundiales la sobredeterminan.</p>
   <blockquote class="cita-boletin cita-marx">«El capital no es una cosa, sino una relación social de producción.» <cite>(Marx, El Capital, T. I, cap. 23)</cite></blockquote>
   <div class="graf">{barras_circuitos()}</div>
   <div class="graf"><table class="tabla-circuitos">
     <thead><tr><th>Circuito</th><th>¿Se condensa este mes?</th><th>Punto del ciclo</th><th>Actor dominante</th></tr></thead>
     <tbody>
     <tr><td>Financiero (ficticio)</td><td>Sí: blindaje legal + defensa del anatocismo</td><td>D–D′</td><td>Banca, holdings, CMF</td></tr>
-    <tr><td>Minero-rentístico</td><td>Sí: cobre US$ 6,18/lb por guerra; renta cedida</td><td>Renta / M–D′</td><td>Transnacionales, Codelco-SQM</td></tr>
-    <tr><td>Reproducción privatizada</td><td>Sí: AFP US$ 254.140 M; TGR cobradora; sala cuna rechazada</td><td>D–D′ vía salario diferido</td><td>AFP, banca, TGR</td></tr>
-    <tr><td>Industrial-militar (mundial)</td><td>Sí: US$ 2,9 billones de gasto militar 2025</td><td>Sumidero de s</td><td>Estados de ambos bloques</td></tr>
-    <tr><td>Digital/IA (mundial)</td><td>Sí, como burbuja: capex US$ 725.000 M</td><td>D–D′ / renta tecnológica</td><td>Hyperscalers</td></tr>
+    <tr><td>Minero-rentístico</td><td>Sí: cobre {kpi_fmt("Cobre")} por guerra; renta cedida</td><td>Renta / M–D′</td><td>Transnacionales, Codelco-SQM</td></tr>
+    <tr><td>Reproducción privatizada</td><td>Sí: AFP {kpi_fmt("AFP — stock de fondos")}; TGR cobradora; sala cuna rechazada</td><td>D–D′ vía salario diferido</td><td>AFP, banca, TGR</td></tr>
+    <tr><td>Industrial-militar (mundial)</td><td>Sí: {kpi_fmt("Gasto militar mundial")} de gasto militar {kpi("Gasto militar mundial")["fecha_corte"]}</td><td>Sumidero de s</td><td>Estados de ambos bloques</td></tr>
+    <tr><td>Digital/IA (mundial)</td><td>Como burbuja — <span class="estatus est-x">X · pendiente</span> {kpi_fmt("Digital/IA — capex hyperscalers")}</td><td>D–D′ / renta tecnológica</td><td>Hyperscalers</td></tr>
+    <tr><td>Logístico</td><td>No medido aún — <span class="estatus est-x">X · placeholder</span></td><td>M–D′ (circulación)</td><td>Navieras, puertos, logística global</td></tr>
+    <tr><td>Agroindustrial</td><td>No medido aún — <span class="estatus est-x">X · placeholder</span></td><td>M–D′ / renta de la tierra</td><td>Agroexportadoras, forestales</td></tr>
     </tbody></table></div>
   <div class="kpi-grid">
-    {''.join(f'<div class="kpi"><span class="kpi-nombre">{k["indicador"]}</span><span class="kpi-valor">{k["valor"]}</span><span class="kpi-nota">{k["nota"]} · {k["fecha_corte"]} · {k["fuente"]}</span></div>' for k in kpis)}
+    {''.join(f'<div class="kpi"><span class="kpi-nombre">{k["indicador"]}</span><span class="kpi-valor">{_fmt_kpi_row(k)}</span><span class="kpi-nota">{k["nota"]} · {k["fecha_corte"]} · {k["fuente"]} <span class="estatus est-{k["estatus"].lower()}">{k["estatus"]}</span></span></div>' for k in kpis)}
   </div>
   <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> Chile compra estabilidad vendiendo renta: el circuito minero-rentístico ({fmt(MIN25,1)} % del PIB) recibe cobre en máximos por la guerra y la megarreforma lo devuelve como rebaja tributaria; la reproducción privatizada es el circuito de mayor peso nacional (stock AFP ≈ {fmt(afp_pct)} % del PIB: el salario diferido convertido en capital ficticio); la correa financiera saca del país el {fmt(pib_pct25,1)} % del PIB cada año.</p>
   {incomodo("el stock AFP cayó US$ 3.804 M en el mes — pero es revaluación de mercado que absorbe el cotizante, no menor captura del dispositivo: el dato no autoriza ni a celebrar ni a lamentar (regla de lectura IFA).")}
@@ -362,8 +391,8 @@ m2 = f'''<section class="modulo-obs" id="m2">
     "2025 / jun-jul 2026 según indicador · descarga 16-08-2026",
     "O",
     "Cada barra usa la proxy declarada bajo su rótulo (los circuitos NO son sectores del PIB: el gráfico mide peso, no composición). La variación del stock AFP NO es variación de la captura (revaluación).",
-    "participación de servicios financieros estricta (sin inmobiliarias): pendiente por trazabilidad BC.")}
-  <p class="fuente-obs">Fuente: Reporte N°1 (jul-2026), «Matriz de articulación de circuitos» y diccionario de datos · CEPALSTAT (BC) · Elaboración propia.</p>
+    "participación de servicios financieros estricta (sin inmobiliarias): pendiente por trazabilidad BC. Circuitos logístico y agroindustrial: sin serie propia todavía — declarados como pendientes (X) en la tabla, no omitidos.")}
+  <p class="fuente-obs">Fuente: Reporte N°1 (jul-2026), «Matriz de articulación de circuitos» y diccionario de datos · CEPALSTAT (BC) · Elaboración propia. Ver también: Dussel, <em>16 tesis de economía política</em> (2014), Tesis 6 [6.6-6.7] y Tesis 7 [7.3-7.5] (ciclo y fetichización del capital); Katz, <em>Bajo el imperio del capital</em> («circuitos de la acumulación»); Rikap, <em>Teoría de la dependencia digital</em> (circuito digital/IA); Dussel, Tesis 11 [11.6] «La guerra como negocio» (circuito industrial-militar).</p>
 </section>'''
 
 m3 = f'''<section class="modulo-obs" id="m3">
@@ -380,7 +409,7 @@ m3 = f'''<section class="modulo-obs" id="m3">
     "O",
     "Suma de los cuatro trimestres de cada año (2026: solo T1, declarado en la etiqueta). Razón US$ 1,51 = utilidades pagadas 2024 / IED entrante 2024 (CEPAL). Neto = débito − crédito.",
     "ninguno en la serie; la desagregación por destino está en el mapa (módulo 5) con datos BC.")}
-  <p class="fuente-obs">Fuentes: CEPALSTAT (Banco Central de Chile vía CEPAL), descarga 16-08-2026 · CEPAL (2025), <em>La IED en América Latina y el Caribe 2025</em>, pp. 33 y 65 · Elaboración propia.</p>
+  <p class="fuente-obs">Fuentes: CEPALSTAT (Banco Central de Chile vía CEPAL), descarga 16-08-2026 · CEPAL (2025), <em>La IED en América Latina y el Caribe 2025</em>, pp. 33 y 65 · Elaboración propia. Ver también: Dussel, <em>16 tesis de economía política</em>, Tesis 10 [10.4] «Transferencia de plusvalor como esencia de la dominación social globalizada».</p>
 </section>'''
 
 m4 = f'''<section class="modulo-obs" id="m4">
@@ -397,12 +426,13 @@ m4 = f'''<section class="modulo-obs" id="m4">
     "O",
     "Serie de hitos legales (panel A); serie anual COFOG Gobierno Central (panel B). 2020-2021 con gasto de pandemia.",
     "gasto social 2024-2025 (DIPRES aún no publica la serie en CEPALSTAT); tramos 1970-1989 del impuesto.")}
-  <p class="fuente-obs">Fuentes: serie legal citada · CEPALSTAT (DIPRES) · prensa citada en ficha · Elaboración propia.</p>
+  <p class="fuente-obs">Fuentes: serie legal citada · CEPALSTAT (DIPRES) · prensa citada en ficha · Elaboración propia. Ver también: Lenin, <em>El Estado y la revolución</em>; Harnecker, <em>Los conceptos elementales del materialismo histórico</em>, cap. 7 §3 «La doble función del Estado».</p>
 </section>'''
 
 m5 = f'''<section class="modulo-obs" id="m5">
   <h3>5 · La transferencia de plusvalor: historia y mapa del drenaje</h3>
   <p class="concepto">En el intercambio desigual el valor fluye de la periferia al centro sin violar ninguna ley del mercado: se intercambian equivalentes y sin embargo se transfiere plusvalor. La medición moderna muestra que no es un residuo colonial sino la estructura misma de la economía mundial — y que se intensificó con el ajuste neoliberal de los 80-90. La historia tiene también geografía: <strong>el mapa de abajo es la figura de este módulo</strong>, por escala — primero Chile, después la región, al final el mundo. <em>Revisión conceptual del vector: transferencia neta = lo que sale − lo que entra; las utilidades son plusvalor repatriado y los intereses su fracción financiera (módulo 3).</em></p>
+  <p class="concepto"><strong>Nota de escala:</strong> la vista <em>Chile</em> es medición operativa propia — series que este Observatorio mantiene y actualiza cada mes con fuente primaria (Banco Central, CEPALSTAT). Las vistas <em>América Latina</em> y <em>Mundo</em> son referencia de literatura académica (Hickel et al.), no series propias con la misma cadencia de actualización: se amplían «de a poco», cuando los módulos 1-4 tengan su propia base país por país tan consistente como la de Chile.</p>
   <blockquote class="cita-boletin cita-marx">«Los proletarios no tienen patria.» <cite>(Marx y Engels, Manifiesto del Partido Comunista, cap. 2)</cite></blockquote>
   <div class="graf"><div class="magnitud-grid">
     <div class="magnitud"><span class="mag-val">US$ {fmt(h("apropiacion_neta_valor"),1)} billones</span><span class="mag-que">apropiados netos por el Norte en un solo año (2015) = {fmt(h("trabajo_apropiado"))} millones de años-persona de trabajo sureño</span><span class="mag-src">Hickel et al. 2022 (GEC)</span></div>
@@ -411,9 +441,9 @@ m5 = f'''<section class="modulo-obs" id="m5">
     <div class="magnitud"><span class="mag-val">{fmt(h("razon_perdidas_vs_ayuda"))}×</span><span class="mag-que">las pérdidas del Sur por intercambio desigual superan treinta veces toda la «ayuda» recibida en el período</span><span class="mag-src">Hickel et al. 2022 (GEC)</span></div>
   </div></div>
   <div class="botones-mapa" role="tablist" aria-label="Escala del mapa">
-    <button class="activo" data-vista="v-chile">Chile</button>
-    <button data-vista="v-al">América Latina</button>
-    <button data-vista="v-mundo">Mundo</button>
+    <button class="activo" role="tab" aria-selected="true" data-vista="v-chile">Chile</button>
+    <button role="tab" aria-selected="false" tabindex="-1" data-vista="v-al">América Latina</button>
+    <button role="tab" aria-selected="false" tabindex="-1" data-vista="v-mundo">Mundo</button>
   </div>
   <p class="estado-mapa" id="estado-mapa">Vista Chile: vectores netos medidos por destino (BC 2024) — Europa, EE.UU., Canadá, Asia — más los intereses a la banca internacional; China como socio comercial, no como destino de la renta.</p>
   <div class="graf">{mapa_drenaje()}</div>
@@ -427,7 +457,7 @@ m5 = f'''<section class="modulo-obs" id="m5">
     "P",
     "Cada cifra de Hickel con SU artículo (el «10,8» es del GEC 2022, no del NPE 2021). El grosor de las flechas sólidas es proporcional a la magnitud dentro de cada vista (1 px ≈ US$ 400 M en la vista Chile; no comparable entre vistas). Las punteadas no miden. La serie año a año del drenaje mundial vive en los anexos de los artículos.",
     "Canadá: recibido no desagregado por el BC (se reporta lo pagado) · utilidades reinvertidas por destino (el BC publica las distribuidas) · serie anual Hickel.")}
-  <p class="fuente-obs">Fuentes: Hickel et al. (2021, 2022), con DOI en la ficha · Banco Central de Chile · CEPALSTAT · clasificación FMI · Elaboración propia.</p>
+  <p class="fuente-obs">Fuentes: Hickel et al. (2021, 2022), con DOI en la ficha · Banco Central de Chile · CEPALSTAT · clasificación FMI · Elaboración propia. Ver también: Lenin, <em>El imperialismo, fase superior del capitalismo</em>; Dussel, <em>16 tesis de economía política</em>, Tesis 11 [11.4-11.5] (mecanismos de transferencia del plusvalor periferia-centro).</p>
 </section>'''
 
 cierre = f'''<section class="modulo-obs cierre-obs">
@@ -484,14 +514,16 @@ pagina = f'''<!DOCTYPE html>
 <script>
 document.querySelectorAll('.botones-mapa button').forEach(function(b){{
   b.addEventListener('click',function(){{
-    document.querySelectorAll('.botones-mapa button').forEach(x=>x.classList.remove('activo'));
+    document.querySelectorAll('.botones-mapa button').forEach(x=>{{x.classList.remove('activo'); x.setAttribute('aria-selected','false'); x.setAttribute('tabindex','-1');}});
     b.classList.add('activo');
+    b.setAttribute('aria-selected','true');
+    b.setAttribute('tabindex','0');
     document.querySelectorAll('.vista-mapa').forEach(v=>v.style.display='none');
     document.getElementById(b.dataset.vista).style.display='block';
     const estados={{
       'v-chile':'Vista Chile: vectores netos medidos por destino (BC 2024) — Europa, EE.UU., Canadá, Asia — más los intereses a la banca internacional; China como socio comercial, no como destino de la renta.',
-      'v-al':'Vista América Latina: lo que la región pagó en rentas primarias (2025) contra lo que entró por IED (2024) — utilidades de Perú subestimadas (declarado).',
-      'v-mundo':'Vista Mundo: direcciones de referencia del drenaje y la magnitud neta Sur→Norte de la literatura (Hickel et al. 2022); China como contribuyente neto: ambos bloques son capitalistas.'
+      'v-al':'Vista América Latina (referencia de literatura, no serie propia): lo que la región pagó en rentas primarias (2025) contra lo que entró por IED (2024) — utilidades de Perú subestimadas (declarado).',
+      'v-mundo':'Vista Mundo (referencia de literatura, no serie propia): direcciones de referencia del drenaje y la magnitud neta Sur→Norte de la literatura (Hickel et al. 2022); China como contribuyente neto: ambos bloques son capitalistas.'
     }};
     document.getElementById('estado-mapa').textContent = estados[b.dataset.vista];
   }});

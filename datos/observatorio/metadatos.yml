@@ -67,12 +67,12 @@ series:
     notas: "Nivel de fondo, NO variación mensual. La TETV no se suma a s/v (el traslado no produce valor). Labor share oficial = cota superior; depurado 28-30 %."
 
   kpi_corte.csv:
-    descripcion: "Indicadores del corte con fecha y fuente (grilla KPI)"
+    descripcion: "Indicadores del corte con fecha y fuente (grilla KPI). Formato máquina desde sep-2026: valor_numerico + decimales (+ valor2_numerico/decimales2 para indicadores con dos cifras) + plantilla de despliegue (tokens {v}/{v2}), en vez de una columna de texto ya formateado."
     fuente: "Reporte N°1 (jul-2026) con diccionario de datos (SP, Comisión Ingresa, TGR, INE, Cochilco, SIPRI)"
     url: "https://www.spensiones.cl · https://www.ine.gob.cl · https://www.cochilco.cl"
     frecuencia: "mensual/trimestral según indicador"
-    estatus: "O"
-    notas: "El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado."
+    estatus: "O (la fila «Digital/IA — capex hyperscalers» es X: sin fuente propia verificada, no se grafica)"
+    notas: "El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado. El capex de hyperscalers (~US$ 725.000 M, 2026) circulaba antes en el sitio sin ficha del dato ni fuente trazable en esta carpeta: queda declarado como pendiente (X) hasta que la editorial confirme la fuente exacta que usó — entonces se completa esta fila con valor_numerico, unidad y fuente reales."
 
   gasto_social_chile.csv:
     descripcion: "Gasto público social del Gobierno Central de Chile, en % del PIB, por función (total, salud, educación, vivienda, protección social)"
