@@ -48,4 +48,4 @@ elcorreocomunista/
 
 ## 3. Cómo aportar
 
-¿Quieres proponer un despacho, sumar tu organización al directorio de fuentes o enviar un documento propio? Ver [`CONTRIBUTING.md`](CONTRIBUTING.md) — se recibe como «issue» en este repositorio, con plantilla guiada.
+¿Quieres proponer un despacho, sumar tu organización al directorio de fuentes o enviar un documento propio? Escríbenos a **queacontezca@gmail.com** — no hace falta cuenta de GitHub. Ver [`CONTRIBUTING.md`](CONTRIBUTING.md) para más detalle, o para abrir un «issue» directamente si ya tienes cuenta.
