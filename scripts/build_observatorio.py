@@ -194,9 +194,14 @@ def barras_rentas_chile():
 def panel_doble_retencion_gasto():
     """Panel A: tasa de retención (serie legal). Panel B: gasto público social (% PIB). Eje de años compartido."""
     W, P = 760, 46
-    HA0, HA1 = 22, 195      # panel A vertical (tasa 0-32 %)
-    HB0, HB1 = 250, 432     # panel B vertical (gasto 0-27 %)
+    HA0, HA1 = 22, 165      # panel A vertical (tasa 0-32 %)
+    HB0, HB1 = 254, 432     # panel B vertical (gasto 0-27 %)
     H = 470
+    # bloque entre paneles (coordenadas explícitas, de arriba hacia abajo, para que
+    # anotación · título B · leyenda B no se pisen entre sí):
+    ANN_Y1, ANN_Y2 = HA1 + 22, HA1 + 37   # anotación «megarreforma», 2 líneas
+    TITULO_B_Y = HB0 - 32                  # título del panel B
+    LEYENDA_B_RECT_Y, LEYENDA_B_TXT_Y = HB0 - 24, HB0 - 15   # leyenda del panel B
     x0a, x1a = 1988, 2032
     def X(a): return P + (W - P - 20) * (a - x0a) / (x1a - x0a)
     def YA(v): return HA1 - (HA1 - HA0) * v / 32
@@ -212,7 +217,7 @@ def panel_doble_retencion_gasto():
     for a in range(1990, 2031, 7):
         g += f'<text x="{X(a):.0f}" y="{H-8}" font-size="10" text-anchor="middle" fill="{PIZ}">{a}</text>'
     g += (f'<text x="{P}" y="{HA0-6}" font-size="11.5" font-weight="bold" fill="{NEGRO}">A · Lo que el Estado retiene: impuesto a las empresas (tasa legal, %)</text>'
-          f'<text x="{P}" y="{HB0-6}" font-size="11.5" font-weight="bold" fill="{NEGRO}">B · Lo que el Estado solventa: gasto público social (% del PIB, Gobierno Central)</text>')
+          f'<text x="{P}" y="{TITULO_B_Y}" font-size="11.5" font-weight="bold" fill="{NEGRO}">B · Lo que el Estado solventa: gasto público social (% del PIB, Gobierno Central)</text>')
     # Panel A: retención
     pts = [(float(r["anio"]), float(r["tasa"]), r["hito"]) for r in impuesto]
     reales = [p for p in pts if p[0] <= 2025]; proy = [p for p in pts if p[0] >= 2025]
@@ -235,12 +240,12 @@ def panel_doble_retencion_gasto():
         g += f'<polyline points="{" ".join(f"{X(a):.0f},{YB(v):.0f}" for a, v in pts_b)}" fill="none" stroke="{col}" stroke-width="{sw}"{d}/>'
         for a, v in pts_b:
             g += f'<circle cx="{X(a):.0f}" cy="{YB(v):.0f}" r="3" fill="{col}"><title>{nom}: {fmt(v,1)} % del PIB ({int(a)})</title></circle>'
-        g += f'<rect x="{lx}" y="{HB0-16}" width="10" height="10" fill="{col}"/><text x="{lx+14}" y="{HB0-7}" font-size="10.5" fill="{NEGRO}">{nom}</text>'
+        g += f'<rect x="{lx}" y="{LEYENDA_B_RECT_Y}" width="10" height="10" fill="{col}"/><text x="{lx+14}" y="{LEYENDA_B_TXT_Y}" font-size="10.5" fill="{NEGRO}">{nom}</text>'
         lx += 14 + 7.6 * len(nom)
     # hito del ajuste 2026 (cruza ambos paneles)
     g += (f'<line x1="{X(2026):.0f}" y1="{HA0}" x2="{X(2026):.0f}" y2="{HB1}" stroke="{ROJO}" stroke-width="1.5" stroke-dasharray="4 4"/>'
-          f'<text x="{X(2026)+6:.0f}" y="{(HA1+HB0)/2-8:.0f}" font-size="11" fill="{ROJO}" font-weight="bold">megarreforma + ajuste de US$ {fmt(AJ_TOTAL)} M (2026):</text>'
-          f'<text x="{X(2026)+6:.0f}" y="{(HA1+HB0)/2+7:.0f}" font-size="11" fill="{ROJO}">PGU, gratuidad y bonos en revisión</text>')
+          f'<text x="{X(2026)-8:.0f}" y="{ANN_Y1}" font-size="11" text-anchor="end" fill="{ROJO}" font-weight="bold">megarreforma + ajuste de US$ {fmt(AJ_TOTAL)} M (2026):</text>'
+          f'<text x="{X(2026)-8:.0f}" y="{ANN_Y2}" font-size="11" text-anchor="end" fill="{ROJO}">PGU, gratuidad y bonos en revisión</text>')
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Retención estatal y gasto público social">{g}</svg>'
 
 # ── mapa del drenaje ──
