@@ -94,68 +94,66 @@
     }
   }
 
-  /* ── 2. gráfico de series, dibujado desde JSON ── */
+  /* ── 2. gráfico de series, dibujado desde JSON ──
+     Cada serie trae sus propias filas: {e: etiqueta, eje: rótulo bajo la barra, v: valor,
+     cmp: comparación ya redactada, par: true si el período está incompleto}. */
   function el(n, at, txt) { var e = document.createElementNS(NS, n); for (var k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; }
   function graficoSerie(caja) {
     var src = document.getElementById(caja.dataset.datos); if (!src) return;
     var D; try { D = JSON.parse(src.textContent); } catch (e) { return; }
-    var filas = D.filas, series = D.series, actual = series[0].clave, sel = filas.length - 1;
+    var series = D.series, actual = series[0], sel = 0, barras = [];
     caja.textContent = '';
     var bot = document.createElement('div'); bot.className = 'serie-botones'; bot.setAttribute('role', 'group'); bot.setAttribute('aria-label', 'Serie que se muestra');
     series.forEach(function (s) {
       var b = document.createElement('button'); b.type = 'button'; b.textContent = s.corto; b.dataset.clave = s.clave;
-      b.setAttribute('aria-pressed', s.clave === actual ? 'true' : 'false');
-      b.addEventListener('click', function () { actual = s.clave; pinta(); });
+      b.addEventListener('click', function () { actual = s; pinta(true); });
       bot.appendChild(b);
     });
-    var W = 420, H = 150, BASE = H - 18, ALTO = BASE - 14;
+    var W = 420, H = 170, BASE = H - 22, ALTO = BASE - 14;
     var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, 'class': 'mini-graf', role: 'group' });
     var lect = document.createElement('p'); lect.className = 'serie-lectura'; lect.setAttribute('aria-live', 'polite');
     var nota = document.createElement('p'); nota.className = 'cifra-nota serie-fuente';
     caja.appendChild(bot); caja.appendChild(svg); caja.appendChild(lect); caja.appendChild(nota);
-    var n = filas.length, gap = 5, bw = (W - gap * (n - 1)) / n, barras = [];
-    svg.appendChild(el('line', { 'class': 'b-base', x1: 0, y1: BASE, x2: W, y2: BASE }));
-    filas.forEach(function (f, i) {
-      var x = i * (bw + gap);
-      var r = el('rect', { 'class': 'b', x: x.toFixed(1), y: BASE, width: bw.toFixed(1), height: 0, tabindex: i === sel ? 0 : -1 });
-      r.addEventListener('pointerenter', function () { elige(i); });
-      r.addEventListener('click', function () { elige(i); });
-      r.addEventListener('focus', function () { elige(i); });
-      r.addEventListener('keydown', function (e) {
-        var j = i;
-        if (e.key === 'ArrowRight') j = Math.min(n - 1, i + 1); else if (e.key === 'ArrowLeft') j = Math.max(0, i - 1); else return;
-        e.preventDefault(); barras[j].focus();
-      });
-      svg.appendChild(r); barras.push(r);
-      if (f.t === 1) svg.appendChild(el('text', { 'class': 'b-eje', x: x.toFixed(1), y: H - 4 }, f.a));
-    });
-    function serie() { return series.filter(function (s) { return s.clave === actual; })[0]; }
     function elige(i) {
-      sel = i; var s = serie(), f = filas[i], v = f[actual];
+      sel = i; var f = actual.filas[i];
       barras.forEach(function (b, j) { b.classList.toggle('sel', j === i); b.setAttribute('tabindex', j === i ? 0 : -1); });
-      var prev = filas.filter(function (z) { return z.a === f.a - 1 && z.t === f.t; })[0];
-      var txt = f.a + ' T' + f.t + ' · US$ ' + nf(v) + ' M';
-      var cmp = '';
-      if (prev && prev[actual]) { var d = (v / prev[actual] - 1) * 100; cmp = (d >= 0 ? '+' : '−') + nf(Math.abs(d), 1) + ' % sobre ' + prev.a + ' T' + prev.t; }
+      var txt = f.e + ' · ' + D.prefijo + nf(f.v) + D.sufijo;
       lect.textContent = '';
       var st = document.createElement('strong'); st.textContent = txt; lect.appendChild(st);
-      if (cmp) { var sp = document.createElement('span'); sp.textContent = cmp; lect.appendChild(sp); }
-      barras[i].setAttribute('aria-label', s.nombre + ', ' + txt + (cmp ? ', ' + cmp : ''));
+      if (f.cmp) { var sp = document.createElement('span'); sp.textContent = f.cmp; lect.appendChild(sp); }
+      barras[i].setAttribute('aria-label', actual.nombre + ', ' + txt + (f.cmp ? ', ' + f.cmp : ''));
     }
-    function pinta() {
-      var s = serie(), mx = Math.max.apply(null, filas.map(function (f) { return f[actual]; }));
-      [].forEach.call(bot.children, function (b) { b.setAttribute('aria-pressed', b.dataset.clave === actual ? 'true' : 'false'); });
+    function pinta(cambio) {
+      var filas = actual.filas, n = filas.length, gap = n > 8 ? 5 : 12, bw = (W - gap * (n - 1)) / n;
+      var mx = Math.max.apply(null, filas.map(function (f) { return f.v; }));
+      [].forEach.call(bot.children, function (b) { b.setAttribute('aria-pressed', b.dataset.clave === actual.clave ? 'true' : 'false'); });
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      barras = [];
+      svg.appendChild(el('line', { 'class': 'b-base', x1: 0, y1: BASE, x2: W, y2: BASE }));
       filas.forEach(function (f, i) {
-        var h = Math.max(1, f[actual] / mx * ALTO);
-        barras[i].setAttribute('y', (BASE - h).toFixed(1)); barras[i].setAttribute('height', h.toFixed(1));
-        barras[i].classList.toggle('b-ult', f[actual] === mx);
+        var x = i * (bw + gap), h = Math.max(1, f.v / mx * ALTO);
+        var r = el('rect', { 'class': 'b' + (f.v === mx ? ' b-ult' : '') + (f.par ? ' b-par' : ''), x: x.toFixed(1), y: BASE, width: bw.toFixed(1), height: 0 });
+        r.addEventListener('pointerenter', function () { elige(i); });
+        r.addEventListener('click', function () { elige(i); });
+        r.addEventListener('focus', function () { elige(i); });
+        r.addEventListener('keydown', function (e) {
+          var j = i;
+          if (e.key === 'ArrowRight') j = Math.min(n - 1, i + 1); else if (e.key === 'ArrowLeft') j = Math.max(0, i - 1); else return;
+          e.preventDefault(); barras[j].focus();
+        });
+        svg.appendChild(r); barras.push(r);
+        if (f.eje) svg.appendChild(el('text', { 'class': 'b-eje', x: (x + bw / 2).toFixed(1), y: H - 7, 'text-anchor': 'middle' }, f.eje));
+        var pon = function () { r.setAttribute('y', (BASE - h).toFixed(1)); r.setAttribute('height', h.toFixed(1)); };
+        if (quieto) pon(); else requestAnimationFrame(function () { requestAnimationFrame(pon); });
+        setTimeout(pon, 600);                      /* por si la pestaña está en segundo plano */
       });
-      svg.setAttribute('aria-label', s.nombre + ', por trimestre');
-      nota.textContent = s.nombre + '. En rojo, el trimestre más alto de lo graficado. ';
-      var fu = document.createElement('span'); fu.textContent = D.fuente; nota.appendChild(fu);
-      elige(sel);
+      svg.setAttribute('aria-label', actual.nombre);
+      nota.textContent = actual.nombre + '. ' + (actual.nota || '') + ' ';
+      var fu = document.createElement('span'); fu.textContent = actual.fuente || D.fuente; nota.appendChild(fu);
+      var ini = actual.inicio != null ? actual.inicio : filas.length - 1;
+      elige(cambio ? Math.min(ini, filas.length - 1) : ini);
     }
-    pinta();
+    pinta(false);
   }
 
   /* ── 3. índice del Observatorio ── */
@@ -175,7 +173,7 @@
 
   function inicia() {
     [].forEach.call(document.querySelectorAll('.graf-serie'), graficoSerie);
-    [].forEach.call(document.querySelectorAll('.graf svg'), mejoraEstatico);
+    [].forEach.call(document.querySelectorAll('.graf svg, .graf-est svg'), mejoraEstatico);
     [].forEach.call(document.querySelectorAll('.nav-obs'), indiceObs);
     document.addEventListener('scroll', ocultaTip, { passive: true });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') ocultaTip(); });

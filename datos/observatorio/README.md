@@ -17,6 +17,7 @@ Reproducción libre, total o parcial, citando la fuente (CC BY 4.0).
 | `drenaje_mundial_hickel.csv` | Cifras del drenaje Sur→Norte, con su artículo y DOI | Hickel et al. (2021, NPE) y Hickel et al. (2022, GEC) | O |
 | `ied_entradas_cepal.csv` | Entradas de IED en AL y Chile; razones de drenaje | CEPAL, *La IED en ALyC 2025* + CEPALSTAT | O |
 | `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2029, ley promulgada el 09-10-2026) | leyes citadas; prensa mientras no se publique en el Diario Oficial | O |
+| `desempleo_integral_sol.csv` | Tasa de desempleo y Tasa de Desempleo Integral (subempleo + desaliento), por trimestre móvil | Fundación SOL, Serie IMCE (sobre la ENE del INE) | O |
 | `jornada_semana_obrera.csv` | Composición de la semana obrera y tasas | Fundación SOL 2022 recalculada (Reporte N°1) | C |
 | `kpi_corte.csv` | Indicadores del corte (AFP, CAE, TGR, empleo, cobre, gasto militar, capex digital/IA) — formato máquina: `valor_numerico` + `plantilla` de despliegue | SP · Comisión Ingresa · TGR · INE · Cochilco · SIPRI | O (capex digital/IA: X, pendiente) |
 | `kpi_historial.csv` | Valores de los indicadores en cortes anteriores (no se pierde la historia) | las mismas fuentes | O |

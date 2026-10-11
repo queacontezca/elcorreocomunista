@@ -44,6 +44,7 @@ gasto = lee_csv("gasto_social_chile.csv")
 ied_pais = lee_csv("renta_ied_chile_pais_2024.csv")
 pib_min = lee_csv("pib_y_mineria_chile.csv")
 ajuste = lee_csv("ajuste_fiscal_2026.csv")
+sol_des = lee_csv("desempleo_integral_sol.csv")
 MAPA_BASE = (DATOS / "mapa_base_paises.svg").read_text(encoding="utf-8")
 
 def h(indicador, periodo=None):
@@ -126,6 +127,25 @@ V_EUR = float(ip("Europa")["neto"]); V_USA = float(ip("Estados Unidos")["neto"])
 V_CAN = float(ip("Canadá")["pagado"]); V_ASI = float(ip("Asia (Japón)")["neto"])
 V_OCE = float(ip("Oceanía")["neto"]); V_NOA = float(ip("Otros y no asignados")["pagado"])
 INT_NOIED = float(CL_2024["debito_total"]) - float(CL_2024["ied_utilidades_dividendos"])
+
+# Tasa del impuesto, una fila por año: cada año lleva la última tasa legal registrada en el CSV
+# (los años intermedios se rellenan hacia adelante; el CSV solo registra hitos).
+ANIO_HOY = 2026
+ANIO_FIN_TASA = int(impuesto[-1]["anio"]) + 1          # un año más: la tasa final ya en régimen
+def tasa_por_anio():
+    hitos = {int(r["anio"]): float(r["tasa"]) for r in impuesto}
+    filas, tasa = [], None
+    for a in range(int(impuesto[0]["anio"]), ANIO_FIN_TASA + 1):
+        if a in hitos: tasa = hitos[a]
+        filas.append({"anio": a, "tasa": tasa, "proy": a > ANIO_HOY})
+    return filas
+TASAS = tasa_por_anio()
+# cambios legales que se marcan con línea segmentada: (año desde el que rige en el CSV, rótulo)
+LEYES = [(2012, "Ley 20.469"), (2015, "Ley 20.780"), (ANIO_HOY + 1, "Reconstrucción (Kast)")]
+def titulo_tasa(r):
+    base = f'Impuesto a las empresas {r["anio"]}: {fmt(r["tasa"],1).rstrip("0").rstrip(",")} %'
+    if r["proy"]: base += " · calendario de la ley promulgada el 09-10-2026"
+    return base
 
 # ───────────────────────── figuras SVG ─────────────────────────
 def apilada_jornada():
@@ -266,18 +286,19 @@ def panel_doble_retencion_gasto():
               f'<text x="{P-6}" y="{YB(v)+4:.0f}" font-size="10" text-anchor="end" fill="{PIZ}">{v} %</text>')
     for a in range(1990, 2031, 7):
         g += f'<text x="{X(a):.0f}" y="{H-8}" font-size="10" text-anchor="middle" fill="{PIZ}">{a}</text>'
-    g += (f'<text x="{P}" y="{HA0-6}" font-size="11.5" font-weight="bold" fill="{NEGRO}">A · Lo que el Estado retiene: impuesto a las empresas (tasa legal, %)</text>'
+    g += (f'<text x="{P}" y="{HA0-6}" font-size="11.5" font-weight="bold" fill="{NEGRO}">A · Lo que el Estado retiene: impuesto a las empresas (tasa legal por año, %; en rojo, lo ya legislado hacia {ANIO_FIN_TASA})</text>'
           f'<text x="{P}" y="{TITULO_B_Y}" font-size="11.5" font-weight="bold" fill="{NEGRO}">B · Lo que el Estado solventa: gasto público social (% del PIB, Gobierno Central)</text>')
-    # Panel A: retención
-    pts = [(float(r["anio"]), float(r["tasa"]), r["hito"]) for r in impuesto]
-    reales = [p for p in pts if p[0] <= 2026]; proy = [p for p in pts if p[0] >= 2026]
-    g += f'<polyline points="{" ".join(f"{X(a):.0f},{YA(v):.0f}" for a, v, _ in reales)}" fill="none" stroke="{NEGRO}" stroke-width="2.5"/>'
-    g += f'<polyline points="{" ".join(f"{X(a):.0f},{YA(v):.0f}" for a, v, _ in proy)}" fill="none" stroke="{ROJO}" stroke-width="2.5" stroke-dasharray="6 4"/>'
-    for a, v, hito in pts:
-        col = ROJO if a > 2026 else NEGRO
-        g += (f'<circle cx="{X(a):.0f}" cy="{YA(v):.0f}" r="4" fill="{col}">'
-              f'<title>{"Ley de Reconstrucción (promulgada 09-10-2026)" if a > 2026 else "Impuesto a las empresas"}: {fmt(v,1).rstrip("0").rstrip(",")} % ({int(a)}){" · " + hito if hito else ""}</title></circle>')
-    g += (f'<text x="{X(2026)-8:.0f}" y="{YA(tasa_final)+17:.0f}" font-size="10.5" text-anchor="end" fill="{ROJO}" font-style="italic">ley promulgada: {fmt(tasa_final)} % en {anio_final}</text>')
+    # Panel A: retención — una columna por año; líneas segmentadas en los cambios legales
+    paso = X(2001) - X(2000); bwA = paso * 0.78
+    for r in TASAS:
+        col = ROJO if r["proy"] else PIZ
+        g += (f'<rect x="{X(r["anio"]) - bwA/2:.1f}" y="{YA(r["tasa"]):.1f}" width="{bwA:.1f}" height="{HA1 - YA(r["tasa"]):.1f}" fill="{col}">'
+              f'<title>{titulo_tasa(r)}</title></rect>')
+    for anio, rot in LEYES:
+        xl = X(anio) - paso / 2; fin = anio > ANIO_HOY
+        g += (f'<line x1="{xl:.1f}" y1="{HA0}" x2="{xl:.1f}" y2="{HA1}" stroke="{ROJO if fin else NEGRO}" stroke-width="1.2" stroke-dasharray="4 3"/>'
+              f'<text x="{xl + (4 if anio == 2015 else -4):.1f}" y="{HA0 + 9}" font-size="9.5" text-anchor="{"start" if anio == 2015 else "end"}" fill="{ROJO if fin else NEGRO}">{rot}</text>')
+    g += (f'<text x="{X(ANIO_FIN_TASA) + paso/2:.0f}" y="{YA(tasa_final) - 5:.0f}" font-size="10.5" text-anchor="end" fill="{ROJO}" font-weight="bold">{fmt(tasa_final)} %</text>')
     # Panel B: gasto social
     series = [("gasto_social_total", "Gasto social total", NEGRO, 2.5, ""),
               ("salud", "Salud", ROJO, 2, ""),
@@ -293,7 +314,7 @@ def panel_doble_retencion_gasto():
         g += f'<rect x="{lx}" y="{LEYENDA_B_RECT_Y}" width="10" height="10" fill="{col}"/><text x="{lx+14}" y="{LEYENDA_B_TXT_Y}" font-size="10.5" fill="{NEGRO}">{nom}</text>'
         lx += 14 + 7.6 * len(nom)
     # hito del ajuste 2026 (cruza ambos paneles)
-    g += (f'<line x1="{X(2026):.0f}" y1="{HA0}" x2="{X(2026):.0f}" y2="{HB1}" stroke="{ROJO}" stroke-width="1.5" stroke-dasharray="4 4"/>'
+    g += (f'<line x1="{X(2026.5):.1f}" y1="{HA1}" x2="{X(2026.5):.1f}" y2="{HB1}" stroke="{ROJO}" stroke-width="1.2" stroke-dasharray="4 3"/>'
           f'<text x="{X(2026)-8:.0f}" y="{ANN_Y1}" font-size="11" text-anchor="end" fill="{ROJO}" font-weight="bold">megarreforma promulgada + ajuste de US$ {fmt(AJ_TOTAL)} M (2026):</text>'
           f'<text x="{X(2026)-8:.0f}" y="{ANN_Y2}" font-size="11" text-anchor="end" fill="{ROJO}">PGU, gratuidad y bonos en revisión</text>')
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Retención estatal y gasto público social">{g}</svg>'
@@ -614,38 +635,116 @@ document.querySelectorAll('.botones-mapa button').forEach(function(b){{
 # ───────────────────────── portada: franja «cifras del corte» ─────────────────────────
 def franja_portada():
     """Franja de portada generada desde los mismos CSV (se inserta entre los marcadores de index.html)."""
-    filas = [{"a": int(r["anio"]), "t": int(r["trimestre"]), "deb": float(r["debito_total"]),
-              "uti": float(r["ied_utilidades_dividendos"]), "neto": -float(r["balance_neto"])} for r in rentas_tri]
-    datos = {"fuente": "CEPALSTAT, ind. 547 (compila Banco Central) · millones de US$",
-             "series": [{"clave": "deb", "corto": "Total pagado", "nombre": "Rentas primarias pagadas al exterior"},
-                        {"clave": "uti", "corto": "Utilidades IED", "nombre": "Utilidades y dividendos de la inversión extranjera"},
-                        {"clave": "neto", "corto": "Saldo neto", "nombre": "Saldo neto: lo que sale menos lo que entra"}],
-             "filas": filas}
-    W, H = 420, 150; n = len(filas); gap = 5; bw = (W - gap * (n - 1)) / n; mx = max(f["deb"] for f in filas)
-    barras = ""
-    for i, f in enumerate(filas):
-        hh = f["deb"] / mx * (H - 32); x = i * (bw + gap)
-        barras += f'<rect class="{"b-ult" if f["deb"] == mx else "b"}" x="{x:.1f}" y="{H-18-hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"/>'
-        if f["t"] == 1: barras += f'<text class="b-eje" x="{x:.1f}" y="{H-4}">{f["a"]}</text>'
+    # ── (iv) extracción: columnas por año y por destino ──
+    campo_bal = "balance" if "balance" in rentas_cl[0] else "balance_neto"
+    def serie_anual(campo, signo=1):
+        filas, prev = [], None
+        campo_tri = "balance_neto" if campo == campo_bal else campo
+        for r in rentas_cl:
+            v = signo * float(r[campo]); parcial = r["nota"].startswith("parcial")
+            if parcial:
+                base = sum(signo * tri(TRI_ANIO - 1, q, campo_tri) for q in range(1, TRI_Q + 1))
+                cmp_ = f'{TRI_Q} trimestres · {"+" if v >= base else "−"}{fmt(abs(v / base - 1) * 100)} % sobre los mismos de {TRI_ANIO - 1}'
+            elif prev:
+                cmp_ = f'{"+" if v >= prev else "−"}{fmt(abs(v / prev - 1) * 100, 1)} % sobre {int(r["anio"]) - 1}'
+            else:
+                cmp_ = "inicio de la serie"
+            filas.append({"e": r["anio"] + (" (parcial)" if parcial else ""), "eje": r["anio"][2:], "v": v, "cmp": cmp_, "par": parcial})
+            if not parcial: prev = v
+        return filas
+    tot_ied = float(ip("TOTAL IED")["pagado"])
+    CORTO = {"Europa": "Europa", "Estados Unidos": "EE.UU.", "Canadá": "Canadá", "Asia (Japón)": "Asia", "Oceanía": "Oceanía", "Otros y no asignados": "Otros"}
+    destinos = [{"e": r["destino"], "eje": CORTO.get(r["destino"], r["destino"]), "v": float(r["pagado"]),
+                 "cmp": f'{fmt(float(r["pagado"]) / tot_ied * 100)} % de la renta de la inversión extranjera pagada en 2024'}
+                for r in ied_pais if r["destino"] != "TOTAL IED"]
+    fte = "CEPALSTAT, ind. 547 (compila Banco Central)"
+    i_max = max(range(len(rentas_cl)), key=lambda i: float(rentas_cl[i]["debito_total"]))
+    datos = {"prefijo": "US$ ", "sufijo": " M", "fuente": fte, "series": [
+        {"clave": "deb", "corto": "Total por año", "nombre": "Rentas primarias pagadas al exterior, por año", "nota": "En rojo, el año más alto; 2026 va incompleto.", "inicio": i_max, "filas": serie_anual("debito_total")},
+        {"clave": "uti", "corto": "Utilidades IED", "nombre": "Utilidades y dividendos de la inversión extranjera, por año", "nota": "2026 va incompleto.", "inicio": i_max, "filas": serie_anual("ied_utilidades_dividendos")},
+        {"clave": "neto", "corto": "Saldo neto", "nombre": "Saldo neto: lo que sale menos lo que entra, por año", "nota": "2026 va incompleto.", "inicio": i_max, "filas": serie_anual(campo_bal, -1)},
+        {"clave": "dest", "corto": "Por destino", "nombre": "Renta de la inversión extranjera pagada en 2024, por destino", "nota": "Utilidades distribuidas.", "fuente": "Banco Central, IED por país (renta direccional), 2024", "inicio": 0, "filas": destinos}]}
+    W, H = 420, 170; fa = datos["series"][0]["filas"]; n = len(fa); gap = 5; bw = (W - gap * (n - 1)) / n; mx = max(x["v"] for x in fa)
+    est = f'<line class="b-base" x1="0" y1="{H-22}" x2="{W}" y2="{H-22}"/>'
+    for i, x in enumerate(fa):
+        hh = x["v"] / mx * (H - 36); xx = i * (bw + gap)
+        est += (f'<rect class="b{" b-ult" if x["v"] == mx else ""}{" b-par" if x["par"] else ""}" x="{xx:.1f}" y="{H-22-hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"/>'
+                f'<text class="b-eje" x="{xx+bw/2:.1f}" y="{H-7}" text-anchor="middle">{x["eje"]}</text>')
+
+    # ── (iii) retención: una columna por año, con línea segmentada en cada cambio legal ──
+    RW, RH, RB = 420, 170, 148
+    n_t = len(TASAS); rbw = RW / n_t
+    def ry(v): return RB - (RB - 40) * v / 30
+    ret = f'<line class="eje-l" x1="0" y1="{RB}" x2="{RW}" y2="{RB}"/>'
+    for i, r in enumerate(TASAS):
+        ret += (f'<rect class="{"col-proy" if r["proy"] else "col"}" x="{i*rbw+0.8:.1f}" y="{ry(r["tasa"]):.1f}" width="{rbw-1.6:.1f}" height="{RB-ry(r["tasa"]):.1f}"><title>{titulo_tasa(r)}</title></rect>')
+        if r["anio"] % 10 == 0: ret += f'<text class="eje-t" x="{i*rbw+rbw/2:.1f}" y="{RH-7}" text-anchor="middle">{r["anio"]}</text>'
+    for anio, rot in LEYES:
+        xl = (anio - TASAS[0]["anio"]) * rbw; fin = anio > ANIO_HOY
+        cls = " ley-proy" if fin else ""
+        ytx = 10 if fin else 26
+        ret += (f'<line class="ley-l{cls}" x1="{xl:.1f}" y1="{ytx - 8}" x2="{xl:.1f}" y2="{RB}"/>'
+                f'<text class="ley-t{cls}" x="{xl + (4 if anio == 2015 else -4):.1f}" y="{ytx}" text-anchor="{"start" if anio == 2015 else "end"}">{rot}</text>')
+    tasa_max = max(r["tasa"] for r in TASAS); tasa_ini = TASAS[0]["tasa"]
+
+    # ── (ii) explotación: la semana obrera y sus dos tasas ──
+    segs = [("trabajo_necesario", "Necesario", "seg-a"), ("plustrabajo", "Plustrabajo", "seg-b"),
+            ("traslado_no_remunerado", "Traslado", "seg-c"), ("reproductivo_no_remunerado", "Hogar y cuidados", "seg-d")]
+    tot = sum(float(jornada[k]["valor"]) for k, _, _ in segs); x = 0; sem = ""
+    for k, nom, cls in segs:
+        v = float(jornada[k]["valor"]); w = 420 * v / tot; h_txt = fmt(v, 2).rstrip("0").rstrip(",")
+        sem += (f'<rect class="{cls}" x="{x:.1f}" y="6" width="{w:.1f}" height="40"><title>{nom}: {h_txt} horas a la semana — {jornada[k]["nota"]}</title></rect>'
+                f'<text class="seg-n" x="{x + w/2:.1f}" y="31" text-anchor="middle">{h_txt} h</text>'
+                f'<text class="seg-r" x="{x + w/2:.1f}" y="62" text-anchor="middle">{nom}</text>')
+        x += w
+    sv = float(jornada["tasa_explotacion_sv"]["valor"]); tetv = float(jornada["TETV"]["valor"])
+
+    # ── (i) desempleo: oficial e integral, mismo trimestre ──
+    s = sol_des[-1]; td = float(s["tasa_desempleo"]); tdi = float(s["tasa_desempleo_integral"])
     des = kpi("Desempleo / informalidad")
-    tasa_hoy = float(next(r["tasa"] for r in impuesto if r["anio"] == "2026"))
     TRIM = {"DEF": "diciembre-febrero", "EFM": "enero-marzo", "FMA": "febrero-abril", "MAM": "marzo-mayo", "AMJ": "abril-junio", "MJJ": "mayo-julio",
             "JJA": "junio-agosto", "JAS": "julio-septiembre", "ASO": "agosto-octubre", "SON": "septiembre-noviembre", "OND": "octubre-diciembre", "NDE": "noviembre-enero"}
-    cod = des["fecha_corte"].split("-")[0]
-    periodo_des = f"trimestre {TRIM[cod]}" if cod in TRIM else des["fecha_corte"]
-    return f'''<section class="cifras-corte" aria-label="Cifras del corte del Observatorio">
-    <div class="cifra cifra-graf">
-      <p class="cifra-rot">Rentas que salen de Chile · por trimestre</p>
-      <div class="graf-serie" data-datos="datos-trimestral">
-        <svg class="mini-graf" viewBox="0 0 {W} {H}" role="img" aria-label="Rentas primarias pagadas por Chile, por trimestre"><line class="b-base" x1="0" y1="{H-18}" x2="{W}" y2="{H-18}"/>{barras}</svg>
-        <p class="cifra-nota"><strong>US$ {fmt(deb_tri_ult)} M</strong> en {TRI_ANIO} T{TRI_Q}: el trimestre más alto de la serie. <span>CEPALSTAT, ind. 547</span></p>
-      </div>
-      <script type="application/json" id="datos-trimestral">{json.dumps(datos, ensure_ascii=False, separators=(",", ":"))}</script>
+    periodo_ine = TRIM.get(des["fecha_corte"].split("-")[0], des["fecha_corte"])
+    def dh(v): return 120 * v / 16.0
+    dcol = (f'<line class="eje-l" x1="0" y1="140" x2="240" y2="140"/>'
+            f'<rect class="col" x="22" y="{140-dh(td):.1f}" width="84" height="{dh(td):.1f}"><title>Tasa de desempleo, {s["trimestre_movil"]}: {fmt(td,1)} % (Fundación SOL sobre la ENE del INE)</title></rect>'
+            f'<rect class="col-proy" x="134" y="{140-dh(tdi):.1f}" width="84" height="{dh(tdi):.1f}"><title>Tasa de Desempleo Integral, {s["trimestre_movil"]}: {fmt(tdi,1)} % — suma subempleo y desaliento (hombres {fmt(float(s["tdi_hombres"]),1)} %, mujeres {fmt(float(s["tdi_mujeres"]),1)} %)</title></rect>'
+            f'<text class="col-n" x="64" y="{140-dh(td)-7:.1f}" text-anchor="middle">{fmt(td,1)} %</text>'
+            f'<text class="col-n" x="176" y="{140-dh(tdi)-7:.1f}" text-anchor="middle">{fmt(tdi,1)} %</text>'
+            f'<text class="eje-t" x="64" y="156" text-anchor="middle">oficial</text><text class="eje-t" x="176" y="156" text-anchor="middle">integral</text>')
+
+    return f"""<section class="cifras-corte" aria-label="Cifras del Observatorio">
+    <div class="cifra cifra-exp">
+      <p class="cifra-rot">Explotación · la semana obrera</p>
+      <div class="cifra-par"><p><strong class="cifra-num">{fmt(sv,1)} %</strong><span>tasa de explotación: plustrabajo sobre trabajo necesario</span></p><p><strong class="cifra-num">{fmt(tetv,1)} %</strong><span>si se suma el traslado no pagado: tiempo vital expropiado</span></p></div>
+      <div class="graf-est"><svg class="est-graf" viewBox="0 0 420 70" role="img" aria-label="Composición de la semana obrera en horas">{sem}</svg></div>
+      <p class="cifra-nota">{fmt(float(jornada["carga_global_real"]["valor"]))} horas de carga real a la semana. Nivel de referencia, no dato del mes. <span>Reporte N°1 sobre Fundación SOL (2022)</span></p>
+      <a class="cifra-ir" href="observatorio.html#m1">Ver el módulo 1 →</a>
     </div>
-    <a class="cifra" href="observatorio.html#m3"><p class="cifra-rot">Primer semestre {TRI_ANIO}</p><p class="cifra-num">US$ {fmt(deb_parcial)} M</p><p class="cifra-nota">en rentas primarias pagadas al exterior, +{fmt(var_deb)} % sobre igual semestre de {TRI_ANIO-1}. <span>CEPALSTAT</span></p></a>
-    <a class="cifra cifra-b" href="observatorio.html#m2"><p class="cifra-rot">Desempleo</p><p class="cifra-num">{fmt(float(des["valor_numerico"]),1)} %</p><p class="cifra-nota">informalidad {fmt(float(des["valor2_numerico"]),1)} %, {periodo_des}. <span>{des["fuente"]}</span></p></a>
-    <a class="cifra cifra-c" href="observatorio.html#m4"><p class="cifra-rot">Impuesto a las empresas</p><p class="cifra-num">{fmt(tasa_hoy)} → {fmt(tasa_final)} %</p><p class="cifra-nota">rebaja ya promulgada, en régimen en {anio_final}. <span>prensa, 09-10-2026</span></p></a>
-  </section>'''
+    <div class="cifra cifra-des">
+      <p class="cifra-rot">Desempleo · oficial e integral</p>
+      <div class="cifra-lado">
+        <div class="graf-est"><svg class="est-graf" viewBox="0 0 240 162" role="img" aria-label="Desempleo oficial e integral, {s["trimestre_movil"]}">{dcol}</svg></div>
+        <p class="cifra-nota"><strong>{fmt(tdi - td,1)} puntos</strong> separan la cifra oficial de la que suma el subempleo y el desaliento, en {s["trimestre_movil"]}.<br>Último dato oficial: {fmt(float(des["valor_numerico"]),1)} % en {periodo_ine}. <span>Fundación SOL, IMCE (28-08-2026) · {des["fuente"]}</span></p>
+      </div>
+      <a class="cifra-ir" href="observatorio.html#m2">Ver el módulo 2 →</a>
+    </div>
+    <div class="cifra cifra-ret">
+      <p class="cifra-rot">Retención del Estado · impuesto a las empresas</p>
+      <div class="graf-est"><svg class="est-graf" viewBox="0 0 {RW} {RH}" role="img" aria-label="Tasa legal del impuesto a las empresas por año, de {TASAS[0]["anio"]} a {ANIO_FIN_TASA}">{ret}</svg></div>
+      <p class="cifra-nota"><strong>{fmt(tasa_ini)} % → {fmt(tasa_max)} % → {fmt(tasa_final)} %.</strong> Tasa legal por año; las líneas marcan cada cambio de ley y, en rojo, la rebaja ya promulgada hacia {ANIO_FIN_TASA}. <span>leyes citadas en el Observatorio · prensa, 09-10-2026</span></p>
+      <a class="cifra-ir" href="observatorio.html#m4">Ver el módulo 4 →</a>
+    </div>
+    <div class="cifra cifra-graf">
+      <p class="cifra-rot">Extracción · rentas que salen de Chile</p>
+      <div class="graf-serie" data-datos="datos-extraccion">
+        <svg class="mini-graf" viewBox="0 0 {W} {H}" role="img" aria-label="Rentas primarias pagadas por Chile, por año">{est}</svg>
+        <p class="cifra-nota"><strong>US$ {fmt(deb25)} M</strong> en 2025, el año más alto de la serie; US$ {fmt(deb_parcial)} M en los primeros {TRI_Q} trimestres de {TRI_ANIO}. <span>{fte}</span></p>
+      </div>
+      <script type="application/json" id="datos-extraccion">{json.dumps(datos, ensure_ascii=False, separators=(",", ":"))}</script>
+      <a class="cifra-ir" href="observatorio.html#m3">Ver el módulo 3 →</a>
+    </div>
+  </section>"""
 
 INI, FIN = "<!-- CIFRAS:INICIO (generado por scripts/build_observatorio.py; no editar a mano) -->", "<!-- CIFRAS:FIN -->"
 portada = PORTADA.read_text(encoding="utf-8")

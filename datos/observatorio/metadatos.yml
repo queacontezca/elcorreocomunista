@@ -75,6 +75,14 @@ series:
     estatus: "C"
     notas: "Nivel de fondo, NO variación mensual. La TETV no se suma a s/v (el traslado no produce valor). Labor share oficial = cota superior; depurado 28-30 %."
 
+  desempleo_integral_sol.csv:
+    descripcion: "Tasa de desempleo (TD) y Tasa de Desempleo Integral (TDI: incorpora subempleo y desaliento), trimestre móvil"
+    fuente: "Fundación SOL, Informe Mensual de Calidad del Empleo (Serie IMCE), sobre la Encuesta Nacional de Empleo del INE"
+    url: "https://fundacionsol.cl"
+    frecuencia: "mensual (trimestre móvil)"
+    ultima_descarga: "2026-10-11"
+    notas: "Se registra solo lo leído directamente en el PDF de la fuente. MJJ 2026 leído en el Resumen IMCE del 28-08-2026, p. 2. Al 11-10-2026 no se encontró el informe de junio-agosto."
+    estatus: "O"
   kpi_corte.csv:
     descripcion: "Indicadores del corte con fecha y fuente (grilla KPI). Formato máquina desde sep-2026: valor_numerico + decimales (+ valor2_numerico/decimales2 para indicadores con dos cifras) + plantilla de despliegue (tokens {v}/{v2}), en vez de una columna de texto ya formateado."
     fuente: "Reporte N°1 (jul-2026) con diccionario de datos (SP, Comisión Ingresa, TGR, INE, Cochilco, SIPRI); corte 11-10-2026: SP (comunicado 03-09-2026), INE (nota de prensa 30-09-2026) y Cochilco (informe semanal 5-9 oct-2026) consultados directamente"
