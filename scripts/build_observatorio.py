@@ -807,8 +807,35 @@ def svg_destinos():
               f'<text class="eje-t" x="{x + bw/2:.1f}" y="134" text-anchor="middle">{CORTO.get(r["destino"], r["destino"])}</text>')
     return f'<svg class="est-graf" viewBox="0 0 420 140" role="img" aria-label="Renta de la inversión extranjera pagada en 2024, por destino">{g}</svg>'
 
+def svg_cols(filas, aria, alto=118):
+    """filas: [(rótulo del eje o "", valor, título, destacar)] → columnas verticales con el valor del extremo destacado."""
+    mx = max(v for _, v, _, _ in filas); n = len(filas); gap = 6; bw = (420 - gap * (n - 1)) / n
+    g = f'<line class="eje-l" x1="0" y1="{alto}" x2="420" y2="{alto}"/>'
+    for i, (eje, v, tit, dest) in enumerate(filas):
+        hh = (alto - 22) * v / mx; x = i * (bw + gap)
+        g += f'<rect class="{"col-proy" if dest else "col"}" x="{x:.1f}" y="{alto - hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"><title>{tit}</title></rect>'
+        if eje: g += f'<text class="eje-t" x="{x + bw/2:.1f}" y="{alto + 16}" text-anchor="middle">{eje}</text>'
+    return f'<svg class="est-graf" viewBox="0 0 420 {alto + 22}" role="img" aria-label="{aria}">{g}</svg>'
+
+def svg_paises():
+    """Lo que pagó en rentas primarias cada país de la región en 2024 (los seis mayores)."""
+    filas = sorted(pais24, key=lambda r: -float(r["debito_total_2024"]))[:6]
+    mx = float(filas[0]["debito_total_2024"]); g = ""
+    for i, r in enumerate(filas):
+        v = float(r["debito_total_2024"]); y = 2 + i * 22; w = 250 * v / mx
+        g += (f'<text class="seg-r" x="62" y="{y + 12}" text-anchor="end">{r["pais"]}</text>'
+              f'<rect class="{"col-proy" if r["pais"] == "Chile" else "col"}" x="70" y="{y}" width="{w:.1f}" height="16"><title>{r["pais"]}: US$ {fmt(v)} M pagados al exterior en rentas primarias (2024)</title></rect>'
+              f'<text class="seg-r" x="{76 + w:.1f}" y="{y + 12}">US$ {fmt(v)} M</text>')
+    return f'<svg class="est-graf" viewBox="0 0 420 {6 + 22 * len(filas)}" role="img" aria-label="Rentas primarias pagadas al exterior en 2024, por país de América Latina">{g}</svg>'
+
 def bandas():
     cae = kpi("CAE — cartera / mora"); gs = gasto[-1]
+    edu_max = max(float(r["educacion"]) for r in gasto); gst_max = max(gasto, key=lambda r: float(r["gasto_social_total"]))
+    svg_edu = svg_cols([(r["anio"] if i % 2 == 0 or i == len(gasto) - 1 else "", float(r["educacion"]), f'Gasto público en educación {r["anio"]}: {fmt(float(r["educacion"]),1)} % del PIB', float(r["educacion"]) == edu_max) for i, r in enumerate(gasto)],
+                       "Gasto público en educación, en porcentaje del PIB, por año")
+    svg_gst = svg_cols([(r["anio"] if i % 2 == 0 or i == len(gasto) - 1 else "", float(r["gasto_social_total"]), f'Gasto público social {r["anio"]}: {fmt(float(r["gasto_social_total"]),1)} % del PIB', r is gst_max) for i, r in enumerate(gasto)],
+                       "Gasto público social, en porcentaje del PIB, por año")
+    pos_cl = sorted(pais24, key=lambda r: -float(r["debito_total_2024"])).index(next(r for r in pais24 if r["pais"] == "Chile")) + 1
     return {
         "comun": {"pagina": "secciones/los-medios-comunes.html", "tono": "ds-azul", "modulo": "m2",
                   "titulo": "Lo común capturado · peso de cada circuito",
@@ -822,21 +849,24 @@ def bandas():
                   "svg": svg_semana(),
                   "cifras": [(f'{fmt(float(jornada["carga_global_real"]["valor"]))} h', "de carga real a la semana, contra 42 h de jornada legal"),
                              (f'{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %', "tasa de explotación: plustrabajo sobre trabajo necesario")],
-                  "mini": (f'{fmt(float(jornada["carga_global_real"]["valor"]))} h', "de carga real a la semana, contra 42 h legales"),
+                  "mini_svg": svg_edu,
+                  "mini": (f'{fmt(float(gs["educacion"]),1)} % del PIB', f'de gasto público en educación ({gs["anio"]}), desde {fmt(float(gasto[0]["educacion"]),1)} % en {gasto[0]["anio"]}'),
                   "fuente": "Reporte N°1 sobre Fundación SOL (2022) · nivel de referencia"},
         "fronteras": {"pagina": "secciones/proletariado.html", "tono": "ds-azul", "modulo": "m5",
                   "titulo": "Hacia dónde sale el plusvalor · renta pagada en 2024, por destino",
                   "svg": svg_destinos(),
                   "cifras": [(f'US$ {fmt(h("apropiacion_neta_valor"),1)} bill.', "drenados del Sur al Norte en un solo año (2015)"),
                              (f'US$ {fmt(razon_cl,2)}', "salieron de Chile en utilidades por cada dólar de inversión extranjera que entró (2024)")],
-                  "mini": (f'US$ {fmt(razon_cl,2)}', "salen en utilidades por cada dólar que entra"),
+                  "mini_svg": svg_paises(),
+                  "mini": (f'{pos_cl}.º de la región', "es Chile entre los países que más renta pagan al exterior (2024)"),
                   "fuente": "Banco Central · CEPAL · Hickel et al. (2022)"},
         "estado": {"pagina": "secciones/marchitamiento-del-estado.html", "tono": "ds-salmon", "modulo": "m4",
                   "titulo": "Lo que el Estado retiene · impuesto a las empresas por año",
                   "svg": svg_tasa(),
                   "cifras": [(f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'rebaja ya promulgada, en régimen en {anio_final}'),
                              (f'{fmt(float(gs["gasto_social_total"]),1)} %', f'del PIB en gasto público social ({gs["anio"]}); ajuste anunciado de US$ {fmt(AJ_TOTAL)} M')],
-                  "mini": (f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'impuesto a las empresas, hacia {anio_final}'),
+                  "mini_svg": svg_gst,
+                  "mini": (f'{fmt(float(gs["gasto_social_total"]),1)} % del PIB', f'de gasto público social ({gs["anio"]}), desde {fmt(float(gst_max["gasto_social_total"]),1)} % en {gst_max["anio"]}'),
                   "fuente": "leyes citadas en el Observatorio · CEPALSTAT (DIPRES) · prensa"},
     }
 
@@ -884,7 +914,7 @@ def banda_html(b, raiz):
 def mini_html(b):
     v, t = b["mini"]
     return f'''<div class="dato-mini {b["tono"]}">
-        <div class="graf-est">{b["svg"]}</div>
+        <div class="graf-est">{b.get("mini_svg", b["svg"])}</div>
         <p><strong>{v}</strong> {t} · <a href="observatorio.html#{b["modulo"]}">Observatorio →</a></p>
       </div>'''
 
