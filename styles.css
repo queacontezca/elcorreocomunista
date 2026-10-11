@@ -1329,3 +1329,39 @@ a.term-chip:hover, a.term-chip:focus-visible{transform:translate(-2px,-2px); box
 .lecturas-sintesis h2{font-size:1.6rem; color:var(--pizarra); line-height:1}
 .lecturas-sintesis h2 span{font-family:var(--font-grabado); font-style:italic; text-transform:none; letter-spacing:0; font-size:1.05rem; color:var(--rojo-profundo); margin-left:.5rem}
 .lecturas-sintesis .tapas{margin-top:1rem}
+
+
+/* ════════════════════════════════════════════════════════════════════
+   GRÁFICA POR SECCIÓN — banda del principio, banda chica de portada y «la sección en cifras»
+   (generadas por scripts/build_observatorio.py)
+   ════════════════════════════════════════════════════════════════════ */
+.dato-seccion{display:grid; grid-template-columns:1.25fr 1fr; gap:1rem 1.6rem; padding:1.1rem 1.2rem 1rem; margin:1.4rem 0 0; border-top:4px solid var(--pizarra)}
+.ds-azul{background:var(--azul-palido)} .ds-salmon{background:var(--salmon)}
+.dato-seccion .cifra-rot{color:var(--tinta); margin-bottom:.5rem}
+.ds-cifras{display:flex; flex-direction:column; gap:.8rem; justify-content:center}
+.ds-cifras p{display:flex; flex-direction:column; gap:.15rem}
+.ds-cifras .cifra-num{color:var(--tinta); font-size:clamp(1.9rem,3.4vw,2.7rem)}
+.ds-cifras span{font-size:.82rem; line-height:1.3}
+.ds-pie{grid-column:1/-1; font-family:var(--font-cintillo); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--tinta)}
+.ds-pie a{color:var(--tinta); text-decoration:none; border-bottom:2px solid currentColor}
+.ds-pie a:hover{color:var(--rojo-profundo)}
+.est-graf .col-n-ch{font-size:15px}
+.sec-cifras{display:grid; grid-template-columns:auto auto 1fr; gap:1rem 2rem; align-items:end; padding:1rem 0 1.1rem; margin:0 0 1.2rem; border-bottom:4px solid var(--pizarra)}
+.dato-seccion + .sec-cifras{margin-top:0}
+.sc-num{display:flex; flex-direction:column; gap:.1rem}
+.sc-num strong{font-family:var(--font-cartel); font-weight:700; font-size:clamp(2.6rem,6vw,4rem); line-height:.9; color:var(--rojo-ladrillo)}
+.sc-num span{font-family:var(--font-cintillo); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--tinta)}
+.sc-graf{max-width:22rem; justify-self:end; width:100%}
+.sc-graf .cifra-rot{color:var(--rojo-profundo); margin-bottom:.3rem}
+.dato-mini{display:grid; grid-template-columns:1fr; gap:.4rem; padding:.7rem .8rem .6rem; margin:0 -1.1rem 1rem 0}
+.dato-mini p{font-size:.8rem; line-height:1.3; color:var(--tinta)}
+.dato-mini strong{font-family:var(--font-cartel); font-weight:700; font-size:1.35rem; line-height:1; margin-right:.2rem}
+.dato-mini a{color:var(--tinta); font-family:var(--font-cintillo); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:none; border-bottom:2px solid currentColor; white-space:nowrap}
+.seccion .principio{margin-bottom:0}
+.seccion .dato-mini + .despacho, .seccion .dato-mini ~ .despacho:first-of-type{border-top:0}
+@media (max-width:760px){ .dato-seccion{grid-template-columns:1fr} .sec-cifras{grid-template-columns:auto auto} .sc-graf{grid-column:1/-1; justify-self:start} }
+
+/* Boletines: texto justificado (pedido por Christian, 11-10-2026), con partición silábica para no abrir huecos */
+body .cuerpo{text-align:justify; text-justify:inter-word; hyphens:auto; -webkit-hyphens:auto}
+body .cuerpo h1, body .cuerpo h2, body .cuerpo h3, body .cuerpo .epigrafe, body .cuerpo blockquote cite{text-align:left; hyphens:manual; -webkit-hyphens:manual}
+.bol-info p, .en-este-numero p{text-align:justify; hyphens:auto; -webkit-hyphens:auto}

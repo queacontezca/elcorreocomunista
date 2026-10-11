@@ -141,7 +141,7 @@ def tasa_por_anio():
     return filas
 TASAS = tasa_por_anio()
 # cambios legales que se marcan con línea segmentada: (año desde el que rige en el CSV, rótulo)
-LEYES = [(2012, "Ley 20.469"), (2015, "Ley 20.780"), (ANIO_HOY + 1, "Reconstrucción (Kast)")]
+LEYES = [(2012, "Ley 20.469"), (2015, "Ley 20.780"), (ANIO_HOY + 1, "Ofensiva burguesa (Kast)")]
 def titulo_tasa(r):
     base = f'Impuesto a las empresas {r["anio"]}: {fmt(r["tasa"],1).rstrip("0").rstrip(",")} %'
     if r["proy"]: base += " · calendario de la ley promulgada el 09-10-2026"
@@ -754,6 +754,174 @@ if INI in portada and FIN in portada:
     print("index.html: franja «cifras del corte» regenerada")
 else:
     print("AVISO: index.html no tiene los marcadores CIFRAS; la franja de portada no se actualizó")
+
+
+# ───────────────────────── gráfica por sección (portada y páginas de sección) ─────────────────────────
+# Cada principio lleva una banda con un gráfico chico y dos cifras, tomadas de los mismos CSV.
+# Cada página de sección lleva además «la sección en cifras»: despachos, fuentes y despachos por mes,
+# contados sobre el propio HTML de la página.
+def svg_semana():
+    segs = [("trabajo_necesario", "Necesario", "seg-a"), ("plustrabajo", "Plustrabajo", "seg-b"),
+            ("traslado_no_remunerado", "Traslado", "seg-c"), ("reproductivo_no_remunerado", "Hogar y cuidados", "seg-d")]
+    tot = sum(float(jornada[k]["valor"]) for k, _, _ in segs); x = 0; g = ""
+    for k, nom, cls in segs:
+        v = float(jornada[k]["valor"]); w = 420 * v / tot; h_txt = fmt(v, 2).rstrip("0").rstrip(",")
+        g += (f'<rect class="{cls}" x="{x:.1f}" y="6" width="{w:.1f}" height="40"><title>{nom}: {h_txt} horas a la semana — {jornada[k]["nota"]}</title></rect>'
+              f'<text class="seg-n" x="{x + w/2:.1f}" y="31" text-anchor="middle">{h_txt} h</text>'
+              f'<text class="seg-r" x="{x + w/2:.1f}" y="62" text-anchor="middle">{nom}</text>')
+        x += w
+    return f'<svg class="est-graf" viewBox="0 0 420 70" role="img" aria-label="Composición de la semana obrera en horas">{g}</svg>'
+
+def svg_tasa():
+    RW, RH, RB = 420, 150, 128
+    rbw = RW / len(TASAS)
+    def ry(v): return RB - (RB - 36) * v / 30
+    g = f'<line class="eje-l" x1="0" y1="{RB}" x2="{RW}" y2="{RB}"/>'
+    for i, r in enumerate(TASAS):
+        g += f'<rect class="{"col-proy" if r["proy"] else "col"}" x="{i*rbw+0.8:.1f}" y="{ry(r["tasa"]):.1f}" width="{rbw-1.6:.1f}" height="{RB-ry(r["tasa"]):.1f}"><title>{titulo_tasa(r)}</title></rect>'
+        if r["anio"] % 10 == 0: g += f'<text class="eje-t" x="{i*rbw+rbw/2:.1f}" y="{RH-7}" text-anchor="middle">{r["anio"]}</text>'
+    for anio, rot in LEYES:
+        if anio <= ANIO_HOY: continue
+        xl = (anio - TASAS[0]["anio"]) * rbw
+        g += (f'<line class="ley-l ley-proy" x1="{xl:.1f}" y1="6" x2="{xl:.1f}" y2="{RB}"/>'
+              f'<text class="ley-t ley-proy" x="{xl - 4:.1f}" y="14" text-anchor="end">{rot}</text>')
+    return f'<svg class="est-graf" viewBox="0 0 {RW} {RH}" role="img" aria-label="Tasa legal del impuesto a las empresas por año">{g}</svg>'
+
+def svg_barras_h(items, unidad):
+    """items: [(rótulo, valor, clase)] → barras horizontales con el valor al final."""
+    mx = max(v for _, v, _ in items); g = ""
+    for i, (nom, v, cls) in enumerate(items):
+        y = 4 + i * 40; w = 300 * v / mx
+        g += (f'<text class="seg-r" x="0" y="{y + 9}">{nom}</text>'
+              f'<rect class="{cls}" x="0" y="{y + 14}" width="{w:.1f}" height="16"><title>{nom}: {fmt(v, 1)} {unidad}</title></rect>'
+              f'<text class="col-n col-n-ch" x="{w + 8:.1f}" y="{y + 28}">{fmt(v, 1)} %</text>')
+    return f'<svg class="est-graf" viewBox="0 0 420 {8 + 40 * len(items)}" role="img" aria-label="Peso de cada circuito, en porcentaje del PIB">{g}</svg>'
+
+def svg_destinos():
+    CORTO = {"Europa": "Europa", "Estados Unidos": "EE.UU.", "Canadá": "Canadá", "Asia (Japón)": "Asia", "Oceanía": "Oceanía", "Otros y no asignados": "Otros"}
+    filas = [r for r in ied_pais if r["destino"] != "TOTAL IED"]
+    mx = max(float(r["pagado"]) for r in filas); n = len(filas); gap = 10; bw = (420 - gap * (n - 1)) / n; g = '<line class="eje-l" x1="0" y1="118" x2="420" y2="118"/>'
+    for i, r in enumerate(filas):
+        v = float(r["pagado"]); hh = 96 * v / mx; x = i * (bw + gap)
+        g += (f'<rect class="{"col-proy" if v == mx else "col"}" x="{x:.1f}" y="{118 - hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"><title>{r["destino"]}: US$ {fmt(v)} M de renta de la inversión extranjera pagada en 2024</title></rect>'
+              f'<text class="eje-t" x="{x + bw/2:.1f}" y="134" text-anchor="middle">{CORTO.get(r["destino"], r["destino"])}</text>')
+    return f'<svg class="est-graf" viewBox="0 0 420 140" role="img" aria-label="Renta de la inversión extranjera pagada en 2024, por destino">{g}</svg>'
+
+def bandas():
+    cae = kpi("CAE — cartera / mora"); gs = gasto[-1]
+    return {
+        "comun": {"pagina": "secciones/los-medios-comunes.html", "tono": "ds-azul", "modulo": "m2",
+                  "titulo": "Lo común capturado · peso de cada circuito",
+                  "svg": svg_barras_h([("Fondos de pensiones (AFP), stock", afp_pct, "col-proy"), ("Minería", MIN25, "col"), ("Rentas pagadas al exterior", pib_pct25, "col")], "% del PIB"),
+                  "cifras": [(kpi_fmt("AFP — stock de fondos"), f'en fondos de AFP: el salario diferido convertido en capital ({kpi("AFP — stock de fondos")["fecha_corte"]})'),
+                             (f'{fmt(float(cae["valor2_numerico"]),1)} %', f'de mora en la cartera del CAE ({cae["fecha_corte"]})')],
+                  "mini": (f'{fmt(afp_pct)} % del PIB', "en fondos de AFP: el mayor circuito nacional"),
+                  "fuente": "Superintendencia de Pensiones · Comisión Ingresa · CEPALSTAT"},
+        "jerarquias": {"pagina": "secciones/trabajo-polimorfo.html", "tono": "ds-salmon", "modulo": "m1",
+                  "titulo": "El tiempo dividido · la semana obrera",
+                  "svg": svg_semana(),
+                  "cifras": [(f'{fmt(float(jornada["carga_global_real"]["valor"]))} h', "de carga real a la semana, contra 42 h de jornada legal"),
+                             (f'{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %', "tasa de explotación: plustrabajo sobre trabajo necesario")],
+                  "mini": (f'{fmt(float(jornada["carga_global_real"]["valor"]))} h', "de carga real a la semana, contra 42 h legales"),
+                  "fuente": "Reporte N°1 sobre Fundación SOL (2022) · nivel de referencia"},
+        "fronteras": {"pagina": "secciones/proletariado.html", "tono": "ds-azul", "modulo": "m5",
+                  "titulo": "Hacia dónde sale el plusvalor · renta pagada en 2024, por destino",
+                  "svg": svg_destinos(),
+                  "cifras": [(f'US$ {fmt(h("apropiacion_neta_valor"),1)} bill.', "drenados del Sur al Norte en un solo año (2015)"),
+                             (f'US$ {fmt(razon_cl,2)}', "salieron de Chile en utilidades por cada dólar de inversión extranjera que entró (2024)")],
+                  "mini": (f'US$ {fmt(razon_cl,2)}', "salen en utilidades por cada dólar que entra"),
+                  "fuente": "Banco Central · CEPAL · Hickel et al. (2022)"},
+        "estado": {"pagina": "secciones/marchitamiento-del-estado.html", "tono": "ds-salmon", "modulo": "m4",
+                  "titulo": "Lo que el Estado retiene · impuesto a las empresas por año",
+                  "svg": svg_tasa(),
+                  "cifras": [(f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'rebaja ya promulgada, en régimen en {anio_final}'),
+                             (f'{fmt(float(gs["gasto_social_total"]),1)} %', f'del PIB en gasto público social ({gs["anio"]}); ajuste anunciado de US$ {fmt(AJ_TOTAL)} M')],
+                  "mini": (f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'impuesto a las empresas, hacia {anio_final}'),
+                  "fuente": "leyes citadas en el Observatorio · CEPALSTAT (DIPRES) · prensa"},
+    }
+
+MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"]
+def seccion_en_cifras(html):
+    """Cuenta sobre el HTML de la página: despachos, fuentes distintas y despachos por mes de 2026."""
+    arts = re.findall(r'<article class="(?:despacho|indicio)".*?</article>', html, re.S)
+    fuentes, por_mes, antes = set(), [0] * 12, 0
+    for a in arts:
+        meta = re.search(r'<p class="meta">(.*?)</p>', a, re.S)
+        if not meta: continue
+        m = meta.group(1)
+        org = re.search(r'<(?:a|span)[^>]*>(.*?)</(?:a|span)>', m, re.S)
+        if org: fuentes.add(re.sub(r"<[^>]+>", "", org.group(1)).strip())
+        plano = re.sub(r"<[^>]+>", " ", m)
+        f = re.search(r'·\s*(?:corte\s+)?(?:\d{1,2}\s+)?(ene|feb|mar|abr|may|jun|jul|ago|sept?|oct|nov|dic)\b\.?\s*(\d{4})?', plano)
+        if not f: continue
+        mes = "sept" if f.group(1).startswith("sep") else f.group(1)
+        if f.group(2) and f.group(2) != str(ANIO_HOY): antes += 1
+        else: por_mes[MESES.index(mes)] += 1
+    usados = [i for i, c in enumerate(por_mes) if c]
+    if not usados: return ""
+    i0, i1 = min(usados), max(usados)
+    cols = ([("antes", antes)] if antes else []) + [(MESES[i], por_mes[i]) for i in range(i0, i1 + 1)]
+    mx = max(c for _, c in cols); n = len(cols); gap = 8; bw = min(44, (300 - gap * (n - 1)) / n); g = '<line class="eje-l" x1="0" y1="70" x2="300" y2="70"/>'
+    for i, (nom, c) in enumerate(cols):
+        hh = 54 * c / mx; x = i * (bw + gap)
+        if c: g += (f'<rect class="{"col-proy" if (nom != "antes" and c == max(por_mes)) else "col"}" x="{x:.1f}" y="{70 - hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"><title>{"Anteriores a " + str(ANIO_HOY) if nom == "antes" else nom + " " + str(ANIO_HOY)}: {c} {"despacho" if c == 1 else "despachos"}</title></rect>'
+                    f'<text class="eje-t" x="{x + bw/2:.1f}" y="{66 - hh:.1f}" text-anchor="middle">{c}</text>')
+        g += f'<text class="eje-t" x="{x + bw/2:.1f}" y="84" text-anchor="middle">{nom}</text>'
+    return f'''<section class="sec-cifras" aria-label="La sección en cifras">
+  <p class="sc-num"><strong>{len(arts)}</strong><span>despachos en esta página</span></p>
+  <p class="sc-num"><strong>{len(fuentes)}</strong><span>fuentes distintas</span></p>
+  <div class="sc-graf graf-est"><p class="cifra-rot">Despachos por mes</p><svg class="est-graf" viewBox="0 0 300 88" role="img" aria-label="Despachos de esta página por mes">{g}</svg></div>
+</section>'''
+
+def banda_html(b, raiz):
+    cif = "".join(f'<p><strong class="cifra-num">{v}</strong><span>{t}</span></p>' for v, t in b["cifras"])
+    return f'''<section class="dato-seccion {b["tono"]}">
+  <div class="ds-graf graf-est"><p class="cifra-rot">{b["titulo"]}</p>{b["svg"]}</div>
+  <div class="ds-cifras">{cif}</div>
+  <p class="ds-pie">{b["fuente"]} · <a href="{raiz}observatorio.html#{b["modulo"]}">ver en el Observatorio →</a></p>
+</section>'''
+
+def mini_html(b):
+    v, t = b["mini"]
+    return f'''<div class="dato-mini {b["tono"]}">
+        <div class="graf-est">{b["svg"]}</div>
+        <p><strong>{v}</strong> {t} · <a href="observatorio.html#{b["modulo"]}">Observatorio →</a></p>
+      </div>'''
+
+def entre_marcas(texto, ini, fin, nuevo):
+    a, b = texto.index(ini) + len(ini), texto.index(fin)
+    return texto[:a] + "\n" + nuevo + "\n" + texto[b:]
+
+B = bandas()
+# páginas de sección: banda del principio (si la tiene) + la sección en cifras, antes de la rejilla
+PAGINAS = ["secciones/los-medios-comunes.html", "secciones/trabajo-polimorfo.html", "secciones/proletariado.html",
+           "secciones/marchitamiento-del-estado.html", "secciones/movimientos-de-masas.html", "secciones/estado.html",
+           "secciones/organizacion-politica.html", "puntos-reales.html"]
+G_INI, G_FIN = "<!-- GRAFICA:INICIO (generado por scripts/build_observatorio.py; no editar a mano) -->", "<!-- GRAFICA:FIN -->"
+for ruta in PAGINAS:
+    p = RAIZ / ruta; html = p.read_text(encoding="utf-8"); raiz = "../" if "/" in ruta else ""
+    if G_INI not in html:
+        ancla = '<div class="rejilla-sec">'
+        if ancla not in html: print("AVISO: sin rejilla en", ruta); continue
+        html = html.replace(ancla, G_INI + "\n" + G_FIN + "\n" + ancla, 1)
+    banda = next((banda_html(b, raiz) for b in B.values() if b["pagina"] == ruta), "")
+    html = entre_marcas(html, G_INI, G_FIN, (banda + "\n" if banda else "") + seccion_en_cifras(html))
+    if "interactivo.js" not in html:
+        html = html.replace("</body>", f'<script src="{raiz}interactivo.js" defer></script>\n</body>')
+    p.write_text(html, encoding="utf-8")
+print("secciones: gráfica regenerada en", len(PAGINAS), "páginas")
+
+# portada: una banda chica dentro de cada principio
+portada = PORTADA.read_text(encoding="utf-8")
+for clave, b in B.items():
+    ini, fin = f"<!-- GRAFICA-{clave}:INICIO -->", f"<!-- GRAFICA-{clave}:FIN -->"
+    if ini not in portada:
+        m = re.search(r'(<section id="' + clave + r'" class="seccion"[^>]*>\s*<h2>.*?</h2>\s*<p class="principio">.*?</p>)', portada, re.S)
+        if not m: print("AVISO: no se encontró la sección", clave, "en la portada"); continue
+        portada = portada[:m.end()] + "\n      " + ini + "\n      " + fin + portada[m.end():]
+    portada = entre_marcas(portada, ini, fin, "      " + mini_html(b) + "\n      ")
+PORTADA.write_text(portada, encoding="utf-8")
+print("index.html: gráfica de los cuatro principios regenerada")
 
 SALIDA.write_text(pagina, encoding="utf-8")
 print("observatorio.html regenerado:", len(pagina), "bytes")
