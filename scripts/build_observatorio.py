@@ -26,7 +26,8 @@ def fmt(v, dec=0):
     s = f"{v:,.{dec}f}"
     return s.replace(",", "X").replace(".", ",").replace("X", ".")
 
-ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#8b1a1a", "#b3543f", "#17110c", "#5c554d", "#d8d2c4", "#efe8d2"
+# PRUEBA DE ESTÉTICA: tokens del sistema «Ediciones ¡Que Acontezca!» (rojo-ladrillo, salmon, tinta, pizarra, azul-palido, papel)
+ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#bf4245", "#e69089", "#000000", "#43454a", "#bbc7d1", "#f7ece0"
 
 # ───────────────────────── datos ─────────────────────────
 rentas_cl = lee_csv("rentas_primarias_chile.csv")

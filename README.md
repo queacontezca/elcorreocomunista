@@ -21,7 +21,8 @@ El sitio se organiza así: la **portada local** (Chile) despacha lo publicado po
 ```
 elcorreocomunista/
 ├── index.html            ← portada local (Chile)
-├── styles.css            ← hoja de estilos única (paleta boletín)
+├── styles.css            ← hoja de estilos única (estética «Ediciones ¡Que Acontezca!», octubre 2026)
+├── fonts/                ← tipografías alojadas en el sitio (Antonio, Anton, IM Fell Double Pica, League Spartan, Open Sans; licencias OFL incluidas)
 ├── america-latina.html   ← escala América Latina
 ├── mundo.html            ← escala Mundo (en formación)
 ├── puntos-reales.html    ← subsección Puntos reales

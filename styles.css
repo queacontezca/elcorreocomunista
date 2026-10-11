@@ -1,3 +1,19 @@
+/* ════════════════════════════════════════════════════════════════════
+   ESTÉTICA NUEVA — adoptada para la edición de octubre de 2026
+   (nació como prueba local el 11-10-2026)
+   Aplica el sistema «Ediciones ¡Que Acontezca!» (borrador del 03-10-2026)
+   sobre el sitio tal como está publicado. Estructura: primero la hoja
+   vigente sin cambios; al final, la capa «ESTÉTICA NUEVA» que la reviste.
+   Decisiones del sistema aplicadas aquí según su recomendación:
+   D2-A fondo papel · D4-C dos rojos con rol · D5-A cinco familias ·
+   D6-A Open Sans de lectura · D7-A cabecera clara · D8-B comillas ·
+   D9-A bloques desfasados. Todas las tipografías están alojadas en
+   fonts/ (Antonio e IM Fell Double Pica: licencia OFL, bajadas de
+   github.com/google/fonts el 11-10-2026). Sin llamadas a terceros.
+   11-10-2026: logo nuevo (círculo con multitud, D10 decidido) y sello
+   grabado con su distribución original en la paleta nueva (D15);
+   rojo-act pasa a #f9514c y se suma noche #171d22, medidos del logo.
+   ════════════════════════════════════════════════════════════════════ */
 /* ════════════════════════════════════════════════════
    EL CORREO COMUNISTA — estética postal de clase
    Paleta oficial boletines ¡Que Acontezca!:
@@ -730,3 +746,372 @@ footer strong{color:var(--papel)}
 .tabla-scroll{overflow-x:auto}
 /* En pantallas angostas el llamado al Observatorio se apila (antes desbordaba el ancho del teléfono) */
 @media (max-width:700px){ .observatorio-teaser{flex-direction:column; align-items:flex-start} }
+
+
+/* ════════════════════════════════════════════════════════════════════
+   ESTÉTICA NUEVA — capa sobre la hoja anterior
+   ════════════════════════════════════════════════════════════════════ */
+@font-face{font-family:"Antonio"; src:url("fonts/Antonio-wght.ttf") format("truetype"); font-weight:100 700; font-display:swap}
+@font-face{font-family:"IM Fell Double Pica"; src:url("fonts/IMFellDoublePica-Regular.ttf") format("truetype"); font-weight:400; font-style:normal; font-display:swap}
+@font-face{font-family:"IM Fell Double Pica"; src:url("fonts/IMFellDoublePica-Italic.ttf") format("truetype"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Anton"; src:url("fonts/Anton-Regular.ttf") format("truetype"); font-weight:400; font-display:swap}
+@font-face{font-family:"League Spartan"; src:url("fonts/LeagueSpartan-Bold.ttf") format("truetype"); font-weight:700; font-display:swap}
+@font-face{font-family:"Open Sans"; src:url("fonts/OpenSans-Regular.ttf") format("truetype"); font-weight:400; font-display:swap}
+@font-face{font-family:"Open Sans"; src:url("fonts/OpenSans-Italic.ttf") format("truetype"); font-weight:400; font-style:italic; font-display:swap}
+@font-face{font-family:"Open Sans"; src:url("fonts/OpenSans-Bold.ttf") format("truetype"); font-weight:700; font-display:swap}
+
+:root{
+  /* tokens del sistema */
+  --papel:#f7ece0; --blanco:#ffffff; --tinta:#000000; --pizarra:#43454a;
+  --rojo-act:#f9514c; --noche:#171d22; --rojo-ladrillo:#bf4245; --rojo-profundo:#a62c2a;
+  --salmon:#e69089; --azul:#6584a9; --azul-claro:#80a1c1; --azul-palido:#bbc7d1;
+  --filete:#b9ad8f;
+  --font-cartel:"Antonio","Anton","Arial Narrow",sans-serif;
+  --font-cintillo:"Anton","Antonio","Arial Narrow",sans-serif;
+  --font-grabado:"IM Fell Double Pica","IM FELL Double Pica",Georgia,serif;
+  --font-consigna:"League Spartan","Arial Black",sans-serif;
+  --font-lectura:"Open Sans",Arial,sans-serif;
+  /* nombres que usa la hoja vigente, reasignados a los tokens */
+  --rojo:var(--rojo-profundo);      /* texto rojo pequeño y botones */
+  --negro:var(--pizarra);
+  --papel-oscuro:var(--azul-palido);
+  --rojo-prof:var(--azul-palido);
+}
+
+/* ── Base ── */
+body{background:var(--papel); color:var(--tinta); font-family:var(--font-lectura); line-height:1.55}
+a{color:var(--rojo-profundo); text-decoration:underline; text-underline-offset:.15em}
+a:hover{color:var(--tinta)}
+h1,h2{font-family:var(--font-cartel); font-weight:700; text-transform:uppercase; letter-spacing:.01em}
+h3{font-family:var(--font-grabado); font-weight:400}
+h4{font-family:var(--font-cintillo); font-weight:400; letter-spacing:.12em; text-transform:uppercase}
+button, .botones-discusion button, .botones-obs button, .botones-mapa button{border-radius:0}
+
+/* ── Cabecera clara (D7-A) ── */
+.estafeta{background:var(--papel); color:var(--tinta); border-bottom:4px solid var(--pizarra)}
+.banda-superior{
+  font-family:var(--font-cintillo); font-size:.72rem; letter-spacing:.14em;
+  color:var(--tinta); border-bottom:1px solid var(--filete); align-items:center;
+}
+.banda-superior span:first-child{display:flex; align-items:center; gap:.7rem}
+.banda-superior span:first-child::before, .me-sup span::before, footer p:first-child::before{
+  /* marca chica: el sello, porque el logo con multitud se empasta bajo 60 px */
+  content:""; display:inline-block; width:34px; height:34px; flex:none;
+  background:url("imagenes/sello-grabado-chico.svg") center/contain no-repeat;
+}
+.masthead{border-bottom:0; padding:1.8rem 1.2rem .6rem; align-items:flex-end; gap:1.6rem}
+.centro{text-align:left}
+.masthead h1{
+  font-family:var(--font-cartel); font-weight:700; text-transform:uppercase;
+  font-size:clamp(3rem,9.5vw,6.6rem); line-height:.95; letter-spacing:0; color:var(--pizarra);
+}
+.masthead h1 span{color:var(--rojo-ladrillo)}
+.bajada{margin-top:.5rem}
+.sello{
+  font-family:var(--font-grabado); font-style:italic; font-weight:400;
+  font-size:clamp(1.35rem,3vw,2rem); letter-spacing:0;
+  color:var(--rojo-profundo); background:none; border:0; outline:0; padding:0; transform:none;
+}
+.sello-grabado{width:150px; height:auto; flex:none; align-self:center}
+.fecha-caja{border-left:0; padding-left:0; width:auto; align-self:center}
+.fecha-caja .logo-act{width:112px; height:auto; border-radius:0; margin:0}
+.fila-fecha{justify-content:flex-start; padding:.9rem 1.2rem .4rem}
+.etiqueta{font-family:var(--font-grabado); font-style:italic; font-size:1rem; letter-spacing:0; text-transform:none; color:var(--pizarra)}
+.clasif{gap:0}
+.clasif .etiqueta{margin-right:.9rem}
+.clasif a{
+  font-family:var(--font-cintillo); font-size:.8rem; letter-spacing:.12em; text-decoration:none;
+  background:var(--azul-palido); color:var(--tinta); border:0; border-right:1px solid var(--papel); padding:.6rem 1.2rem;
+}
+.clasif a.activa{background:var(--pizarra); color:var(--papel); font-weight:400}
+.clasif a:not(.activa):hover{color:var(--rojo-profundo)}
+.indice{
+  justify-content:flex-start; gap:.25rem 1.5rem; padding:.5rem 1.2rem .6rem;
+  font-family:var(--font-cintillo); font-size:.78rem; letter-spacing:.12em;
+}
+.indice .etiqueta{text-align:left; width:auto; margin:0 .4rem 0 0}
+.indice a{color:var(--tinta); text-decoration:none}
+.indice a:hover{color:var(--rojo-profundo)}
+.indice-idea, .indice-b{border-top:1px solid var(--filete)}
+.indice-idea .etiqueta{color:var(--pizarra)}
+.indice a.pr, .indice a.esp{color:var(--tinta); border-bottom:3px solid var(--rojo-ladrillo); font-weight:400}
+.indice-c{opacity:1; margin-top:0; padding-top:.2rem; font-size:.7rem}
+.indice-c a{color:var(--pizarra)}
+
+/* ── Cabecera de subpáginas ── */
+.mini-estafeta{background:var(--papel); color:var(--tinta); border-bottom:4px solid var(--pizarra)}
+.me-sup{
+  font-family:var(--font-cintillo); font-size:.72rem; letter-spacing:.14em; color:var(--tinta);
+  border-bottom:1px solid var(--filete);
+}
+.me-sup a{color:var(--rojo-profundo); text-decoration:none}
+.me-sup span{display:flex; align-items:center; gap:.7rem; flex-direction:row-reverse}
+.me-titulo{padding:1.6rem 1.2rem 1.4rem}
+.kicker{font-family:var(--font-cintillo); font-weight:400; font-size:.78rem; letter-spacing:.14em; color:var(--rojo-profundo); margin-bottom:.7rem}
+.titulo-sec{
+  font-family:var(--font-cartel); font-weight:700; text-transform:uppercase;
+  font-size:clamp(2.2rem,6vw,3.6rem); line-height:.98; letter-spacing:0;
+  background:none; color:var(--pizarra); padding:0; margin-bottom:.5rem; display:block;
+}
+.titulo-sec .numeral{font-style:normal; color:var(--rojo-ladrillo)}
+.principio-sec{font-family:var(--font-grabado); font-style:italic; font-size:1.3rem; line-height:1.2; color:var(--rojo-profundo); max-width:46rem}
+.indice-sub{
+  background:var(--azul-palido); justify-content:flex-start; gap:0; padding:0 1.2rem;
+  font-family:var(--font-cintillo); font-size:.72rem; letter-spacing:.11em;
+}
+.indice-sub a{color:var(--tinta); opacity:1; text-decoration:none; padding:.6rem .8rem; border-right:1px solid var(--papel)}
+.indice-sub a:hover{background:var(--papel); text-decoration:none}
+.indice-sub a.actual{background:var(--pizarra); color:var(--papel); font-weight:400; border-bottom:0}
+
+/* ── Manifiesto ── */
+.manifiesto{
+  font-style:normal; background:none; border:0; box-shadow:none;
+  border-left:10px solid var(--azul); padding:.2rem 0 .2rem 1.4rem;
+}
+.manifiesto p{font-size:1rem}
+.manifiesto p:first-child::first-line{font-family:var(--font-grabado); font-style:italic; font-size:1.35rem}
+.firma-editorial{
+  font-family:var(--font-consigna); font-weight:700; font-variant:normal; text-transform:uppercase;
+  letter-spacing:.1em; font-size:.8rem; color:var(--rojo-profundo);
+}
+.lanzamiento{border-top:1px solid var(--filete)}
+
+/* ── Llamado al especial: bloque oscuro con comillas (D8-B) ── */
+.especial-teaser{background:var(--pizarra); color:var(--papel); border:0; box-shadow:none; position:relative; overflow:hidden; padding:1.5rem 1.8rem 1.5rem 6.2rem}
+.especial-teaser::before{
+  content:"“"; position:absolute; left:1.1rem; top:-.6rem;
+  font-family:var(--font-cartel); font-weight:700; font-size:9rem; line-height:1; color:var(--salmon);
+}
+.especial-teaser .kicker-esp{font-family:var(--font-cintillo); color:var(--salmon); letter-spacing:.14em}
+.especial-teaser h2{font-size:clamp(1.9rem,4.4vw,2.9rem); line-height:1}
+.especial-teaser h2 a{color:var(--papel); text-decoration:none}
+.especial-teaser p{color:var(--papel); font-size:.95rem}
+.especial-teaser .boton-obs{background:var(--papel); color:var(--tinta); border:0}
+@media (max-width:700px){ .especial-teaser{padding:4.2rem 1.2rem 1.4rem} }
+
+/* ── Síntesis de la edición ── */
+.discusion{background:none; border:0; border-top:4px solid var(--pizarra); box-shadow:none; padding:1.1rem 0 0}
+.discusion h2{font-size:2rem; color:var(--pizarra); border-bottom:0; padding-bottom:0; margin-bottom:.7rem}
+.discusion h2 span{font-family:var(--font-grabado); font-style:italic; text-transform:none; letter-spacing:0; font-size:1.1rem; color:var(--rojo-profundo)}
+.botones-discusion{gap:0}
+.botones-discusion button{
+  font-family:var(--font-cintillo); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  background:var(--azul-palido); color:var(--tinta); border:0; border-right:1px solid var(--papel); border-bottom:1px solid var(--papel); padding:.55rem .9rem;
+}
+.botones-discusion button:hover{background:var(--azul-claro)}
+.botones-discusion button.activo{background:var(--pizarra); color:var(--papel); font-weight:400}
+.cuerpo-discusion .eje{font-family:var(--font-grabado); font-style:italic; font-size:1.3rem; line-height:1.25}
+.cuerpo-discusion .eje strong{font-family:var(--font-cintillo); font-style:normal; font-weight:400; font-size:.76rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo-profundo); display:block}
+.cuerpo-discusion p{font-size:.95rem}
+.cuerpo-discusion .nota{font-style:normal; color:var(--pizarra)}
+
+/* ── Boletines (lateral) ── */
+.boletines-lateral{background:var(--azul-palido); color:var(--tinta); border:0; box-shadow:none; padding:0 1.2rem 1.1rem}
+.boletines-lateral h2{
+  font-size:1.7rem; line-height:1; background:var(--rojo-ladrillo); margin:0 -1.2rem; padding:.9rem 1.2rem .8rem;
+}
+.boletines-lateral h2 a{color:var(--papel); text-decoration:none}
+.boletines-lateral .bajada-lateral{font-family:var(--font-grabado); font-style:italic; font-size:1.05rem; letter-spacing:0; text-transform:none; color:var(--tinta); border-bottom:1px solid var(--papel); margin-top:.7rem}
+.boletines-lateral li{border-bottom:1px solid var(--papel)}
+.boletines-lateral .num{font-family:var(--font-cintillo); font-style:normal; font-weight:400; letter-spacing:.12em; color:var(--rojo-profundo)}
+.bol-textos .titulo a, .boletines-lateral li.proximo .titulo{font-family:var(--font-grabado); font-weight:400; font-size:1.25rem; line-height:1.1; color:var(--tinta); text-decoration:none}
+.boletines-lateral .acciones{font-family:var(--font-cintillo); letter-spacing:.12em}
+.boletines-lateral .acciones a{color:var(--rojo-profundo)}
+.boletines-lateral li.proximo .acciones{color:var(--pizarra)}
+.boletines-lateral .arts, .boletines-lateral .arts a{color:var(--tinta); text-decoration:none}
+.boletines-lateral .arts a:hover{text-decoration:underline}
+.boletines-lateral .pie-lateral{color:var(--pizarra); font-style:normal}
+.bol-tapa img{border:0; box-shadow:none}
+.bol-tapa-vacia{border:2px dashed var(--pizarra); background:var(--papel); color:var(--pizarra)}
+.bol-tapa-vacia .tv-num, .bol-portada-vacia .tv-num{font-family:var(--font-cartel); font-style:normal; font-weight:700; font-size:1.8rem; color:var(--rojo-ladrillo)}
+.bol-tapa-vacia .tv-tema, .bol-portada-vacia .tv-tema{font-family:var(--font-cintillo); color:var(--tinta)}
+.bol-tapa-vacia .tv-estado, .bol-portada-vacia .tv-estado{font-family:var(--font-grabado)}
+.bol-portada-vacia{border:2px dashed var(--pizarra)}
+.bol-portada-vacia .tv-num{font-size:2.6rem}
+
+/* ── Secciones: título en dos bloques desfasados (D9-A) ── */
+.seccion{border-top:0}
+.seccion h2{
+  display:inline-block; background:var(--azul); color:var(--tinta);
+  font-family:var(--font-cartel); font-weight:400; text-transform:none; font-size:1.75rem; line-height:1.05; letter-spacing:0;
+  padding:1.1rem 1.4rem .85rem 1rem; margin:0; min-width:55%;
+}
+.seccion h2 a{color:var(--tinta); text-decoration:none}
+.seccion h2 .numeral{font-style:normal; color:var(--tinta); opacity:.6}
+.seccion .principio{
+  background:var(--rojo-ladrillo); color:var(--papel);
+  font-family:var(--font-grabado); font-style:italic; font-size:1.3rem; line-height:1.15; text-align:right;
+  margin:-.45rem 0 1.3rem 22%; padding:.75rem 1.1rem; border-bottom:0; position:relative;
+}
+
+/* ── Despachos ── */
+.despacho{background:none; border:0; border-top:4px solid var(--pizarra); padding:.8rem 0 .4rem; margin-bottom:1.3rem}
+.despacho::before{display:none}
+.despacho .meta{font-family:var(--font-lectura); font-size:.74rem; color:var(--pizarra)}
+.despacho .meta .org, .despacho .meta a.org, span.org{
+  font-family:var(--font-cintillo); font-weight:400; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--rojo-profundo); text-decoration:none;
+}
+.despacho h3{font-family:var(--font-grabado); font-weight:400; font-size:1.42rem; line-height:1.15; margin:.25rem 0 .4rem}
+.despacho h3 a{color:var(--tinta); text-decoration:none}
+.despacho h3 a:hover{color:var(--rojo-profundo)}
+.despacho .extracto{font-style:normal; font-size:.93rem; line-height:1.5; color:var(--tinta)}
+.voz-propia{font-family:var(--font-cintillo); font-weight:400; letter-spacing:.12em; background:var(--salmon); color:var(--tinta); padding:.05rem .4rem}
+.lugar{font-style:normal}
+.relacion{font-family:var(--font-grabado); font-size:1.02rem; color:var(--rojo-profundo); border-top:0; padding-top:0}
+.despacho .lectura{background:none; border-left:6px solid var(--azul); font-size:.9rem; padding:.2rem 0 .2rem .9rem}
+.despacho .lectura strong{color:var(--tinta)}
+.despacho .lectura .cat{font-style:normal; font-weight:700; color:var(--rojo-profundo)}
+.despacho:target, .indicio:target{box-shadow:none; border-color:var(--rojo-ladrillo)}
+.bloque-debate{border:0; background:var(--azul-palido); padding:1.1rem 1.3rem}
+.bloque-debate h4{font-family:var(--font-cartel); font-weight:700; letter-spacing:0; font-size:1.5rem; color:var(--pizarra)}
+.bloque-debate .versus{font-family:var(--font-cintillo); font-weight:400; letter-spacing:.1em; text-transform:uppercase; font-size:.76rem; color:var(--rojo-profundo); display:block}
+.bloque-debate p{font-size:.93rem; margin:.6rem 0}
+
+/* ── Puntos reales: bloque azul ── */
+.puntos-reales{background:var(--azul); color:var(--tinta); border:0; box-shadow:none}
+.puntos-reales h2{font-size:2.2rem; line-height:1}
+.puntos-reales h2 a{color:var(--tinta); text-decoration:none}
+.puntos-reales h2 span{font-family:var(--font-grabado); font-style:italic; text-transform:none; letter-spacing:0; font-size:1.2rem; color:var(--tinta)}
+.indicio{background:var(--papel); border:0; padding:1rem 1.1rem}
+.indicio .meta{font-family:var(--font-cintillo); letter-spacing:.12em; color:var(--pizarra)}
+.indicio .meta a{color:var(--rojo-profundo); text-decoration:none}
+.indicio h3{font-size:1.25rem; line-height:1.15}
+.indicio h3 a{color:var(--tinta); text-decoration:none}
+.indicio .extracto{color:var(--tinta); font-size:.9rem}
+.sin-despachos{font-style:normal}
+
+/* ── Llamado al Observatorio, servicios, pie ── */
+.observatorio-teaser{background:none; border:0; border-top:4px solid var(--pizarra); box-shadow:none; padding:1.2rem 0 0}
+.observatorio-teaser h2{font-size:2rem; line-height:1}
+.observatorio-teaser h2 a{color:var(--pizarra); text-decoration:none}
+.observatorio-teaser h2 span{font-family:var(--font-grabado); font-style:italic; text-transform:none; letter-spacing:0; font-size:1.1rem; color:var(--rojo-profundo)}
+.observatorio-teaser p{color:var(--tinta); font-size:.95rem}
+.boton-obs, .btn-comentarios, .boton-leer, .descarga a.boton{
+  font-family:var(--font-cintillo); font-weight:400; letter-spacing:.12em; text-transform:uppercase; font-size:.8rem;
+  background:var(--rojo-profundo); color:var(--papel); border:0; box-shadow:none; text-decoration:none;
+}
+.boton-obs:hover, .btn-comentarios:hover, .boton-leer:hover{background:var(--pizarra); color:var(--papel)}
+.boton-pdf{font-family:var(--font-cintillo); font-weight:400; letter-spacing:.12em; border:2px solid var(--pizarra); color:var(--tinta)}
+.servicios article{border-top:4px solid var(--pizarra)}
+.servicios h3{font-size:1.2rem}
+.servicios h3 a{color:var(--tinta)}
+.servicios p{color:var(--tinta); font-size:.84rem}
+footer{background:var(--pizarra); color:var(--papel); border-top:0; font-size:.82rem}
+footer p:first-child{display:flex; align-items:center; justify-content:center; gap:.7rem; font-family:var(--font-cintillo); letter-spacing:.14em; text-transform:uppercase}
+footer strong{font-weight:400}
+footer a{color:var(--papel)}
+.aviso{font-style:normal; padding-bottom:3rem}
+
+/* ── Páginas de sección ── */
+.bloque h3, .despachos-sec > h3, .anudados h3{
+  font-family:var(--font-cintillo); font-weight:400; font-size:.8rem; letter-spacing:.14em; color:var(--rojo-profundo); border-bottom:1px solid var(--filete);
+}
+.bloque.pregunta h3{font-family:var(--font-grabado); font-style:italic; font-size:1.9rem; line-height:1.1; text-transform:none; letter-spacing:0; color:var(--tinta); border-bottom:0; margin-bottom:.5rem}
+.bloque p{font-size:1rem}
+.lateral-sec{background:var(--azul-palido); border:0; padding:1.1rem 1.2rem}
+.lateral-sec h4{font-size:.78rem; color:var(--rojo-profundo); border-bottom:1px solid var(--papel)}
+.cita-boletin{border-left:0; padding:0; margin:1rem 0 1.2rem; color:var(--tinta); font-family:var(--font-grabado); font-style:italic; font-size:1.18rem; line-height:1.25; position:relative}
+.lateral-sec .cita-boletin::before{content:"“"; display:block; font-family:var(--font-cartel); font-weight:700; font-style:normal; font-size:3.4rem; line-height:.7; color:var(--rojo-ladrillo); margin-bottom:-.5rem}
+.cita-boletin cite{font-family:var(--font-consigna); font-weight:700; font-style:normal; text-transform:uppercase; letter-spacing:.1em; font-size:.66rem; color:var(--tinta); margin-top:.5rem}
+.cita-boletin cite a{color:var(--rojo-profundo)}
+.cita-marx{background:none; border:0; border-left:10px solid var(--salmon); padding-left:1.1rem}
+.anudados{background:var(--azul-palido); border:0; box-shadow:none}
+.hipotesis li::marker{color:var(--rojo-ladrillo)}
+
+/* Especial 18 de octubre */
+.eje-esp{
+  background:var(--azul) !important; color:var(--tinta) !important; border:0 !important;
+  font-family:var(--font-cartel) !important; font-weight:400 !important; font-size:1.7rem !important; letter-spacing:0 !important; text-transform:none !important;
+  padding:1rem 1.2rem .5rem !important; margin:2.2rem 0 0 !important; display:inline-block; min-width:60%;
+}
+.eje-esp span{
+  font-family:var(--font-cintillo); font-style:normal; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta); opacity:.75;
+}
+.eje-esp + .despacho{margin-top:1.3rem}
+.mapa-lecturas th, .fuentes-pag th, .tabla-obs th, .tabla-circuitos th{
+  background:var(--azul-palido); font-family:var(--font-cintillo); font-weight:400; letter-spacing:.12em; border-color:var(--papel);
+}
+.mapa-lecturas td, .fuentes-pag td{border:0; border-bottom:1px solid var(--filete); font-size:.86rem}
+.mapa-lecturas td:first-child{font-family:var(--font-grabado); font-size:1.08rem; line-height:1.15}
+.nota{color:var(--pizarra)}
+
+/* ── Boletines (página) ── */
+.bol-card{background:none; border:0; border-top:4px solid var(--pizarra); padding:1.2rem 0}
+.bol-portada img{border:0; box-shadow:none}
+.bol-info h3{font-family:var(--font-cartel); font-weight:700; text-transform:uppercase; font-size:2rem; line-height:1; color:var(--pizarra)}
+.bol-meta{font-family:var(--font-cintillo); letter-spacing:.12em; text-transform:uppercase; font-size:.7rem; color:var(--rojo-profundo)}
+.bol-nota{font-family:var(--font-grabado); font-style:italic; font-size:1.2rem; line-height:1.2; color:var(--tinta)}
+.bol-este{font-family:var(--font-cintillo); color:var(--pizarra)}
+.bol-arts li{font-size:.95rem}
+
+/* ── Artículos de boletín (las páginas traen estilos propios en línea) ── */
+body .volver{font-family:var(--font-cintillo); letter-spacing:.14em; text-decoration:none}
+body .cabecera-art{border-bottom:0; padding-bottom:.4rem; margin-bottom:1.4rem}
+body .cabecera-art .coleccion{font-family:var(--font-cintillo); letter-spacing:.14em; color:var(--pizarra)}
+body .cabecera-art .coleccion a{color:var(--rojo-profundo); text-decoration:none}
+body .cabecera-art h1{
+  display:inline-block; background:var(--azul); color:var(--tinta);
+  font-family:var(--font-cartel); font-weight:400; text-transform:none; font-size:clamp(1.9rem,4.6vw,2.6rem); line-height:1.08;
+  padding:1.3rem 1.4rem .7rem 1.1rem; margin-top:.8rem;
+}
+body .cuerpo{font-family:var(--font-lectura); font-size:1.0625rem; line-height:1.6; text-align:left}
+body .cuerpo .cita-boletin{
+  background:var(--rojo-ladrillo); color:var(--papel); font-family:var(--font-consigna); font-weight:700; font-style:normal;
+  text-transform:uppercase; letter-spacing:.08em; font-size:1.2rem; line-height:1.3; padding:1.6rem 1.6rem 1.4rem; margin:1.6rem 0;
+}
+body .cuerpo .cita-boletin cite{color:var(--papel); font-size:.8rem}
+body .descarga{border:0; box-shadow:none; background:var(--azul-palido)}
+body .descarga .nota{font-style:normal}
+body .licencia{font-style:normal}
+.en-este-numero{border:0; box-shadow:none; background:var(--azul-palido)}
+.en-este-numero h2{color:var(--pizarra); font-size:1.5rem}
+.figura-poster img{border:0; box-shadow:none}
+
+/* ── Fuentes ── */
+.fuentes-pag h1{font-size:clamp(2.2rem,6vw,3.6rem); line-height:1; color:var(--pizarra); border-bottom:4px solid var(--pizarra)}
+.fuentes-pag h2{background:var(--azul); color:var(--tinta); font-weight:400; text-transform:none; font-size:1.6rem; display:inline-block; padding:.9rem 1.2rem .4rem .9rem}
+.fuentes-pag .intro{color:var(--tinta)}
+.fuentes-pag .modo2{color:var(--rojo-profundo)}
+
+/* ── Observatorio ── */
+.modulo-obs{background:none; border:0; border-top:4px solid var(--pizarra); padding:1.1rem 0}
+.modulo-obs > h3{font-family:var(--font-cartel); font-weight:700; font-size:1.7rem; line-height:1.05; color:var(--pizarra); text-transform:uppercase}
+.graf{background:var(--papel); border:1px solid var(--filete)}
+.term-titulo{background:none; border:0; border-left:10px solid var(--azul); color:var(--tinta)}
+.term-chip{background:var(--azul-palido); border:0; border-top:0}
+.term-nom{font-family:var(--font-cintillo); letter-spacing:.12em; color:var(--tinta)}
+.term-val, .kpi-valor, .mag-val{font-family:var(--font-cartel); font-weight:700; color:var(--rojo-profundo)}
+.term-val{font-size:1.5rem}
+.kpi-valor{font-size:2rem}
+.mag-val{font-size:2rem}
+.term-fec, .kpi-nota, .mag-src{color:var(--tinta); font-style:normal}
+.kpi, .magnitud{background:none; border:0; border-top:4px solid var(--pizarra)}
+.kpi-nombre{font-family:var(--font-cintillo); letter-spacing:.12em; color:var(--pizarra)}
+.transicion{font-family:var(--font-grabado); font-size:1.25rem; line-height:1.25; color:var(--rojo-profundo); border-left:0; padding-left:0}
+.dato-incomodo{background:var(--salmon); border:0; color:var(--tinta); padding:.9rem 1.1rem}
+.ficha-dato{background:none; border:1px solid var(--filete)}
+.ficha-dato summary{font-family:var(--font-cintillo); font-weight:400; letter-spacing:.1em; text-transform:uppercase; font-size:.74rem; color:var(--tinta)}
+.botones-mapa{gap:0}
+.botones-mapa button{font-family:var(--font-cintillo); letter-spacing:.12em; text-transform:uppercase; background:var(--azul-palido); color:var(--tinta); border:0; border-right:1px solid var(--papel)}
+.botones-mapa button.activo{background:var(--pizarra); color:var(--papel); font-weight:400}
+.pais{stroke:var(--papel)}
+.pais.periferia{fill:var(--salmon)}
+.pais.centro{fill:var(--pizarra)}
+.pais:hover{fill:var(--rojo-ladrillo); stroke:var(--tinta)}
+.vec-txt{fill:var(--tinta); stroke:var(--papel)}
+.polo{fill:var(--rojo-profundo); stroke:var(--papel)}
+.chip{fill:var(--papel); stroke:var(--filete)}
+.sw-negro{background:var(--pizarra)} .sw-rojo{background:var(--salmon)}
+.sw-flecha{background:linear-gradient(90deg,var(--rojo-ladrillo) 70%,transparent 70%)}
+.sw-punteada{border-top-color:var(--salmon)}
+.cierre-obs{border-top:4px solid var(--pizarra)}
+.fuente-obs, .analisis{color:var(--tinta)}
+.despachos-sec .despacho h3{text-transform:none; letter-spacing:0; border-bottom:0; padding-bottom:0; color:var(--tinta); font-family:var(--font-grabado); font-size:1.42rem; margin:.25rem 0 .4rem}
+@media (max-width:760px){
+  .sello-grabado, .fecha-caja{display:none}
+  .masthead{align-items:flex-start; padding-top:1.2rem}
+  .clasif a{padding:.55rem .9rem}
+  .seccion .principio{margin-left:10%}
+  .indice-sub{padding:0}
+}
