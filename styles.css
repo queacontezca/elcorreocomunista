@@ -1115,3 +1115,70 @@ body .licencia{font-style:normal}
   .seccion .principio{margin-left:10%}
   .indice-sub{padding:0}
 }
+
+
+/* ════════════════════════════════════════════════════════════════════
+   AJUSTES DEL 11-10-2026 (noche) — pedidos por Christian sobre el sitio publicado
+   ════════════════════════════════════════════════════════════════════ */
+:root{ --azul-profundo:#46668f; }
+
+/* Cabecera centrada */
+.masthead{justify-content:center; align-items:center}
+.centro{text-align:center}
+.fila-fecha, .indice{justify-content:center}
+.clasif{justify-content:center}
+
+/* Franja del especial: aire antes de la fila siguiente (cerraba un recuadro vacío) */
+.especial-teaser{margin-bottom:1.8rem}
+
+/* Pestañas y botones: letras blancas sobre azul profundo (el blanco no se lee sobre azul pálido) */
+.clasif a, .botones-discusion button, .botones-mapa button, .botones-obs button{background:var(--azul-profundo); color:var(--blanco)}
+.clasif a:not(.activa):hover, .botones-discusion button:hover, .botones-mapa button:hover, .botones-obs button:hover{background:var(--azul); color:var(--blanco)}
+.clasif a.activa, .botones-discusion button.activo, .botones-mapa button.activo, .botones-obs button.activo{background:var(--pizarra); color:var(--papel)}
+.indice-sub{background:var(--azul-profundo)}
+.indice-sub a{color:var(--blanco); border-right-color:var(--azul)}
+.indice-sub a:hover{background:var(--azul); color:var(--blanco)}
+.indice-sub a.actual{background:var(--pizarra); color:var(--papel)}
+
+/* Secciones con marco: el título en bloques rompe el borde y el numeral va de fondo */
+.columnas{gap:2.4rem 2rem}
+.seccion{position:relative; border:3px solid var(--pizarra); padding:0 1.1rem 1rem; margin-top:1.2rem}
+.seccion h2{position:relative; z-index:1; margin:-1.2rem 0 0 -1.1rem; min-width:62%}
+.seccion .principio{z-index:1; margin-right:-1.1rem}
+.seccion::after{
+  content:attr(data-num); position:absolute; right:.6rem; bottom:-.35rem; z-index:0; pointer-events:none;
+  font-family:var(--font-cartel); font-weight:700; font-size:9rem; line-height:1; color:var(--azul-palido); opacity:.55;
+}
+.seccion > *{position:relative; z-index:1}
+.seccion .despacho:first-of-type{border-top:0}
+
+/* Cifras del corte: franja gráfica de portada */
+.cifras-corte{
+  display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:0; margin:0 0 2rem; position:relative;
+  border-top:4px solid var(--pizarra);
+}
+.cifra{padding:1rem 1.1rem 1.1rem; background:var(--papel); border-right:1px solid var(--filete); display:flex; flex-direction:column; gap:.35rem}
+.cifra-b{background:var(--azul-palido); border-right:0}
+.cifra-c{background:var(--salmon); border-right:0}
+.cifra-graf{background:var(--pizarra); color:var(--papel); border-right:0}
+.cifra-rot{font-family:var(--font-cintillo); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:var(--rojo-profundo)}
+.cifra-graf .cifra-rot{color:var(--salmon)}
+.cifra-b .cifra-rot, .cifra-c .cifra-rot{color:var(--tinta)}
+.cifra-num{font-family:var(--font-cartel); font-weight:700; font-size:clamp(2rem,3.6vw,3rem); line-height:.95; color:var(--pizarra)}
+.cifra-b .cifra-num, .cifra-c .cifra-num{color:var(--tinta)}
+.cifra-nota{font-size:.8rem; line-height:1.35; color:var(--tinta)}
+.cifra-graf .cifra-nota{color:var(--papel)}
+.cifra-nota span{display:block; font-family:var(--font-cintillo); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; margin-top:.25rem; opacity:.8}
+.mini-graf{width:100%; height:auto; display:block}
+.mini-graf .b{fill:var(--azul-claro)} .mini-graf .b-ult{fill:var(--rojo-act)}
+.mini-graf .b-base{stroke:var(--papel); stroke-width:1; opacity:.5}
+.mini-graf .b-eje{fill:var(--papel); font-family:var(--font-cintillo); font-size:9px; letter-spacing:.08em}
+.cifras-enlace{
+  grid-column:1/-1; justify-self:end; margin-top:-.1rem;
+  font-family:var(--font-cintillo); font-size:.74rem; letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
+  background:var(--rojo-profundo); color:var(--papel); padding:.5rem 1rem;
+}
+.cifras-enlace:hover{background:var(--pizarra); color:var(--papel)}
+@media (max-width:900px){ .cifras-corte{grid-template-columns:1fr 1fr} .cifra-graf{grid-column:1/-1} }
+@media (max-width:520px){ .cifras-corte{grid-template-columns:1fr} .seccion::after{font-size:6rem} }
+@media (max-width:760px){ .masthead{align-items:center} }
