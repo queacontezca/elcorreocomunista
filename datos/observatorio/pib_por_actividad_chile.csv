@@ -1,0 +1,12 @@
+anio,actividad,usd_millones,grupo
+2025,Explotación de minas y canteras,46734.2,produccion
+2025,"Comercio al por mayor y al por menor, reparación de bienes, y hoteles y restaurantes",35314.3,produccion
+2025,Industrias manufactureras,32017.8,produccion
+2025,"Transporte, almacenamiento y comunicaciones",28737.8,produccion
+2025,Construcción,21379.0,produccion
+2025,"Agricultura, ganadería, caza, silvicultura y pesca",12347.6,produccion
+2025,"Suministro de electricidad, gas y agua",12240.1,produccion
+2025,"Intermediación financiera, actividades inmobiliarias, empresariales y de alquiler",73828.6,financiero_inmobiliario
+2025,"Administración pública, defensa, seguridad social obligatoria, enseñanza, servicios sociales y de salud, y otros servicios comunitarios, sociales y personales",60637.8,reproduccion_pagada
+2025,Impuestos a los productos menos Subvenciones a los productos,34363.3,impuestos_netos
+2025,Producto interno bruto (PIB),357600.5,total

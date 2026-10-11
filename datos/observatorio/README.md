@@ -17,7 +17,11 @@ Reproducción libre, total o parcial, citando la fuente (CC BY 4.0).
 | `drenaje_mundial_hickel.csv` | Cifras del drenaje Sur→Norte, con su artículo y DOI | Hickel et al. (2021, NPE) y Hickel et al. (2022, GEC) | O |
 | `ied_entradas_cepal.csv` | Entradas de IED en AL y Chile; razones de drenaje | CEPAL, *La IED en ALyC 2025* + CEPALSTAT | O |
 | `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2029, ley promulgada el 09-10-2026) | leyes citadas; prensa mientras no se publique en el Diario Oficial | O |
-| `desempleo_integral_sol.csv` | Tasa de desempleo y Tasa de Desempleo Integral (subempleo + desaliento), por trimestre móvil | Fundación SOL, Serie IMCE (sobre la ENE del INE) | O |
+| `sindicalizacion_por_rama.csv` | Tasa de sindicalización por rama de actividad, diciembre de 2024 (según la empresa que paga y según donde se trabaja) | INE, Documento de Trabajo «Tasa de sindicalización según actividad económica» (febrero de 2026), Cuadro 9 | O |
+| `pib_por_actividad_chile.csv` | PIB de Chile 2025 por actividad, agrupado en producción, financiero-inmobiliario y reproducción pagada (agrupación propia) | CEPALSTAT ind. 2215 (compila Banco Central) | O |
+| `trabajo_no_remunerado_chile.csv` | Valor del trabajo doméstico y de cuidados no remunerado, 2023 | Ministerio de Hacienda y ComunidadMujer (nota del 13-10-2025) | P |
+| `ied_componentes_chile.csv` | Componentes del flujo de inversión extranjera directa, 2024 | InvestChile sobre cifras del Banco Central | O |
+| `desempleo_integral_sol.csv` | Tasa de desempleo, Tasa de Desempleo Integral (subempleo + desaliento), subempleo profesional, informalidad y externalización, por trimestre móvil | Fundación SOL, Serie IMCE (sobre la ENE del INE) | O |
 | `jornada_semana_obrera.csv` | Composición de la semana obrera y tasas | Fundación SOL 2022 recalculada (Reporte N°1) | C |
 | `kpi_corte.csv` | Indicadores del corte (AFP, CAE, TGR, empleo, cobre, gasto militar, capex digital/IA) — formato máquina: `valor_numerico` + `plantilla` de despliegue | SP · Comisión Ingresa · TGR · INE · Cochilco · SIPRI | O (capex digital/IA: X, pendiente) |
 | `kpi_historial.csv` | Valores de los indicadores en cortes anteriores (no se pierde la historia) | las mismas fuentes | O |

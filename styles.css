@@ -1365,3 +1365,7 @@ a.term-chip:hover, a.term-chip:focus-visible{transform:translate(-2px,-2px); box
 body .cuerpo{text-align:justify; text-justify:inter-word; hyphens:auto; -webkit-hyphens:auto}
 body .cuerpo h1, body .cuerpo h2, body .cuerpo h3, body .cuerpo .epigrafe, body .cuerpo blockquote cite{text-align:left; hyphens:manual; -webkit-hyphens:manual}
 .bol-info p, .en-este-numero p{text-align:justify; hyphens:auto; -webkit-hyphens:auto}
+.dato-mini .cifra-rot{color:var(--tinta); font-size:.74rem}
+.est-graf .ley-t{font-size:8.5px}
+.est-graf .eje-rot{text-anchor:start; font-size:8.5px}
+.est-graf .seg-n-ch{font-size:12px}

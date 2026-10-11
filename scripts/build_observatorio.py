@@ -45,6 +45,10 @@ ied_pais = lee_csv("renta_ied_chile_pais_2024.csv")
 pib_min = lee_csv("pib_y_mineria_chile.csv")
 ajuste = lee_csv("ajuste_fiscal_2026.csv")
 sol_des = lee_csv("desempleo_integral_sol.csv")
+sind = lee_csv("sindicalizacion_por_rama.csv")
+pib_act = lee_csv("pib_por_actividad_chile.csv")
+tnr = lee_csv("trabajo_no_remunerado_chile.csv")[-1]
+ied_comp = {r["componente"]: float(r["usd_millones"]) for r in lee_csv("ied_componentes_chile.csv")}
 MAPA_BASE = (DATOS / "mapa_base_paises.svg").read_text(encoding="utf-8")
 
 def h(indicador, periodo=None):
@@ -828,6 +832,53 @@ def svg_paises():
               f'<text class="seg-r" x="{76 + w:.1f}" y="{y + 12}">US$ {fmt(v)} M</text>')
     return f'<svg class="est-graf" viewBox="0 0 420 {6 + 22 * len(filas)}" role="img" aria-label="Rentas primarias pagadas al exterior en 2024, por país de América Latina">{g}</svg>'
 
+def svg_filas(items, aria, ref=None):
+    """items: [(rótulo, valor, texto del valor, título, destacar)] → barras horizontales, cada una con su rótulo encima.
+    ref: (valor, texto) dibuja una línea segmentada de referencia."""
+    mx = max(v for _, v, _, _, _ in items) * 1.0; g = ""
+    for i, (nom, v, txt, tit, dest) in enumerate(items):
+        y = 2 + i * 38; w = 290 * v / mx
+        g += (f'<text class="seg-r" x="0" y="{y + 9}">{nom}</text>'
+              f'<rect class="{"col-proy" if dest else "col"}" x="0" y="{y + 13}" width="{w:.1f}" height="16"><title>{tit}</title></rect>'
+              f'<text class="col-n col-n-ch" x="{w + 8:.1f}" y="{y + 27}">{txt}</text>')
+    alto = 4 + 38 * len(items)
+    if ref:
+        xr = 290 * ref[0] / mx
+        g += (f'<line class="ley-l" x1="{xr:.1f}" y1="10" x2="{xr:.1f}" y2="{alto}"/>'
+              f'<text class="ley-t" x="{xr + 4:.1f}" y="{alto + 9}">{ref[1]}</text>')
+        alto += 12
+    return f'<svg class="est-graf" viewBox="0 0 420 {alto}" role="img" aria-label="{aria}">{g}</svg>'
+
+def svg_sindicalizacion():
+    """Columnas por rama (donde se trabaja), de mayor a menor, con la línea del total."""
+    CORTO = {"Minería": "Minería", "Actividades financieras y de seguros": "Finanzas", "Construcción": "Construcción", "Agricultura y pesca": "Agro",
+             "Alojamiento y servicio de comidas": "Alojamiento", "Comercio": "Comercio", "Enseñanza": "Enseñanza", "Salud y asistencia social": "Salud", "Industria manufacturera": "Industria"}
+    total = float(next(r["tasa_rama_trabaja"] for r in sind if r["rama"] == "Total"))
+    filas = sorted([r for r in sind if r["rama"] != "Total"], key=lambda r: -float(r["tasa_rama_trabaja"]))
+    n = len(filas); gap = 4; bw = (420 - gap * (n - 1)) / n; base = 112; mx = float(filas[0]["tasa_rama_trabaja"])
+    def yy(v): return base - (base - 14) * v / mx
+    g = f'<line class="eje-l" x1="0" y1="{base}" x2="420" y2="{base}"/>'
+    for i, r in enumerate(filas):
+        v = float(r["tasa_rama_trabaja"]); x = i * (bw + gap)
+        g += f'<rect class="{"col" if v >= total else "col-proy"}" x="{x:.1f}" y="{yy(v):.1f}" width="{bw:.1f}" height="{base - yy(v):.1f}"><title>{r["rama"]}: {fmt(v,1)} % de sindicalización (diciembre de 2024)</title></rect>'
+        if r["rama"] in ("Minería", "Actividades financieras y de seguros", "Industria manufacturera", "Enseñanza", "Comercio", "Construcción"):
+            g += f'<text class="eje-t eje-rot" x="{x + bw/2:.1f}" y="{base + 6}" transform="rotate(40 {x + bw/2:.1f} {base + 6})">{CORTO[r["rama"]]}</text>'
+    g += (f'<line class="ley-l" x1="0" y1="{yy(total):.1f}" x2="420" y2="{yy(total):.1f}"/>'
+          f'<text class="ley-t" x="416" y="{yy(total) - 4:.1f}" text-anchor="end">total {fmt(total,1)} %</text>')
+    return f'<svg class="est-graf" viewBox="0 0 420 {base + 48}" role="img" aria-label="Tasa de sindicalización por rama de actividad, diciembre de 2024">{g}</svg>', total, filas
+
+def svg_sale_queda(items):
+    """items: [(rótulo, sale, queda, título)] → una barra por fila partida en lo que sale y lo que queda."""
+    g = ""
+    for i, (nom, sale, queda, tit) in enumerate(items):
+        y = 2 + i * 44; tot = sale + queda; ws = 420 * sale / tot
+        g += (f'<text class="seg-r" x="0" y="{y + 9}">{nom}</text>'
+              f'<rect class="col-proy" x="0" y="{y + 13}" width="{ws:.1f}" height="20"><title>{tit[0]}</title></rect>'
+              f'<rect class="col" x="{ws:.1f}" y="{y + 13}" width="{420 - ws:.1f}" height="20"><title>{tit[1]}</title></rect>'
+              f'<text class="seg-n seg-n-ch" x="{ws/2:.1f}" y="{y + 28}" text-anchor="middle">sale {fmt(sale/tot*100)} %</text>'
+              f'<text class="seg-n seg-n-ch" x="{ws + (420 - ws)/2:.1f}" y="{y + 28}" text-anchor="middle">queda {fmt(queda/tot*100)} %</text>')
+    return f'<svg class="est-graf" viewBox="0 0 420 {2 + 44 * len(items)}" role="img" aria-label="De cada dólar de ganancia de la inversión extranjera, cuánto sale y cuánto queda reinvertido">{g}</svg>'
+
 def bandas():
     cae = kpi("CAE — cartera / mora"); gs = gasto[-1]
     edu_max = max(float(r["educacion"]) for r in gasto); gst_max = max(gasto, key=lambda r: float(r["gasto_social_total"]))
@@ -835,6 +886,30 @@ def bandas():
                        "Gasto público en educación, en porcentaje del PIB, por año")
     svg_gst = svg_cols([(r["anio"] if i % 2 == 0 or i == len(gasto) - 1 else "", float(r["gasto_social_total"]), f'Gasto público social {r["anio"]}: {fmt(float(r["gasto_social_total"]),1)} % del PIB', r is gst_max) for i, r in enumerate(gasto)],
                        "Gasto público social, en porcentaje del PIB, por año")
+    s = sol_des[-1]
+    # I · medios de producción, financieros y de reproducción: peso de cada uno en la economía
+    pib_tot = float(next(r["usd_millones"] for r in pib_act if r["grupo"] == "total"))
+    def grupo(gk): return sum(float(r["usd_millones"]) for r in pib_act if r["grupo"] == gk) / pib_tot * 100
+    g_prod, g_fin, g_rep = grupo("produccion"), grupo("financiero_inmobiliario"), grupo("reproduccion_pagada")
+    tnr_amp = float(tnr["pct_pib_ampliado"]); tnr_pib = tnr_amp / (100 - tnr_amp) * 100
+    anio_pib = pib_act[0]["anio"]
+    svg_medios = svg_filas([
+        ("Producción · agro, minería, industria, energía, construcción, comercio, transporte", g_prod, f'{fmt(g_prod,1)} %', f'Actividades productivas: {fmt(g_prod,1)} % del PIB ({anio_pib})', False),
+        ("Financieros · banca, seguros, inmobiliarias y servicios a empresas", g_fin, f'{fmt(g_fin,1)} %', f'Intermediación financiera, inmobiliarias y servicios empresariales: {fmt(g_fin,1)} % del PIB ({anio_pib})', False),
+        ("Reproducción pagada · Estado, enseñanza, salud, servicios sociales", g_rep, f'{fmt(g_rep,1)} %', f'Administración pública, enseñanza, salud y servicios sociales y personales: {fmt(g_rep,1)} % del PIB ({anio_pib})', False),
+        ("Reproducción no pagada · trabajo doméstico y de cuidados", tnr_pib, f'≈ {fmt(tnr_pib,1)} %', f'Trabajo doméstico y de cuidados no remunerado ({tnr["anio"]}): {fmt(tnr_amp,1)} % del PIB ampliado, equivalente a {fmt(tnr_pib,1)} % del PIB. No se cuenta en el PIB. {fmt(float(tnr["pct_aportado_por_mujeres"]),1)} % lo aportan mujeres', True)],
+        "Peso de los medios de producción, financieros y de reproducción en la economía, en porcentaje del PIB")
+    # II · quién decide en el trabajo: sindicalización por rama
+    svg_sind, sind_total, sind_filas = svg_sindicalizacion()
+    # III · de cada dólar de ganancia del capital extranjero, cuánto sale y cuánto queda
+    uti24 = float(CL_2024["ied_utilidades_dividendos"]); reinv_cl = ied_comp["reinversion_de_utilidades"]
+    fresco_cl = ied_comp["participaciones_en_el_capital"] + ied_comp["deuda_relacionada"]
+    al_uti24 = float(AL_2024["ied_utilidades_piso"]); reinv_al = IED_AL * 0.52          # CEPAL: la reinversión es 52 % de la IED que entró a la región
+    svg_patria = svg_sale_queda([
+        ("Chile · ganancia de la inversión extranjera, 2024", uti24 - reinv_cl, reinv_cl,
+         (f'Chile 2024: US$ {fmt(uti24 - reinv_cl)} M de utilidades remitidas al exterior', f'Chile 2024: US$ {fmt(reinv_cl)} M reinvertidos — quedan en el país, como capital del inversionista extranjero')),
+        ("América Latina · lo mismo, para la región", al_uti24 - reinv_al, reinv_al,
+         (f'América Latina 2024: cerca de US$ {fmt(al_uti24 - reinv_al)} M remitidos (estimación: utilidades menos reinversión)', f'América Latina 2024: cerca de US$ {fmt(reinv_al)} M reinvertidos (52 % de la inversión que entró, según CEPAL)'))])
     pos_cl = sorted(pais24, key=lambda r: -float(r["debito_total_2024"])).index(next(r for r in pais24 if r["pais"] == "Chile")) + 1
     return {
         "comun": {"pagina": "secciones/los-medios-comunes.html", "tono": "ds-azul", "modulo": "m2",
@@ -842,30 +917,31 @@ def bandas():
                   "svg": svg_barras_h([("Fondos de pensiones (AFP), stock", afp_pct, "col-proy"), ("Minería", MIN25, "col"), ("Rentas pagadas al exterior", pib_pct25, "col")], "% del PIB"),
                   "cifras": [(kpi_fmt("AFP — stock de fondos"), f'en fondos de AFP: el salario diferido convertido en capital ({kpi("AFP — stock de fondos")["fecha_corte"]})'),
                              (f'{fmt(float(cae["valor2_numerico"]),1)} %', f'de mora en la cartera del CAE ({cae["fecha_corte"]})')],
-                  "mini": (f'{fmt(afp_pct)} % del PIB', "en fondos de AFP: el mayor circuito nacional"),
+                  "pregunta": "¿Cuánto pesa cada medio en la economía? · % del PIB", "mini_svg": svg_medios,
+                  "mini": (f'≈ {fmt(tnr_pib)} % del PIB', f'vale el trabajo doméstico y de cuidados que nadie paga ni cuenta: más que la reproducción pagada ({tnr["anio"]})'),
                   "fuente": "Superintendencia de Pensiones · Comisión Ingresa · CEPALSTAT"},
         "jerarquias": {"pagina": "secciones/trabajo-polimorfo.html", "tono": "ds-salmon", "modulo": "m1",
                   "titulo": "El tiempo dividido · la semana obrera",
                   "svg": svg_semana(),
                   "cifras": [(f'{fmt(float(jornada["carga_global_real"]["valor"]))} h', "de carga real a la semana, contra 42 h de jornada legal"),
                              (f'{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %', "tasa de explotación: plustrabajo sobre trabajo necesario")],
-                  "mini_svg": svg_edu,
-                  "mini": (f'{fmt(float(gs["educacion"]),1)} % del PIB', f'de gasto público en educación ({gs["anio"]}), desde {fmt(float(gasto[0]["educacion"]),1)} % en {gasto[0]["anio"]}'),
+                  "pregunta": "¿Quién decide en el trabajo? · sindicalización por rama", "mini_svg": svg_sind,
+                  "mini": (f'{fmt(100 - sind_total)} de cada 100', f'trabajadores no tienen sindicato: sin voz colectiva en las decisiones de la empresa. De {fmt(float(sind_filas[0]["tasa_rama_trabaja"]))} % en minería a {fmt(float(sind_filas[-1]["tasa_rama_trabaja"]))} % en {sind_filas[-1]["rama"].lower()} (dic. 2024)'),
                   "fuente": "Reporte N°1 sobre Fundación SOL (2022) · nivel de referencia"},
         "fronteras": {"pagina": "secciones/proletariado.html", "tono": "ds-azul", "modulo": "m5",
                   "titulo": "Hacia dónde sale el plusvalor · renta pagada en 2024, por destino",
                   "svg": svg_destinos(),
                   "cifras": [(f'US$ {fmt(h("apropiacion_neta_valor"),1)} bill.', "drenados del Sur al Norte en un solo año (2015)"),
                              (f'US$ {fmt(razon_cl,2)}', "salieron de Chile en utilidades por cada dólar de inversión extranjera que entró (2024)")],
-                  "mini_svg": svg_paises(),
-                  "mini": (f'{pos_cl}.º de la región', "es Chile entre los países que más renta pagan al exterior (2024)"),
+                  "pregunta": "De cada dólar de ganancia extranjera, ¿cuánto sale y cuánto queda?", "mini_svg": svg_patria,
+                  "mini": (f'US$ {fmt((uti24 - reinv_cl) / fresco_cl, 2)}', "salen de Chile por cada dólar nuevo que entra; y lo que «queda» sigue siendo capital extranjero (2024)"),
                   "fuente": "Banco Central · CEPAL · Hickel et al. (2022)"},
         "estado": {"pagina": "secciones/marchitamiento-del-estado.html", "tono": "ds-salmon", "modulo": "m4",
                   "titulo": "Lo que el Estado retiene · impuesto a las empresas por año",
                   "svg": svg_tasa(),
                   "cifras": [(f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'rebaja ya promulgada, en régimen en {anio_final}'),
                              (f'{fmt(float(gs["gasto_social_total"]),1)} %', f'del PIB en gasto público social ({gs["anio"]}); ajuste anunciado de US$ {fmt(AJ_TOTAL)} M')],
-                  "mini_svg": svg_gst,
+                  "pregunta": "¿Qué solventa hoy el Estado?", "mini_svg": svg_gst,
                   "mini": (f'{fmt(float(gs["gasto_social_total"]),1)} % del PIB', f'de gasto público social ({gs["anio"]}), desde {fmt(float(gst_max["gasto_social_total"]),1)} % en {gst_max["anio"]}'),
                   "fuente": "leyes citadas en el Observatorio · CEPALSTAT (DIPRES) · prensa"},
     }
@@ -914,6 +990,7 @@ def banda_html(b, raiz):
 def mini_html(b):
     v, t = b["mini"]
     return f'''<div class="dato-mini {b["tono"]}">
+        <p class="cifra-rot">{b.get("pregunta", "")}</p>
         <div class="graf-est">{b.get("mini_svg", b["svg"])}</div>
         <p><strong>{v}</strong> {t} · <a href="observatorio.html#{b["modulo"]}">Observatorio →</a></p>
       </div>'''
