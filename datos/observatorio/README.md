@@ -17,6 +17,8 @@ Reproducción libre, total o parcial, citando la fuente (CC BY 4.0).
 | `drenaje_mundial_hickel.csv` | Cifras del drenaje Sur→Norte, con su artículo y DOI | Hickel et al. (2021, NPE) y Hickel et al. (2022, GEC) | O |
 | `ied_entradas_cepal.csv` | Entradas de IED en AL y Chile; razones de drenaje | CEPAL, *La IED en ALyC 2025* + CEPALSTAT | O |
 | `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2029, ley promulgada el 09-10-2026) | leyes citadas; prensa mientras no se publique en el Diario Oficial | O |
+| `acciones_de_protesta_coes.csv` | Acciones de protesta en Chile por año (2005-2024) y por tema de la demanda principal: **solo totales agregados**, no la base | Observatorio de Conflictos, COES (Harvard Dataverse, doi:10.7910/DVN/GKQXBR), base 2005-2024 v1; agrupación de temas propia | P |
+| `movilizaciones_registro.csv` | Registro propio de movilizaciones, desde agosto de 2026: borrador con las noticias reunidas para la edición de octubre; cada fila declara si su fuente fue abierta | Elaboración propia sobre las fuentes enlazadas | X |
 | `sindicalizacion_por_rama.csv` | Tasa de sindicalización por rama de actividad, diciembre de 2024 (según la empresa que paga y según donde se trabaja) | INE, Documento de Trabajo «Tasa de sindicalización según actividad económica» (febrero de 2026), Cuadro 9 | O |
 | `pib_por_actividad_chile.csv` | PIB de Chile 2025 por actividad, agrupado en producción, financiero-inmobiliario y reproducción pagada (agrupación propia) | CEPALSTAT ind. 2215 (compila Banco Central) | O |
 | `trabajo_no_remunerado_chile.csv` | Valor del trabajo doméstico y de cuidados no remunerado, 2023 | Ministerio de Hacienda y ComunidadMujer (nota del 13-10-2025) | P |

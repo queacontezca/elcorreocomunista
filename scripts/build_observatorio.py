@@ -811,6 +811,80 @@ def svg_destinos():
               f'<text class="eje-t" x="{x + bw/2:.1f}" y="134" text-anchor="middle">{CORTO.get(r["destino"], r["destino"])}</text>')
     return f'<svg class="est-graf" viewBox="0 0 420 140" role="img" aria-label="Renta de la inversión extranjera pagada en 2024, por destino">{g}</svg>'
 
+
+# ── IV · acciones de protesta por año y tema (COES, solo totales) ──
+prot = lee_csv("acciones_de_protesta_coes.csv")
+P_ANIOS = sorted({int(r["anio"]) for r in prot})
+P_VAL = {(int(r["anio"]), r["tema"]): int(r["acciones"]) for r in prot}
+P_NOMBRE = {"educacion": "Educación", "laboral": "Trabajo", "pensiones": "Pensiones", "salud": "Salud", "vivienda": "Vivienda",
+            "pueblos_originarios": "Pueblos originarios", "ambiental_y_territorial": "Ambiente y territorio",
+            "feminista_y_diversidad": "Feminismo y diversidad", "ddhh_y_memoria": "Derechos humanos y memoria",
+            "sistema_politico": "Sistema político", "otras": "Otras demandas", "sin_demanda_registrada": "Sin demanda registrada"}
+# en el gráfico resumen se apilan cinco temas con nombre y dos grupos de resto
+P_PILA = [("educacion", ["educacion"]), ("laboral", ["laboral"]), ("pensiones", ["pensiones"]), ("salud", ["salud"]), ("vivienda", ["vivienda"]),
+          ("otras", ["pueblos_originarios", "ambiental_y_territorial", "feminista_y_diversidad", "ddhh_y_memoria", "sistema_politico", "otras"]),
+          ("sin", ["sin_demanda_registrada"])]
+P_ROTULO = {"educacion": "Educación", "laboral": "Trabajo", "pensiones": "Pensiones", "salud": "Salud", "vivienda": "Vivienda", "otras": "Otras demandas", "sin": "Sin demanda registrada"}
+def p_total(a): return sum(v for (y, _), v in P_VAL.items() if y == a)
+P_MAX_ANIO = max(P_ANIOS, key=p_total)
+
+def svg_protestas(alto=150):
+    W = 420; n = len(P_ANIOS); gap = 3; bw = (W - gap * (n - 1)) / n; base = alto - 20; mx = p_total(P_MAX_ANIO)
+    g = f'<line class="eje-l" x1="0" y1="{base}" x2="{W}" y2="{base}"/>'
+    for i, a in enumerate(P_ANIOS):
+        x = i * (bw + gap); y = base
+        for clave, temas in P_PILA:
+            v = sum(P_VAL[(a, t)] for t in temas)
+            if not v: continue
+            hh = (base - 8) * v / mx; y -= hh
+            g += f'<rect class="tm-{clave}" x="{x:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{hh:.1f}"><title>{a} · {P_ROTULO[clave]}: {fmt(v)} acciones</title></rect>'
+        if a % 5 == 0 or a == P_ANIOS[-1]: g += f'<text class="eje-t" x="{x + bw/2:.1f}" y="{alto - 5}" text-anchor="middle">{a}</text>'
+    return f'<svg class="est-graf" viewBox="0 0 {W} {alto}" role="img" aria-label="Acciones de protesta en Chile por año, de {P_ANIOS[0]} a {P_ANIOS[-1]}, según el tema de la demanda">{g}</svg>'
+
+def leyenda_protestas():
+    return '<p class="tm-leyenda">' + "".join(f'<span><i class="tm-{c}"></i>{P_ROTULO[c]}</span>' for c, _ in P_PILA) + '</p>'
+
+def svg_tema(tema):
+    """Columnas chicas de un solo tema, 2005-2024, con el año más alto destacado."""
+    vals = [P_VAL[(a, tema)] for a in P_ANIOS]; mx = max(vals) or 1; n = len(vals); gap = 2; bw = (200 - gap * (n - 1)) / n
+    g = '<line class="eje-l" x1="0" y1="56" x2="200" y2="56"/>'
+    for i, (a, v) in enumerate(zip(P_ANIOS, vals)):
+        hh = 50 * v / mx
+        g += f'<rect class="{"col-proy" if v == mx else "col"}" x="{i*(bw+gap):.1f}" y="{56 - hh:.1f}" width="{bw:.1f}" height="{max(hh, 0.5):.1f}"><title>{P_NOMBRE[tema]} {a}: {fmt(v)} acciones</title></rect>'
+    g += f'<text class="eje-t" x="0" y="68">{P_ANIOS[0]}</text><text class="eje-t" x="200" y="68" text-anchor="end">{P_ANIOS[-1]}</text>'
+    return f'<svg class="est-graf" viewBox="0 0 200 72" role="img" aria-label="{P_NOMBRE[tema]}: acciones de protesta por año">{g}</svg>', P_ANIOS[vals.index(mx)], mx, sum(vals)
+
+def protestas_pagina():
+    """Desarrollo para la página de la sección IV."""
+    tot = sum(P_VAL.values()); sin19 = P_VAL[(2019, "sin_demanda_registrada")]
+    fichas = ""
+    for t in [k for k in P_NOMBRE if k != "sin_demanda_registrada"]:
+        svg, a_max, v_max, suma = svg_tema(t)
+        fichas += f'<div class="tm-ficha graf-est"><p class="cifra-rot">{P_NOMBRE[t]}</p>{svg}<p class="tm-nota"><strong>{fmt(suma)}</strong> acciones · máximo en {a_max} ({fmt(v_max)})</p></div>'
+    registro = sorted(lee_csv("movilizaciones_registro.csv"), key=lambda r: r["fecha"])
+    TEMA_R = {"educacion": "Educación", "vivienda": "Vivienda", "trabajo": "Trabajo", "salud": "Salud", "pensiones": "Pensiones", "internacionalismo": "Internacionalismo", "antimilitarismo": "Contra el rearme"}
+    MES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sept", "oct", "nov", "dic"]
+    filas_reg = "".join(
+        f'<tr><td>{int(r["fecha"][8:])} {MES[int(r["fecha"][5:7]) - 1]}</td><td>{r["pais"]}<span>{r["lugar"]}</span></td><td>{TEMA_R.get(r["tema"], r["tema"])}</td>'
+        f'<td>{r["descripcion"]}<span>{r["convocante"]}{" · convocada, sin confirmar su realización" if r["estado"] == "convocada" else ""}</span></td>'
+        f'<td><a href="{r["fuente_url"]}" target="_blank" rel="noopener">{r["fuente"]}</a>{"<span>fuente sin abrir</span>" if r["verificacion"].startswith("solo") else ""}</td></tr>' for r in registro)
+    por_tema = {}
+    for r in registro: por_tema[TEMA_R.get(r["tema"], r["tema"])] = por_tema.get(TEMA_R.get(r["tema"], r["tema"]), 0) + 1
+    resumen_reg = " · ".join(f"{k} {v}" for k, v in sorted(por_tema.items(), key=lambda kv: -kv[1]))
+    en_chile = sum(1 for r in registro if r["pais"] == "Chile")
+    return f'''<section class="dato-seccion ds-papel protestas">
+  <div class="ds-graf graf-est"><p class="cifra-rot">Lo que se levanta por fuera del Estado · acciones de protesta por año y tema, {P_ANIOS[0]}-{P_ANIOS[-1]}</p>{svg_protestas(190)}{leyenda_protestas()}</div>
+  <div class="ds-cifras"><p><strong class="cifra-num">{fmt(tot)}</strong><span>acciones de protesta registradas en veinte años</span></p><p><strong class="cifra-num">{fmt(p_total(P_MAX_ANIO))}</strong><span>en {P_MAX_ANIO}, el año más alto: {fmt(sin19)} de ellas sin una demanda registrada</span></p></div>
+  <div class="tm-rejilla">{fichas}</div>
+  <p class="ds-nota"><strong>Cómo leerlo:</strong> cada acción es un hecho de protesta recogido por los diarios y radios que el Observatorio codifica; el número depende de qué medios se cubren cada año, así que sirve para ver ciclos y temas, no para comparar al detalle un año con otro. El tema es el de la primera demanda registrada; la agrupación por temas es nuestra. En {P_MAX_ANIO} la mitad de las acciones no tiene demanda registrada, y la fuente no explica por qué. Contar protestas no es medir poder popular: es el dato más cercano que existe. Lo que falta —qué organización dejó cada una— es el registro propio que este Correo empieza a llevar ({len(registro)} movilizaciones anotadas a la fecha).</p>
+  <div class="reg-propio">
+    <p class="cifra-rot">Registro propio · {ANIO_HOY}, desde agosto · {len(registro)} movilizaciones, {en_chile} en Chile</p>
+    <p class="tm-nota">{resumen_reg}. La base de COES llega a {P_ANIOS[-1]}: entre ambas queda sin cubrir {P_ANIOS[-1] + 1}. Este registro es un borrador hecho con las noticias reunidas para esta edición; no es exhaustivo ni comparable con la serie de arriba.</p>
+    <table class="reg-tabla"><thead><tr><th>Fecha</th><th>Lugar</th><th>Tema</th><th>Qué</th><th>Fuente</th></tr></thead><tbody>{filas_reg}</tbody></table>
+  </div>
+  <p class="ds-pie">Fuente: Reproducible Research, Centre for Social Conflict and Cohesion Studies COES, «Observatory of Conflicts - Cumulative Dataset», Harvard Dataverse, <a href="https://doi.org/10.7910/DVN/GKQXBR">doi:10.7910/DVN/GKQXBR</a> · solo totales; elaboración propia</p>
+</section>'''
+
 def svg_cols(filas, aria, alto=118):
     """filas: [(rótulo del eje o "", valor, título, destacar)] → columnas verticales con el valor del extremo destacado."""
     mx = max(v for _, v, _, _ in filas); n = len(filas); gap = 6; bw = (420 - gap * (n - 1)) / n
@@ -941,8 +1015,9 @@ def bandas():
                   "svg": svg_tasa(),
                   "cifras": [(f'{fmt(next(r["tasa"] for r in TASAS if r["anio"] == ANIO_HOY))} → {fmt(tasa_final)} %', f'rebaja ya promulgada, en régimen en {anio_final}'),
                              (f'{fmt(float(gs["gasto_social_total"]),1)} %', f'del PIB en gasto público social ({gs["anio"]}); ajuste anunciado de US$ {fmt(AJ_TOTAL)} M')],
-                  "pregunta": "¿Qué solventa hoy el Estado?", "mini_svg": svg_gst,
-                  "mini": (f'{fmt(float(gs["gasto_social_total"]),1)} % del PIB', f'de gasto público social ({gs["anio"]}), desde {fmt(float(gst_max["gasto_social_total"]),1)} % en {gst_max["anio"]}'),
+                  "pregunta": "¿Qué se levanta por fuera del Estado? · protestas por año y tema", "mini_svg": svg_protestas() + leyenda_protestas(), "mini_tono": "ds-papel",
+                  "mini_enlace": "secciones/marchitamiento-del-estado.html", "mini_enlace_txt": "ver el detalle →",
+                  "mini": (f'{fmt(p_total(P_MAX_ANIO))}', f'acciones de protesta en {P_MAX_ANIO}, el año más alto de veinte; {fmt(p_total(P_ANIOS[-1]))} en {P_ANIOS[-1]}. Fuente: COES'),
                   "fuente": "leyes citadas en el Observatorio · CEPALSTAT (DIPRES) · prensa"},
     }
 
@@ -989,10 +1064,10 @@ def banda_html(b, raiz):
 
 def mini_html(b):
     v, t = b["mini"]
-    return f'''<div class="dato-mini {b["tono"]}">
+    return f'''<div class="dato-mini {b.get("mini_tono", b["tono"])}">
         <p class="cifra-rot">{b.get("pregunta", "")}</p>
         <div class="graf-est">{b.get("mini_svg", b["svg"])}</div>
-        <p><strong>{v}</strong> {t} · <a href="observatorio.html#{b["modulo"]}">Observatorio →</a></p>
+        <p><strong>{v}</strong> {t} · <a href="{b.get("mini_enlace", "observatorio.html#" + b["modulo"])}">{b.get("mini_enlace_txt", "Observatorio →")}</a></p>
       </div>'''
 
 def entre_marcas(texto, ini, fin, nuevo):
@@ -1012,6 +1087,7 @@ for ruta in PAGINAS:
         if ancla not in html: print("AVISO: sin rejilla en", ruta); continue
         html = html.replace(ancla, G_INI + "\n" + G_FIN + "\n" + ancla, 1)
     banda = next((banda_html(b, raiz) for b in B.values() if b["pagina"] == ruta), "")
+    if ruta == "secciones/marchitamiento-del-estado.html": banda = protestas_pagina()
     html = entre_marcas(html, G_INI, G_FIN, (banda + "\n" if banda else "") + seccion_en_cifras(html))
     if "interactivo.js" not in html:
         html = html.replace("</body>", f'<script src="{raiz}interactivo.js" defer></script>\n</body>')

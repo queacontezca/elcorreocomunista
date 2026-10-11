@@ -130,3 +130,12 @@ series:
     frecuencia: "estática"
     estatus: "P"
     notas: "La dicotomía FMI es una PROXY de la teoría de la dependencia — se declara en la propia página."
+
+  acciones_de_protesta_coes.csv:
+    descripcion: "Número de acciones de protesta en Chile por año del hecho (2005-2024) y tema de la primera demanda registrada"
+    fuente: "Reproducible Research, Centre for Social Conflict and Cohesion Studies COES, «Observatory of Conflicts - Cumulative Dataset», Harvard Dataverse, https://doi.org/10.7910/DVN/GKQXBR (archivo Base_Observatorio_conflictos_2005-2024_v1.xlsx, versión del 21-08-2025) y su Manual de Usuario (2020)"
+    url: "https://doi.org/10.7910/DVN/GKQXBR"
+    frecuencia: "anual"
+    ultima_descarga: "2026-10-11"
+    estatus: "P"
+    notas: "Solo se publican totales: las condiciones de uso prohíben transferir la base a terceros. Año = variable P5c (fecha de la acción, no de codificación). Tema = agrupación propia del primer elemento de demanda (P19a1): 01xx educación; 03xx laboral, salvo 0306 pensiones; 06xx salud; 12xx vivienda; 02xx pueblos originarios; 04xx y 08xx ambiental y territorial; 05xx y 09xx feminista y diversidad; 11xx derechos humanos y memoria; 13xx sistema político; el resto, otras. «Sin demanda registrada» = P19a1 vacío (la mitad de las acciones de 2019). La base cuenta acciones recogidas por la prensa y la radio codificadas: el número depende de los medios cubiertos cada año. El manual limita el uso a docencia e investigación."

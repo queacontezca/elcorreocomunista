@@ -1369,3 +1369,30 @@ body .cuerpo h1, body .cuerpo h2, body .cuerpo h3, body .cuerpo .epigrafe, body 
 .est-graf .ley-t{font-size:8.5px}
 .est-graf .eje-rot{text-anchor:start; font-size:8.5px}
 .est-graf .seg-n-ch{font-size:12px}
+
+
+/* ── IV · acciones de protesta por año y tema (COES) ── */
+.ds-papel{background:var(--papel); border:1px solid var(--filete)}
+.est-graf .tm-educacion{fill:var(--rojo-ladrillo)} .est-graf .tm-laboral{fill:var(--noche)} .est-graf .tm-pensiones{fill:var(--salmon)}
+.est-graf .tm-salud{fill:var(--azul-profundo)} .est-graf .tm-vivienda{fill:var(--azul-claro)} .est-graf .tm-otras{fill:var(--filete)}
+.est-graf .tm-sin{fill:var(--azul-palido); stroke:var(--pizarra); stroke-width:.5; stroke-dasharray:2 1.5}
+.tm-leyenda{display:flex; flex-wrap:wrap; gap:.2rem .8rem; margin-top:.4rem; font-family:var(--font-cintillo); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; color:var(--tinta)}
+.tm-leyenda span{display:inline-flex; align-items:center; gap:.3rem}
+.tm-leyenda i{display:inline-block; width:.8rem; height:.8rem; flex:none}
+.tm-leyenda .tm-educacion{background:var(--rojo-ladrillo)} .tm-leyenda .tm-laboral{background:var(--noche)} .tm-leyenda .tm-pensiones{background:var(--salmon)}
+.tm-leyenda .tm-salud{background:var(--azul-profundo)} .tm-leyenda .tm-vivienda{background:var(--azul-claro)} .tm-leyenda .tm-otras{background:var(--filete)}
+.tm-leyenda .tm-sin{background:var(--azul-palido); outline:1px dashed var(--pizarra)}
+.dato-mini .tm-leyenda{font-size:.54rem}
+.protestas .tm-rejilla{grid-column:1/-1; display:grid; grid-template-columns:repeat(auto-fill,minmax(10.5rem,1fr)); gap:1rem 1.2rem; border-top:1px solid var(--filete); padding-top:.9rem}
+.tm-ficha .cifra-rot{color:var(--rojo-profundo); margin-bottom:.2rem; font-size:.66rem}
+.tm-nota{font-size:.74rem; line-height:1.3}
+.ds-nota{grid-column:1/-1; font-size:.84rem; line-height:1.45; border-left:6px solid var(--azul); padding:.2rem 0 .2rem .8rem}
+.dato-seccion.ds-papel .cifra-rot{color:var(--rojo-profundo)}
+.ds-pie a{word-break:break-word}
+.reg-propio{grid-column:1/-1; border-top:4px solid var(--pizarra); padding-top:.8rem}
+.reg-tabla{width:100%; border-collapse:collapse; margin-top:.6rem; font-size:.8rem}
+.reg-tabla th{font-family:var(--font-cintillo); font-weight:400; font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; text-align:left; background:var(--azul-palido); padding:.35rem .5rem}
+.reg-tabla td{padding:.4rem .5rem; border-bottom:1px solid var(--filete); vertical-align:top}
+.reg-tabla td span{display:block; font-size:.72rem; color:var(--pizarra)}
+.reg-tabla td:first-child{white-space:nowrap; font-family:var(--font-cintillo); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase}
+@media (max-width:640px){ .reg-tabla thead{display:none} .reg-tabla tr{display:block; border-bottom:4px solid var(--pizarra); padding:.4rem 0} .reg-tabla td{display:block; border:0; padding:.1rem 0} }
