@@ -1182,3 +1182,76 @@ body .licencia{font-style:normal}
 @media (max-width:900px){ .cifras-corte{grid-template-columns:1fr 1fr} .cifra-graf{grid-column:1/-1} }
 @media (max-width:520px){ .cifras-corte{grid-template-columns:1fr} .seccion::after{font-size:6rem} }
 @media (max-width:760px){ .masthead{align-items:center} }
+
+
+/* ════════════════════════════════════════════════════════════════════
+   GRÁFICOS INTERACTIVOS (interactivo.js) — portada y Observatorio
+   ════════════════════════════════════════════════════════════════════ */
+.graf-tip{
+  position:absolute; z-index:60; max-width:21rem; pointer-events:none;
+  background:var(--noche); color:var(--papel); padding:.5rem .7rem;
+  font-family:var(--font-lectura); font-size:.8rem; line-height:1.35; box-shadow:4px 4px 0 var(--rojo-ladrillo);
+}
+.graf-tip strong, .graf-tip span{display:block}
+.graf-tip span + span, .graf-tip strong + span{margin-top:.2rem; padding-top:.2rem; border-top:1px solid var(--pizarra)}
+.graf-vivo [data-t]{cursor:pointer; transition:opacity .15s}
+.graf-vivo.hov [data-t]:not(.on){opacity:.3}
+.graf-vivo [data-t]:focus{outline:none}
+.graf-vivo [data-t]:focus-visible, .mini-graf rect:focus-visible{outline:3px solid var(--azul-profundo); outline-offset:1px}
+.graf-vivo circle[data-t].on{stroke:var(--papel); stroke-width:2; r:6px}
+@media (prefers-reduced-motion:no-preference){
+  .graf-vivo rect[data-t]{transform-box:fill-box; transform-origin:50% 100%}
+  .graf-vivo.entra rect[data-t]{animation:crece .7s cubic-bezier(.2,.7,.2,1) both}
+  .graf-vivo.entra circle[data-t]{animation:aparece .6s both}
+  @keyframes crece{from{transform:scaleY(.02)} to{transform:scaleY(1)}}
+  @keyframes aparece{from{opacity:0} to{opacity:1}}
+  .mini-graf rect{transition:y .45s cubic-bezier(.2,.7,.2,1), height .45s cubic-bezier(.2,.7,.2,1), fill .2s}
+}
+.datos-graf{margin-top:.6rem; border-top:1px solid var(--filete); padding-top:.45rem; font-size:.8rem}
+.datos-graf summary{cursor:pointer; font-family:var(--font-cintillo); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--rojo-profundo)}
+.datos-graf ul{list-style:none; margin:.5rem 0 0; padding:0; columns:2 16rem; column-gap:1.4rem}
+.datos-graf li{padding:.15rem 0; border-bottom:1px dotted var(--filete); break-inside:avoid; font-variant-numeric:tabular-nums}
+.ayuda-graf{font-size:.84rem; color:var(--pizarra); border-left:6px solid var(--azul); padding:.2rem 0 .2rem .8rem; margin:1rem 0 0}
+
+/* Gráfico de series de la portada */
+.serie-botones{display:flex; flex-wrap:wrap; gap:0; margin-bottom:.5rem}
+.serie-botones button{
+  font-family:var(--font-cintillo); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; cursor:pointer;
+  background:transparent; color:var(--papel); border:1px solid var(--azul-claro); border-right-width:0; border-radius:0; padding:.35rem .6rem;
+}
+.serie-botones button:last-child{border-right-width:1px}
+.serie-botones button[aria-pressed="true"]{background:var(--papel); color:var(--tinta); border-color:var(--papel)}
+.serie-botones button:focus-visible{outline:3px solid var(--salmon); outline-offset:1px}
+.mini-graf rect{cursor:pointer}
+.mini-graf rect.sel{stroke:var(--papel); stroke-width:2}
+.mini-graf rect:focus{outline:none}
+.serie-lectura{min-height:2.6em; margin:.2rem 0 .1rem; color:var(--papel)}
+.serie-lectura strong{display:block; font-family:var(--font-cartel); font-weight:700; font-size:1.5rem; line-height:1.05}
+.serie-lectura span{font-size:.8rem; color:var(--salmon)}
+.serie-fuente{font-size:.72rem !important}
+
+/* Fichas de portada como enlaces */
+a.cifra{text-decoration:none; color:var(--tinta); transition:transform .15s, box-shadow .15s}
+a.cifra:hover, a.cifra:focus-visible{transform:translate(-3px,-3px); box-shadow:6px 6px 0 var(--pizarra); position:relative; z-index:2; color:var(--tinta)}
+a.cifra::after{content:"ver en el Observatorio →"; margin-top:auto; padding-top:.5rem; font-family:var(--font-cintillo); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; opacity:.75}
+
+/* Observatorio: índice fijo de módulos y termómetro con enlaces */
+.nav-obs{
+  position:sticky; top:0; z-index:40; display:flex; flex-wrap:wrap; justify-content:center; gap:0;
+  background:var(--noche); padding:0 1rem; font-family:var(--font-cintillo); font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+}
+.nav-obs a{color:var(--papel); text-decoration:none; padding:.6rem .85rem; border-bottom:4px solid transparent}
+.nav-obs a:hover{color:var(--blanco); border-bottom-color:var(--azul-claro)}
+.nav-obs a[aria-current]{border-bottom-color:var(--rojo-act); color:var(--blanco)}
+.modulo-obs, #termometro{scroll-margin-top:3.4rem}
+a.term-chip{text-decoration:none; color:var(--tinta); transition:transform .15s, box-shadow .15s}
+a.term-chip:hover, a.term-chip:focus-visible{transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--pizarra); color:var(--tinta)}
+.chispa{width:100%; height:26px; margin-top:.35rem; display:block}
+.chispa-barras rect{fill:var(--pizarra)} .chispa-barras rect:last-child{fill:var(--rojo-profundo)}
+.chispa-linea polyline{fill:none; stroke:var(--rojo-profundo); stroke-width:2.5; vector-effect:non-scaling-stroke}
+.kpi{transition:transform .15s, box-shadow .15s}
+.kpi:hover{transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--azul-palido)}
+.mapa .vec{transition:stroke-width .15s, opacity .15s}
+.mapa .vista-mapa:hover .vec{opacity:.45}
+.mapa .vista-mapa .vec:hover{opacity:1}
+@media (max-width:640px){ .nav-obs{justify-content:flex-start; flex-wrap:nowrap; overflow-x:auto} .nav-obs a{white-space:nowrap} }

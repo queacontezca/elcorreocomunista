@@ -9,11 +9,12 @@ con el Reporte de Análisis de Coyuntura). Los textos analíticos sí son editor
 Uso:  python3 scripts/build_observatorio.py
       (desde la raíz del sitio; stdlib pura, sin dependencias)
 """
-import csv, pathlib
+import csv, json, pathlib, re
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 DATOS = RAIZ / "datos" / "observatorio"
 SALIDA = RAIZ / "observatorio.html"
+PORTADA = RAIZ / "index.html"
 
 # ───────────────────────── utilidades ─────────────────────────
 def lee_csv(nombre):
@@ -26,7 +27,7 @@ def fmt(v, dec=0):
     s = f"{v:,.{dec}f}"
     return s.replace(",", "X").replace(".", ",").replace("X", ".")
 
-# PRUEBA DE ESTÉTICA: tokens del sistema «Ediciones ¡Que Acontezca!» (rojo-ladrillo, salmon, tinta, pizarra, azul-palido, papel)
+# Tokens del sistema «Ediciones ¡Que Acontezca!» (rojo-ladrillo, salmon, tinta, pizarra, azul-palido, papel)
 ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#bf4245", "#e69089", "#000000", "#43454a", "#bbc7d1", "#f7ece0"
 
 # ───────────────────────── datos ─────────────────────────
@@ -390,20 +391,36 @@ def incomodo(texto):
 def transicion(texto):
     return f'<p class="transicion" aria-hidden="true">{texto}</p>'
 
+def chispa(valores, tipo="linea"):
+    """Mini serie para una ficha del termómetro (sin ejes: solo la forma de la tendencia)."""
+    W, H = 120, 30
+    mn, mx = min(valores), max(valores); rango = (mx - mn) or 1
+    n = len(valores)
+    if tipo == "barras":
+        bw = W / n
+        g = "".join(f'<rect x="{i*bw+1:.1f}" y="{H - (H-3)*v/mx:.1f}" width="{bw-2:.1f}" height="{(H-3)*v/mx:.1f}"/>' for i, v in enumerate(valores))
+    else:
+        pts = " ".join(f"{i*(W-4)/(n-1)+2:.1f},{H-3-(H-6)*(v-mn)/rango:.1f}" for i, v in enumerate(valores))
+        g = f'<polyline points="{pts}"/>'
+    return f'<svg class="chispa chispa-{tipo}" viewBox="0 0 {W} {H}" aria-hidden="true" preserveAspectRatio="none">{g}</svg>'
+
+CH_RENTAS = chispa([float(r["debito_total"]) for r in rentas_tri], "barras")
+CH_IMPUESTO = chispa([float(r["tasa"]) for r in impuesto])
+
 # ───────────────────────── módulos ─────────────────────────
-term = f'''<p class="term-titulo"><strong>El termómetro del corte:</strong> las seis cifras clave de este Observatorio, cada una con su fecha y su estatus de medición (O · operativa — dato oficial fresco · C · calibración — nivel de fondo). Su desarrollo completo está en los módulos de abajo.</p>
-<div class="termometro" role="region" aria-label="Termómetro del corte">
-  <div class="term-chip"><span class="term-nom">s/v-jornada</span><span class="term-val">{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
-  <div class="term-chip"><span class="term-nom">TETV</span><span class="term-val">{fmt(float(jornada["TETV"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
-  <div class="term-chip"><span class="term-nom">AFP — stock</span><span class="term-val">{kpi_fmt("AFP — stock de fondos")}</span><span class="term-fec">{kpi("AFP — stock de fondos")["fecha_corte"]} · SP · O</span></div>
-  <div class="term-chip"><span class="term-nom">Rentas primarias</span><span class="term-val">US$ {fmt(deb_parcial)} M</span><span class="term-fec">{TRI_Q} trim. de {TRI_ANIO} · +{fmt(var_deb)} % interanual · CEPALSTAT-BC · O</span></div>
-  <div class="term-chip"><span class="term-nom">Impuesto empresas</span><span class="term-val">{fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2026")),0)} % → {fmt(tasa_final,0)} %</span><span class="term-fec">ley promulgada 09-10-2026 · rige 2027-{anio_final} · O</span></div>
-  <div class="term-chip"><span class="term-nom">Drenaje Sur→Norte</span><span class="term-val">US$ {fmt(h("apropiacion_neta_valor"),1)} bill.</span><span class="term-fec">2015 · Hickel 2022 · O</span></div>
+term = f'''<p class="term-titulo"><strong>El termómetro del corte:</strong> las seis cifras clave de este Observatorio, cada una con su fecha y su estatus de medición (O · operativa — dato oficial fresco · C · calibración — nivel de fondo). Cada ficha lleva a su módulo.</p>
+<div class="termometro" id="termometro" role="region" aria-label="Termómetro del corte">
+  <a class="term-chip" href="#m1"><span class="term-nom">s/v-jornada</span><span class="term-val">{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></a>
+  <a class="term-chip" href="#m1"><span class="term-nom">TETV</span><span class="term-val">{fmt(float(jornada["TETV"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></a>
+  <a class="term-chip" href="#m2"><span class="term-nom">AFP — stock</span><span class="term-val">{kpi_fmt("AFP — stock de fondos")}</span><span class="term-fec">{kpi("AFP — stock de fondos")["fecha_corte"]} · SP · O</span></a>
+  <a class="term-chip" href="#m3"><span class="term-nom">Rentas primarias</span><span class="term-val">US$ {fmt(deb_parcial)} M</span><span class="term-fec">{TRI_Q} trim. de {TRI_ANIO} · +{fmt(var_deb)} % interanual · CEPALSTAT-BC · O</span>{CH_RENTAS}</a>
+  <a class="term-chip" href="#m4"><span class="term-nom">Impuesto empresas</span><span class="term-val">{fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2026")),0)} % → {fmt(tasa_final,0)} %</span><span class="term-fec">ley promulgada 09-10-2026 · rige 2027-{anio_final} · O</span>{CH_IMPUESTO}</a>
+  <a class="term-chip" href="#m5"><span class="term-nom">Drenaje Sur→Norte</span><span class="term-val">US$ {fmt(h("apropiacion_neta_valor"),1)} bill.</span><span class="term-fec">2015 · Hickel 2022 · O</span></a>
 </div>'''
 
 m1 = f'''<section class="modulo-obs" id="m1">
   <h3>1 · La jornada y la tasa de explotación</h3>
-  <p class="concepto">La semana obrera se compone de tipos de trabajo distintos: el <strong>necesario</strong> (repite el salario, {fmt(float(jornada["trabajo_necesario"]["valor"]),2)} h), el <strong>plustrabajo</strong> (no pagado: plusvalor, {fmt(float(jornada["plustrabajo"]["valor"]),2)} h), el <strong>traslado</strong> (expropia tiempo vital sin producir valor, {fmt(float(jornada["traslado_no_remunerado"]["valor"]))} h) y el <strong>reproductivo no remunerado</strong> (el hogar, ≈ {fmt(float(jornada["reproductivo_no_remunerado"]["valor"]))} h: la carga que el feminismo nombra). La tasa de explotación es la proporción entre lo excedente y lo necesario; pasa el mouse sobre cada segmento.</p>
+  <p class="concepto">La semana obrera se compone de tipos de trabajo distintos: el <strong>necesario</strong> (repite el salario, {fmt(float(jornada["trabajo_necesario"]["valor"]),2)} h), el <strong>plustrabajo</strong> (no pagado: plusvalor, {fmt(float(jornada["plustrabajo"]["valor"]),2)} h), el <strong>traslado</strong> (expropia tiempo vital sin producir valor, {fmt(float(jornada["traslado_no_remunerado"]["valor"]))} h) y el <strong>reproductivo no remunerado</strong> (el hogar, ≈ {fmt(float(jornada["reproductivo_no_remunerado"]["valor"]))} h: la carga que el feminismo nombra). La tasa de explotación es la proporción entre lo excedente y lo necesario; pasa el cursor o toca cada segmento.</p>
   <blockquote class="cita-boletin cita-marx">«La tasa de la plusvalía es la expresión exacta del grado de explotación de la fuerza de trabajo por el capital, o del trabajador por el capitalista.» <cite>(Marx, El Capital, T. I, cap. 9)</cite></blockquote>
   <div class="graf">{apilada_jornada()}</div>
   <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> la semana se mide ahora en 42 h legales pero la carga global real llega a {fmt(float(jornada["carga_global_real"]["valor"]))} h: la rebaja administrada (40 h en 2028) no toca la reproducción privatizada ni el traslado. Medio siglo de jornada muestra que la explotación no se mide solo en el punto de producción: el tiempo vital entregado (TETV {fmt(float(jornada["TETV"]["valor"]),1)} %) es más que la tasa estricta (s/v {fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %).</p>
@@ -546,7 +563,11 @@ pagina = f'''<!DOCTYPE html>
   </div>
   <nav class="indice-sub"><a href="index.html">Portada</a><a href="secciones/los-medios-comunes.html">I · Medios comunes</a><a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a><a href="secciones/proletariado.html">III · Proletariado</a><a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a><a href="especial-18-de-octubre.html">Especial 18-O</a><a href="puntos-reales.html">Puntos reales</a><a class="actual" href="observatorio.html">Observatorio</a></nav>
 </header>
+<nav class="nav-obs" aria-label="Módulos del Observatorio">
+  <a href="#termometro">Termómetro</a><a href="#m1">1 · Jornada</a><a href="#m2">2 · Circuitos</a><a href="#m3">3 · Correa financiera</a><a href="#m4">4 · Retención estatal</a><a href="#m5">5 · Mapa del drenaje</a>
+</nav>
 <main class="contenido-sec">
+  <p class="ayuda-graf">Los gráficos responden: pasa el cursor, toca o recorre con las flechas del teclado para leer cada dato; «Ver los datos de este gráfico» abre la tabla completa.</p>
   {term}
   <section class="bloque pregunta">
     <h3>¿Cómo analizamos la coyuntura?</h3>
@@ -585,9 +606,55 @@ document.querySelectorAll('.botones-mapa button').forEach(function(b){{
   }});
 }});
 </script>
+<script src="interactivo.js" defer></script>
 </body>
 </html>
 '''
+
+# ───────────────────────── portada: franja «cifras del corte» ─────────────────────────
+def franja_portada():
+    """Franja de portada generada desde los mismos CSV (se inserta entre los marcadores de index.html)."""
+    filas = [{"a": int(r["anio"]), "t": int(r["trimestre"]), "deb": float(r["debito_total"]),
+              "uti": float(r["ied_utilidades_dividendos"]), "neto": -float(r["balance_neto"])} for r in rentas_tri]
+    datos = {"fuente": "CEPALSTAT, ind. 547 (compila Banco Central) · millones de US$",
+             "series": [{"clave": "deb", "corto": "Total pagado", "nombre": "Rentas primarias pagadas al exterior"},
+                        {"clave": "uti", "corto": "Utilidades IED", "nombre": "Utilidades y dividendos de la inversión extranjera"},
+                        {"clave": "neto", "corto": "Saldo neto", "nombre": "Saldo neto: lo que sale menos lo que entra"}],
+             "filas": filas}
+    W, H = 420, 150; n = len(filas); gap = 5; bw = (W - gap * (n - 1)) / n; mx = max(f["deb"] for f in filas)
+    barras = ""
+    for i, f in enumerate(filas):
+        hh = f["deb"] / mx * (H - 32); x = i * (bw + gap)
+        barras += f'<rect class="{"b-ult" if f["deb"] == mx else "b"}" x="{x:.1f}" y="{H-18-hh:.1f}" width="{bw:.1f}" height="{hh:.1f}"/>'
+        if f["t"] == 1: barras += f'<text class="b-eje" x="{x:.1f}" y="{H-4}">{f["a"]}</text>'
+    des = kpi("Desempleo / informalidad")
+    tasa_hoy = float(next(r["tasa"] for r in impuesto if r["anio"] == "2026"))
+    TRIM = {"DEF": "diciembre-febrero", "EFM": "enero-marzo", "FMA": "febrero-abril", "MAM": "marzo-mayo", "AMJ": "abril-junio", "MJJ": "mayo-julio",
+            "JJA": "junio-agosto", "JAS": "julio-septiembre", "ASO": "agosto-octubre", "SON": "septiembre-noviembre", "OND": "octubre-diciembre", "NDE": "noviembre-enero"}
+    cod = des["fecha_corte"].split("-")[0]
+    periodo_des = f"trimestre {TRIM[cod]}" if cod in TRIM else des["fecha_corte"]
+    return f'''<section class="cifras-corte" aria-label="Cifras del corte del Observatorio">
+    <div class="cifra cifra-graf">
+      <p class="cifra-rot">Rentas que salen de Chile · por trimestre</p>
+      <div class="graf-serie" data-datos="datos-trimestral">
+        <svg class="mini-graf" viewBox="0 0 {W} {H}" role="img" aria-label="Rentas primarias pagadas por Chile, por trimestre"><line class="b-base" x1="0" y1="{H-18}" x2="{W}" y2="{H-18}"/>{barras}</svg>
+        <p class="cifra-nota"><strong>US$ {fmt(deb_tri_ult)} M</strong> en {TRI_ANIO} T{TRI_Q}: el trimestre más alto de la serie. <span>CEPALSTAT, ind. 547</span></p>
+      </div>
+      <script type="application/json" id="datos-trimestral">{json.dumps(datos, ensure_ascii=False, separators=(",", ":"))}</script>
+    </div>
+    <a class="cifra" href="observatorio.html#m3"><p class="cifra-rot">Primer semestre {TRI_ANIO}</p><p class="cifra-num">US$ {fmt(deb_parcial)} M</p><p class="cifra-nota">en rentas primarias pagadas al exterior, +{fmt(var_deb)} % sobre igual semestre de {TRI_ANIO-1}. <span>CEPALSTAT</span></p></a>
+    <a class="cifra cifra-b" href="observatorio.html#m2"><p class="cifra-rot">Desempleo</p><p class="cifra-num">{fmt(float(des["valor_numerico"]),1)} %</p><p class="cifra-nota">informalidad {fmt(float(des["valor2_numerico"]),1)} %, {periodo_des}. <span>{des["fuente"]}</span></p></a>
+    <a class="cifra cifra-c" href="observatorio.html#m4"><p class="cifra-rot">Impuesto a las empresas</p><p class="cifra-num">{fmt(tasa_hoy)} → {fmt(tasa_final)} %</p><p class="cifra-nota">rebaja ya promulgada, en régimen en {anio_final}. <span>prensa, 09-10-2026</span></p></a>
+  </section>'''
+
+INI, FIN = "<!-- CIFRAS:INICIO (generado por scripts/build_observatorio.py; no editar a mano) -->", "<!-- CIFRAS:FIN -->"
+portada = PORTADA.read_text(encoding="utf-8")
+if INI in portada and FIN in portada:
+    a, b = portada.index(INI) + len(INI), portada.index(FIN)
+    PORTADA.write_text(portada[:a] + "\n  " + franja_portada() + "\n  " + portada[b:], encoding="utf-8")
+    print("index.html: franja «cifras del corte» regenerada")
+else:
+    print("AVISO: index.html no tiene los marcadores CIFRAS; la franja de portada no se actualizó")
 
 SALIDA.write_text(pagina, encoding="utf-8")
 print("observatorio.html regenerado:", len(pagina), "bytes")

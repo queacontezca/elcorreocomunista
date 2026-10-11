@@ -82,18 +82,22 @@
   </section>
 
   <!-- ══════════════ FILA SUPERIOR: LA DISCUSIÓN + BOLETINES ══════════════ -->
-  <!-- ══════════════ CIFRAS DEL CORTE (portada) — datos de datos/observatorio/ ══════════════ -->
-  <section class="cifras-corte" aria-label="Cifras del corte del 11 de octubre de 2026">
+  <!-- ══════════════ CIFRAS DEL CORTE (portada) ══════════════ -->
+  <!-- CIFRAS:INICIO (generado por scripts/build_observatorio.py; no editar a mano) -->
+  <section class="cifras-corte" aria-label="Cifras del corte del Observatorio">
     <div class="cifra cifra-graf">
       <p class="cifra-rot">Rentas que salen de Chile · por trimestre</p>
-      <svg class="mini-graf" viewBox="0 0 420 150" role="img" aria-label="Rentas primarias pagadas por Chile, por trimestre, de 2023 T1 a 2026 T2"><line class="b-base" x1="0" y1="132" x2="420" y2="132"/><rect class="b" x="0.0" y="64.7" width="25.4" height="67.3"><title>2023 T1: US$ 5.111 M</title></rect><text class="b-eje" x="0.0" y="146">2023</text><rect class="b" x="30.4" y="53.8" width="25.4" height="78.2"><title>2023 T2: US$ 5.937 M</title></rect><rect class="b" x="60.7" y="61.1" width="25.4" height="70.9"><title>2023 T3: US$ 5.380 M</title></rect><rect class="b" x="91.1" y="58.2" width="25.4" height="73.8"><title>2023 T4: US$ 5.600 M</title></rect><rect class="b" x="121.4" y="55.7" width="25.4" height="76.3"><title>2024 T1: US$ 5.795 M</title></rect><text class="b-eje" x="121.4" y="146">2024</text><rect class="b" x="151.8" y="48.3" width="25.4" height="83.7"><title>2024 T2: US$ 6.356 M</title></rect><rect class="b" x="182.1" y="56.2" width="25.4" height="75.8"><title>2024 T3: US$ 5.758 M</title></rect><rect class="b" x="212.5" y="60.3" width="25.4" height="71.7"><title>2024 T4: US$ 5.442 M</title></rect><rect class="b" x="242.9" y="49.1" width="25.4" height="82.9"><title>2025 T1: US$ 6.297 M</title></rect><text class="b-eje" x="242.9" y="146">2025</text><rect class="b" x="273.2" y="41.2" width="25.4" height="90.8"><title>2025 T2: US$ 6.894 M</title></rect><rect class="b" x="303.6" y="45.1" width="25.4" height="86.9"><title>2025 T3: US$ 6.595 M</title></rect><rect class="b" x="333.9" y="34.4" width="25.4" height="97.6"><title>2025 T4: US$ 7.409 M</title></rect><rect class="b" x="364.3" y="21.5" width="25.4" height="110.5"><title>2026 T1: US$ 8.386 M</title></rect><text class="b-eje" x="364.3" y="146">2026</text><rect class="b-ult" x="394.6" y="16.0" width="25.4" height="116.0"><title>2026 T2: US$ 8.807 M</title></rect></svg>
-      <p class="cifra-nota"><strong>US$ 8.807 M</strong> en 2026 T2: el trimestre más alto de la serie. <span>CEPALSTAT, ind. 547</span></p>
+      <div class="graf-serie" data-datos="datos-trimestral">
+        <svg class="mini-graf" viewBox="0 0 420 150" role="img" aria-label="Rentas primarias pagadas por Chile, por trimestre"><line class="b-base" x1="0" y1="132" x2="420" y2="132"/><rect class="b" x="0.0" y="63.5" width="25.4" height="68.5"/><text class="b-eje" x="0.0" y="146">2023</text><rect class="b" x="30.4" y="52.5" width="25.4" height="79.5"/><rect class="b" x="60.7" y="59.9" width="25.4" height="72.1"/><rect class="b" x="91.1" y="57.0" width="25.4" height="75.0"/><rect class="b" x="121.4" y="54.4" width="25.4" height="77.6"/><text class="b-eje" x="121.4" y="146">2024</text><rect class="b" x="151.8" y="46.8" width="25.4" height="85.2"/><rect class="b" x="182.1" y="54.9" width="25.4" height="77.1"/><rect class="b" x="212.5" y="59.1" width="25.4" height="72.9"/><rect class="b" x="242.9" y="47.6" width="25.4" height="84.4"/><text class="b-eje" x="242.9" y="146">2025</text><rect class="b" x="273.2" y="39.6" width="25.4" height="92.4"/><rect class="b" x="303.6" y="43.6" width="25.4" height="88.4"/><rect class="b" x="333.9" y="32.7" width="25.4" height="99.3"/><rect class="b" x="364.3" y="19.6" width="25.4" height="112.4"/><text class="b-eje" x="364.3" y="146">2026</text><rect class="b-ult" x="394.6" y="14.0" width="25.4" height="118.0"/></svg>
+        <p class="cifra-nota"><strong>US$ 8.807 M</strong> en 2026 T2: el trimestre más alto de la serie. <span>CEPALSTAT, ind. 547</span></p>
+      </div>
+      <script type="application/json" id="datos-trimestral">{"fuente":"CEPALSTAT, ind. 547 (compila Banco Central) · millones de US$","series":[{"clave":"deb","corto":"Total pagado","nombre":"Rentas primarias pagadas al exterior"},{"clave":"uti","corto":"Utilidades IED","nombre":"Utilidades y dividendos de la inversión extranjera"},{"clave":"neto","corto":"Saldo neto","nombre":"Saldo neto: lo que sale menos lo que entra"}],"filas":[{"a":2023,"t":1,"deb":5111.0,"uti":4259.0,"neto":2756.0},{"a":2023,"t":2,"deb":5937.0,"uti":4321.0,"neto":3551.0},{"a":2023,"t":3,"deb":5380.0,"uti":4530.0,"neto":4183.0},{"a":2023,"t":4,"deb":5600.0,"uti":4679.0,"neto":3742.0},{"a":2024,"t":1,"deb":5795.0,"uti":4607.0,"neto":3608.0},{"a":2024,"t":2,"deb":6356.0,"uti":4952.0,"neto":4772.0},{"a":2024,"t":3,"deb":5758.0,"uti":4822.0,"neto":3460.0},{"a":2024,"t":4,"deb":5442.0,"uti":4568.0,"neto":3552.0},{"a":2025,"t":1,"deb":6297.0,"uti":5095.0,"neto":4606.0},{"a":2025,"t":2,"deb":6894.0,"uti":5625.0,"neto":5077.0},{"a":2025,"t":3,"deb":6595.0,"uti":5780.0,"neto":4465.0},{"a":2025,"t":4,"deb":7409.0,"uti":6370.0,"neto":5205.0},{"a":2026,"t":1,"deb":8386.0,"uti":7231.0,"neto":6206.0},{"a":2026,"t":2,"deb":8807.0,"uti":7419.0,"neto":6948.0}]}</script>
     </div>
-    <div class="cifra"><p class="cifra-rot">Primer semestre 2026</p><p class="cifra-num">US$ 17.192 M</p><p class="cifra-nota">en rentas primarias pagadas al exterior, +30 % sobre igual semestre de 2025. <span>CEPALSTAT</span></p></div>
-    <div class="cifra cifra-b"><p class="cifra-rot">Desempleo</p><p class="cifra-num">9,6 %</p><p class="cifra-nota">informalidad 26,3 %, trimestre junio-agosto. <span>INE, 30-09-2026</span></p></div>
-    <div class="cifra cifra-c"><p class="cifra-rot">Impuesto a las empresas</p><p class="cifra-num">27 → 23 %</p><p class="cifra-nota">rebaja ya promulgada, en régimen en 2029. <span>prensa, 09-10-2026</span></p></div>
-    <a class="cifras-enlace" href="observatorio.html">Ver el Observatorio →</a>
+    <a class="cifra" href="observatorio.html#m3"><p class="cifra-rot">Primer semestre 2026</p><p class="cifra-num">US$ 17.192 M</p><p class="cifra-nota">en rentas primarias pagadas al exterior, +30 % sobre igual semestre de 2025. <span>CEPALSTAT</span></p></a>
+    <a class="cifra cifra-b" href="observatorio.html#m2"><p class="cifra-rot">Desempleo</p><p class="cifra-num">9,6 %</p><p class="cifra-nota">informalidad 26,3 %, trimestre junio-agosto. <span>INE (30-09-2026)</span></p></a>
+    <a class="cifra cifra-c" href="observatorio.html#m4"><p class="cifra-rot">Impuesto a las empresas</p><p class="cifra-num">27 → 23 %</p><p class="cifra-nota">rebaja ya promulgada, en régimen en 2029. <span>prensa, 09-10-2026</span></p></a>
   </section>
+  <!-- CIFRAS:FIN -->
 
   <div class="fila-superior">
 
@@ -415,5 +419,6 @@ document.querySelectorAll('.botones-discusion button').forEach(function(btn){
 });
 </script>
 
+<script src="interactivo.js" defer></script>
 </body>
 </html>
