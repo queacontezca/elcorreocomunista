@@ -2,7 +2,8 @@
 # Regla: toda cifra del observatorio.html sale de estos CSV (fuente única de verdad).
 # Convención de números en CSV: punto decimal, sin separador de miles (formato máquina).
 # En la página se muestran con punto de miles y coma decimal (formato es-CL).
-ultima_descarga: "2026-08-16"
+ultima_descarga: "2026-10-11"
+corte_anterior: "2026-08-16"
 estatus_leyenda:
   O: "operativa — variable fresca con fuente oficial declarada"
   P: "proxy — mide por aproximación declarada, no el concepto mismo"
@@ -14,9 +15,17 @@ series:
     descripcion: "Rentas primarias de la balanza de pagos de Chile (débito, crédito, balance y componentes), millones US$ corrientes, suma anual de trimestres"
     fuente: "CEPALSTAT (CEPAL), indicador 547 «Balanza de pagos trimestral», que compila las cifras del Banco Central de Chile"
     url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
-    frecuencia: "trimestral (agregada a anual; 2026 solo T1)"
+    frecuencia: "trimestral (agregada a anual; 2026 parcial: T1 + T2, descarga 11-10-2026)"
     estatus: "O"
-    notas: "Débitos en magnitud positiva (salida de recursos). «ied_utilidades_dividendos» = utilidades y dividendos de la inversión extranjera directa pagados al exterior (correa financiera). 2020: el crédito cae a 486 por la pandemia."
+    notas: "Débitos en magnitud positiva (salida de recursos). «ied_utilidades_dividendos» = utilidades y dividendos de la inversión extranjera directa pagados al exterior (correa financiera). 2020: el crédito cae a 486 por la pandemia. Corte 11-10-2026: la fuente revisó 2026 T1 (débito 8.071 → 8.386; utilidades IED 7.021 → 7.231); los años 2016-2025 se recalcularon desde la descarga nueva y coinciden con lo publicado."
+
+  rentas_primarias_chile_trimestral.csv:
+    descripcion: "Rentas primarias de Chile por trimestre, 2023 T1 → 2026 T2 (débito, utilidades y dividendos IED, intereses de otra inversión, crédito, balance), millones US$ corrientes"
+    fuente: "CEPALSTAT (CEPAL), indicador 547 «Balanza de pagos trimestral» (compila Banco Central de Chile)"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
+    frecuencia: "trimestral"
+    estatus: "O"
+    notas: "Débitos en magnitud positiva; balance con su signo. 2026 T2 (US$ 8.807 M) es el trimestre de mayor débito de toda la serie disponible en el cubo para Chile (1993-2026), verificado sobre la descarga completa del 11-10-2026."
 
   rentas_primarias_al20.csv:
     descripcion: "Rentas primarias de América Latina (20 países), millones US$, suma simple de países"
@@ -24,7 +33,7 @@ series:
     url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es"
     frecuencia: "anual (suma de trimestres)"
     estatus: "O"
-    notas: "«ied_utilidades_piso» es un PISO — Perú registra 0 en esa línea del cubo (no desagrega) y Venezuela/Cuba/Haití no reportan. El «debito_total» sí incluye a Perú."
+    notas: "SIN ACTUALIZAR en el corte 11-10-2026: solo 6 de los países del cubo reportan 2026 T2 (Bolivia, Brasil, Chile, Colombia, México y Perú), por lo que no se agrega un año parcial regional. «ied_utilidades_piso» es un PISO — Perú registra 0 en esa línea del cubo (no desagrega) y Venezuela/Cuba/Haití no reportan. El «debito_total» sí incluye a Perú."
 
   rentas_debito_pais_2024.csv:
     descripcion: "Renta (débito) total por país latinoamericano, 2024, millones US$"
@@ -52,11 +61,11 @@ series:
 
   impuesto_primera_categoria.csv:
     descripcion: "Tasa legal del impuesto de primera categoría (renta empresas), serie de hitos legales"
-    fuente: "Ley 18.985 (1990), Ley 20.469 (2010), Ley 20.780 (2014); proyecto Boletín 18216-05 (Senado)"
+    fuente: "Ley 18.985 (1990), Ley 20.469 (2010), Ley 20.780 (2014); Ley de Reconstrucción Nacional y Desarrollo Económico y Social (Boletín 18216-05), promulgada el 09-10-2026 — calendario según prensa (Emol 09-10-2026; CNN Chile)"
     url: "https://www.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18216-05"
     frecuencia: "hitos legales"
     estatus: "O"
-    notas: "2030 = proyecto en tramitación (rebaja gradual a 23 % + invariabilidad 10-20 años), no ley."
+    notas: "Corte 11-10-2026: la megarreforma ya es ley promulgada (09-10-2026): 25,5 % en 2027, 24 % en 2028, 23 % en 2029; invariabilidad por contrato de 10 años (desde US$ 50 M), 15 (desde US$ 100 M) o 20 (desde US$ 350 M). PENDIENTE: falta la publicación en el Diario Oficial — al publicarse, reemplazar la cita de prensa por el número de ley y el texto oficial. El corte de agosto registraba «2030, 23 %, proyecto»."
 
   jornada_semana_obrera.csv:
     descripcion: "Composición de la semana obrera y tasas (s/v-jornada, TETV, labor share)"
@@ -68,11 +77,11 @@ series:
 
   kpi_corte.csv:
     descripcion: "Indicadores del corte con fecha y fuente (grilla KPI). Formato máquina desde sep-2026: valor_numerico + decimales (+ valor2_numerico/decimales2 para indicadores con dos cifras) + plantilla de despliegue (tokens {v}/{v2}), en vez de una columna de texto ya formateado."
-    fuente: "Reporte N°1 (jul-2026) con diccionario de datos (SP, Comisión Ingresa, TGR, INE, Cochilco, SIPRI)"
+    fuente: "Reporte N°1 (jul-2026) con diccionario de datos (SP, Comisión Ingresa, TGR, INE, Cochilco, SIPRI); corte 11-10-2026: SP (comunicado 03-09-2026), INE (nota de prensa 30-09-2026) y Cochilco (informe semanal 5-9 oct-2026) consultados directamente"
     url: "https://www.spensiones.cl · https://www.ine.gob.cl · https://www.cochilco.cl"
     frecuencia: "mensual/trimestral según indicador"
     estatus: "O (la fila «Digital/IA — capex hyperscalers» es X: sin fuente propia verificada, no se grafica)"
-    notas: "El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado. El capex de hyperscalers (~US$ 725.000 M, 2026) circulaba antes en el sitio sin ficha del dato ni fuente trazable en esta carpeta: queda declarado como pendiente (X) hasta que la editorial confirme la fuente exacta que usó — entonces se completa esta fila con valor_numerico, unidad y fuente reales."
+    notas: "Corte 11-10-2026: se actualizaron AFP, desempleo/informalidad y cobre; CAE, TGR y gasto militar no tienen dato nuevo y conservan su fecha. Los valores del corte anterior quedan en kpi_historial.csv. El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado. El capex de hyperscalers (~US$ 725.000 M, 2026) circulaba antes en el sitio sin ficha del dato ni fuente trazable en esta carpeta: queda declarado como pendiente (X) hasta que la editorial confirme la fuente exacta que usó — entonces se completa esta fila con valor_numerico, unidad y fuente reales."
 
   gasto_social_chile.csv:
     descripcion: "Gasto público social del Gobierno Central de Chile, en % del PIB, por función (total, salud, educación, vivienda, protección social)"
@@ -100,11 +109,11 @@ series:
 
   ajuste_fiscal_2026.csv:
     descripcion: "Programa de ajuste fiscal del gobierno de Kast (ministro Quiroz): montos y programas en revisión"
-    fuente: "prensa (2+ medios por cifra): BioBioChile, Ex-ante, El Desconcierto, La Tercera"
+    fuente: "prensa (2+ medios por cifra): BioBioChile, Ex-ante, El Desconcierto, La Tercera; corte 11-10-2026: Emol, CNN Chile, Meganoticias"
     url: "https://www.biobiochile.cl"
     frecuencia: "coyuntura 2026"
     estatus: "O"
-    notas: "US$ 6.000 M total prometido; US$ 3.800 M el primer año; PGU, gratuidad y bonos en revisión (recortes hasta 15 %)."
+    notas: "US$ 6.000 M total prometido; US$ 3.800 M el primer año; PGU, gratuidad y bonos en revisión (recortes hasta 15 %). Corte 11-10-2026: se agregan el crecimiento del gasto del proyecto de Presupuesto 2027 (1,5 %) y la fecha de promulgación de la megarreforma — ambos con fuente de prensa, a reemplazar por DIPRES y Diario Oficial."
 
   mapa_base_paises.svg:
     descripcion: "Geometría de 179 países (paths SVG, proyección equirectangular 980×500) con clasificación céntrico/periférico"

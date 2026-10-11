@@ -1,0 +1,4 @@
+corte_observatorio,indicador,valor_numerico,decimales,valor2_numerico,decimales2,plantilla,fecha_corte,fuente,nota,estatus
+2026-08-16,AFP — stock de fondos,254140,0,,,US$ {v} M,jun-2026,Superintendencia de Pensiones,≈ 71 % del PIB 2025 (PIB CEPALSTAT); −US$ 3.804 M en el mes (revaluación de mercado),O
+2026-08-16,Desempleo / informalidad,9.4,1,27.0,1,{v} % / {v2} %,MAM-2026,INE (30-06-2026),"mujeres 10,5 %",O
+2026-08-16,Cobre,6.18,2,,,US$ {v}/lb,semana 20-24 jul-2026,Cochilco,"máximo US$ 6,29 (may-2026)",O

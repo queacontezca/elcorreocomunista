@@ -30,6 +30,7 @@ ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#8b1a1a", "#b3543f", "#17110c", "#5c554d", 
 
 # ───────────────────────── datos ─────────────────────────
 rentas_cl = lee_csv("rentas_primarias_chile.csv")
+rentas_tri = lee_csv("rentas_primarias_chile_trimestral.csv")
 rentas_al = lee_csv("rentas_primarias_al20.csv")
 pais24 = lee_csv("rentas_debito_pais_2024.csv")
 hickel = lee_csv("drenaje_mundial_hickel.csv")
@@ -99,7 +100,22 @@ razon_al = float(AL_2024["ied_utilidades_piso"]) / IED_AL
 pib_pct24 = float(CL_2024["debito_total"]) / PIB24 * 100
 pib_pct25 = deb25 / PIB25 * 100
 mult = deb25 / deb16
-afp_stock = kpi_valor("AFP — stock de fondos")  # datos/observatorio/kpi_corte.csv (jun-2026)
+afp_stock = kpi_valor("AFP — stock de fondos")  # datos/observatorio/kpi_corte.csv
+
+# Flujo trimestral (CEPALSTAT 547): semestre en curso contra el mismo semestre del año anterior
+def tri(anio, q, campo="debito_total"):
+    return float(next(r[campo] for r in rentas_tri if r["anio"] == str(anio) and r["trimestre"] == str(q)))
+TRI_ULT = rentas_tri[-1]                                   # último trimestre disponible
+TRI_ANIO, TRI_Q = int(TRI_ULT["anio"]), int(TRI_ULT["trimestre"])
+deb_parcial = float(CL_2026["debito_total"]); uti_parcial = float(CL_2026["ied_utilidades_dividendos"])
+deb_parcial_prev = sum(tri(TRI_ANIO - 1, q) for q in range(1, TRI_Q + 1))
+uti_parcial_prev = sum(tri(TRI_ANIO - 1, q, "ied_utilidades_dividendos") for q in range(1, TRI_Q + 1))
+var_deb = (deb_parcial / deb_parcial_prev - 1) * 100
+var_uti = (uti_parcial / uti_parcial_prev - 1) * 100
+neto_parcial = -float(CL_2026["balance_neto"])
+deb_tri_ult = float(TRI_ULT["debito_total"])
+tasa_final = float(impuesto[-1]["tasa"]); anio_final = impuesto[-1]["anio"]
+PRES27 = float(next(r["valor"] for r in ajuste if r["indicador"] == "presupuesto_2027_crecimiento_gasto"))
 afp_pct = afp_stock / PIB25 * 100
 
 def ip(destino):
@@ -154,7 +170,7 @@ def barras_circuitos():
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Peso de los circuitos de acumulación en Chile">{g}</svg>'
 
 def barras_rentas_chile():
-    """Barras apiladas: utilidades IED + intereses + resto del débito, 2016→2026T1."""
+    """Barras apiladas: utilidades IED + intereses + resto del débito, 2016→año en curso (parcial)."""
     W, H, P = 760, 320, 52
     filas = [r for r in rentas_cl]
     mx = max(float(r["debito_total"]) for r in filas) * 1.12
@@ -182,7 +198,7 @@ def barras_rentas_chile():
         if deb >= deb25:
             g += (f'<text x="{x0+bw/2:.0f}" y="{y_top-8:.0f}" font-size="11.5" font-weight="bold" text-anchor="middle" fill="{NEGRO}">{fmt(deb)}</text>')
         rot = f' transform="rotate(-45 {x0+bw/2:.0f} {H-P+16})"' if n > 9 else ""
-        etiqueta = r["anio"] + (" (1T)" if r["nota"].startswith("solo") else "")
+        etiqueta = r["anio"] + (f" ({TRI_Q}T)" if r["nota"].startswith("parcial") else "")
         g += f'<text x="{x0+bw/2:.0f}" y="{H-P+16}" font-size="10" text-anchor="middle" fill="{PIZ}"{rot}>{etiqueta}</text>'
     lx = P + 4
     for nom, col in [("Utilidades y dividendos IED", ROJO), ("Intereses otra inversión", SAL), ("Resto del débito", PIZ)]:
@@ -190,6 +206,38 @@ def barras_rentas_chile():
               f'<text x="{lx+16}" y="18" font-size="11" fill="{NEGRO}">{nom}</text>')
         lx += 16 + 8.2 * len(nom)
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Rentas primarias pagadas por Chile">{g}</svg>'
+
+def barras_trimestrales():
+    """Flujo trimestral de rentas primarias pagadas por Chile (débito), con la parte de utilidades IED."""
+    W, H, P = 760, 250, 52
+    filas = rentas_tri
+    mx = max(float(r["debito_total"]) for r in filas) * 1.15
+    n = len(filas); slot = (W - P - 16) / n; bw = slot * 0.7
+    def y(v): return (H - P) - (H - P - 30) * v / mx
+    g = ""
+    for t in range(0, 5):
+        vv = (mx / 1.15) * t / 4
+        g += (f'<line x1="{P}" y1="{y(vv):.0f}" x2="{W-16}" y2="{y(vv):.0f}" stroke="{REJ}"/>'
+              f'<text x="{P-6}" y="{y(vv)+4:.0f}" font-size="10" text-anchor="end" fill="{PIZ}">{fmt(vv/1000,1)}</text>')
+    g += f'<text x="{P}" y="14" font-size="10" fill="{PIZ}" font-style="italic">miles de millones US$ por trimestre</text>'
+    for i, r in enumerate(filas):
+        x0 = P + slot * i + (slot - bw) / 2
+        deb = float(r["debito_total"]); uti = float(r["ied_utilidades_dividendos"])
+        en_curso = r["anio"] == str(TRI_ANIO)
+        g += (f'<rect x="{x0:.0f}" y="{y(deb):.0f}" width="{bw:.0f}" height="{H-P-y(deb):.0f}" fill="{PIZ}">'
+              f'<title>Rentas primarias pagadas {r["anio"]} T{r["trimestre"]}: US$ {fmt(deb)} M</title></rect>'
+              f'<rect x="{x0:.0f}" y="{y(uti):.0f}" width="{bw:.0f}" height="{H-P-y(uti):.0f}" fill="{ROJO if en_curso else SAL}">'
+              f'<title>Utilidades y dividendos IED {r["anio"]} T{r["trimestre"]}: US$ {fmt(uti)} M</title></rect>')
+        if en_curso or deb >= deb_tri_ult:
+            g += f'<text x="{x0+bw/2:.0f}" y="{y(deb)-6:.0f}" font-size="11" font-weight="bold" text-anchor="middle" fill="{NEGRO}">{fmt(deb)}</text>'
+        g += f'<text x="{x0+bw/2:.0f}" y="{H-P+14}" font-size="10" text-anchor="middle" fill="{PIZ}">T{r["trimestre"]}</text>'
+        if r["trimestre"] == "1":
+            g += f'<text x="{x0:.0f}" y="{H-P+29}" font-size="10.5" font-weight="bold" fill="{NEGRO}">{r["anio"]}</text>'
+    lx = P + 250
+    for nom, col in [(f"Utilidades y dividendos IED ({TRI_ANIO} en rojo)", SAL), ("Resto del débito", PIZ)]:
+        g += f'<rect x="{lx}" y="5" width="11" height="11" fill="{col}"/><text x="{lx+16}" y="15" font-size="11" fill="{NEGRO}">{nom}</text>'
+        lx += 16 + 7.2 * len(nom)
+    return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Flujo trimestral de rentas primarias pagadas por Chile">{g}</svg>'
 
 def panel_doble_retencion_gasto():
     """Panel A: tasa de retención (serie legal). Panel B: gasto público social (% PIB). Eje de años compartido."""
@@ -220,14 +268,14 @@ def panel_doble_retencion_gasto():
           f'<text x="{P}" y="{TITULO_B_Y}" font-size="11.5" font-weight="bold" fill="{NEGRO}">B · Lo que el Estado solventa: gasto público social (% del PIB, Gobierno Central)</text>')
     # Panel A: retención
     pts = [(float(r["anio"]), float(r["tasa"]), r["hito"]) for r in impuesto]
-    reales = [p for p in pts if p[0] <= 2025]; proy = [p for p in pts if p[0] >= 2025]
+    reales = [p for p in pts if p[0] <= 2026]; proy = [p for p in pts if p[0] >= 2026]
     g += f'<polyline points="{" ".join(f"{X(a):.0f},{YA(v):.0f}" for a, v, _ in reales)}" fill="none" stroke="{NEGRO}" stroke-width="2.5"/>'
     g += f'<polyline points="{" ".join(f"{X(a):.0f},{YA(v):.0f}" for a, v, _ in proy)}" fill="none" stroke="{ROJO}" stroke-width="2.5" stroke-dasharray="6 4"/>'
     for a, v, hito in pts:
-        col = ROJO if a > 2025 else NEGRO
+        col = ROJO if a > 2026 else NEGRO
         g += (f'<circle cx="{X(a):.0f}" cy="{YA(v):.0f}" r="4" fill="{col}">'
-              f'<title>{"Proyecto «megarreforma»" if a > 2025 else "Impuesto a las empresas"}: {fmt(v,1).rstrip("0").rstrip(",")} % ({int(a)}){" · " + hito if hito else ""}</title></circle>')
-    g += (f'<text x="{X(2030)-4:.0f}" y="{YA(23)+16:.0f}" font-size="10.5" text-anchor="end" fill="{ROJO}" font-style="italic">proyecto: 23 % hacia 2030</text>')
+              f'<title>{"Ley de Reconstrucción (promulgada 09-10-2026)" if a > 2026 else "Impuesto a las empresas"}: {fmt(v,1).rstrip("0").rstrip(",")} % ({int(a)}){" · " + hito if hito else ""}</title></circle>')
+    g += (f'<text x="{X(2026)-8:.0f}" y="{YA(tasa_final)+17:.0f}" font-size="10.5" text-anchor="end" fill="{ROJO}" font-style="italic">ley promulgada: {fmt(tasa_final)} % en {anio_final}</text>')
     # Panel B: gasto social
     series = [("gasto_social_total", "Gasto social total", NEGRO, 2.5, ""),
               ("salud", "Salud", ROJO, 2, ""),
@@ -244,7 +292,7 @@ def panel_doble_retencion_gasto():
         lx += 14 + 7.6 * len(nom)
     # hito del ajuste 2026 (cruza ambos paneles)
     g += (f'<line x1="{X(2026):.0f}" y1="{HA0}" x2="{X(2026):.0f}" y2="{HB1}" stroke="{ROJO}" stroke-width="1.5" stroke-dasharray="4 4"/>'
-          f'<text x="{X(2026)-8:.0f}" y="{ANN_Y1}" font-size="11" text-anchor="end" fill="{ROJO}" font-weight="bold">megarreforma + ajuste de US$ {fmt(AJ_TOTAL)} M (2026):</text>'
+          f'<text x="{X(2026)-8:.0f}" y="{ANN_Y1}" font-size="11" text-anchor="end" fill="{ROJO}" font-weight="bold">megarreforma promulgada + ajuste de US$ {fmt(AJ_TOTAL)} M (2026):</text>'
           f'<text x="{X(2026)-8:.0f}" y="{ANN_Y2}" font-size="11" text-anchor="end" fill="{ROJO}">PGU, gratuidad y bonos en revisión</text>')
     return f'<svg viewBox="0 0 {W} {H}" style="width:100%;height:auto" role="img" aria-label="Retención estatal y gasto público social">{g}</svg>'
 
@@ -347,8 +395,8 @@ term = f'''<p class="term-titulo"><strong>El termómetro del corte:</strong> las
   <div class="term-chip"><span class="term-nom">s/v-jornada</span><span class="term-val">{fmt(float(jornada["tasa_explotacion_sv"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
   <div class="term-chip"><span class="term-nom">TETV</span><span class="term-val">{fmt(float(jornada["TETV"]["valor"]),1)} %</span><span class="term-fec">calibración SOL 2022 · C</span></div>
   <div class="term-chip"><span class="term-nom">AFP — stock</span><span class="term-val">{kpi_fmt("AFP — stock de fondos")}</span><span class="term-fec">{kpi("AFP — stock de fondos")["fecha_corte"]} · SP · O</span></div>
-  <div class="term-chip"><span class="term-nom">Rentas primarias</span><span class="term-val">US$ {fmt(deb25)} M/año</span><span class="term-fec">2025 · CEPALSTAT-BC · O</span></div>
-  <div class="term-chip"><span class="term-nom">Impuesto empresas</span><span class="term-val">{fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2025")),0)} % → {fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2030")),0)} %</span><span class="term-fec">proyecto 2030 · O</span></div>
+  <div class="term-chip"><span class="term-nom">Rentas primarias</span><span class="term-val">US$ {fmt(deb_parcial)} M</span><span class="term-fec">{TRI_Q} trim. de {TRI_ANIO} · +{fmt(var_deb)} % interanual · CEPALSTAT-BC · O</span></div>
+  <div class="term-chip"><span class="term-nom">Impuesto empresas</span><span class="term-val">{fmt(float(next(r["tasa"] for r in impuesto if r["anio"]=="2026")),0)} % → {fmt(tasa_final,0)} %</span><span class="term-fec">ley promulgada 09-10-2026 · rige 2027-{anio_final} · O</span></div>
   <div class="term-chip"><span class="term-nom">Drenaje Sur→Norte</span><span class="term-val">US$ {fmt(h("apropiacion_neta_valor"),1)} bill.</span><span class="term-fec">2015 · Hickel 2022 · O</span></div>
 </div>'''
 
@@ -378,7 +426,7 @@ m2 = f'''<section class="modulo-obs" id="m2">
     <thead><tr><th>Circuito</th><th>¿Se condensa este mes?</th><th>Punto del ciclo</th><th>Actor dominante</th></tr></thead>
     <tbody>
     <tr><td>Financiero (ficticio)</td><td>Sí: blindaje legal + defensa del anatocismo</td><td>D–D′</td><td>Banca, holdings, CMF</td></tr>
-    <tr><td>Minero-rentístico</td><td>Sí: cobre {kpi_fmt("Cobre")} por guerra; renta cedida</td><td>Renta / M–D′</td><td>Transnacionales, Codelco-SQM</td></tr>
+    <tr><td>Minero-rentístico</td><td>Sí: cobre {kpi_fmt("Cobre")} ({kpi("Cobre")["fecha_corte"]}); renta cedida por ley</td><td>Renta / M–D′</td><td>Transnacionales, Codelco-SQM</td></tr>
     <tr><td>Reproducción privatizada</td><td>Sí: AFP {kpi_fmt("AFP — stock de fondos")}; TGR cobradora; sala cuna rechazada</td><td>D–D′ vía salario diferido</td><td>AFP, banca, TGR</td></tr>
     <tr><td>Industrial-militar (mundial)</td><td>Sí: {kpi_fmt("Gasto militar mundial")} de gasto militar {kpi("Gasto militar mundial")["fecha_corte"]}</td><td>Sumidero de s</td><td>Estados de ambos bloques</td></tr>
     <tr><td>Digital/IA (mundial)</td><td>Como burbuja — <span class="estatus est-x">X · pendiente</span> {kpi_fmt("Digital/IA — capex hyperscalers")}</td><td>D–D′ / renta tecnológica</td><td>Hyperscalers</td></tr>
@@ -388,12 +436,12 @@ m2 = f'''<section class="modulo-obs" id="m2">
   <div class="kpi-grid">
     {''.join(f'<div class="kpi"><span class="kpi-nombre">{k["indicador"]}</span><span class="kpi-valor">{_fmt_kpi_row(k)}</span><span class="kpi-nota">{k["nota"]} · {k["fecha_corte"]} · {k["fuente"]} <span class="estatus est-{k["estatus"].lower()}">{k["estatus"]}</span></span></div>' for k in kpis)}
   </div>
-  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> Chile compra estabilidad vendiendo renta: el circuito minero-rentístico ({fmt(MIN25,1)} % del PIB) recibe cobre en máximos por la guerra y la megarreforma lo devuelve como rebaja tributaria; la reproducción privatizada es el circuito de mayor peso nacional (stock AFP ≈ {fmt(afp_pct)} % del PIB: el salario diferido convertido en capital ficticio); la correa financiera saca del país el {fmt(pib_pct25,1)} % del PIB cada año.</p>
-  {incomodo("el stock AFP cayó US$ 3.804 M en el mes — pero es revaluación de mercado que absorbe el cotizante, no menor captura del dispositivo: el dato no autoriza ni a celebrar ni a lamentar (regla de lectura IFA).")}
+  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> Chile compra estabilidad vendiendo renta: el circuito minero-rentístico ({fmt(MIN25,1)} % del PIB) recibe cobre en máximos ({kpi_fmt("Cobre")}) y la megarreforma, promulgada el 9 de octubre, lo devuelve como rebaja tributaria; la reproducción privatizada es el circuito de mayor peso nacional (stock AFP ≈ {fmt(afp_pct)} % del PIB: el salario diferido convertido en capital ficticio); la correa financiera saca del país el {fmt(pib_pct25,1)} % del PIB cada año.</p>
+  {incomodo(f"el stock AFP ({kpi_fmt('AFP — stock de fondos')}, {kpi('AFP — stock de fondos')['fecha_corte']}) está por debajo del corte anterior de este Observatorio (US$ 254.140 M, jun-2026) aunque agosto fue un mes de rentabilidad positiva — es variación de mercado y de tipo de cambio que absorbe el cotizante, no menor captura del dispositivo: el dato no autoriza ni a celebrar ni a lamentar (regla de lectura IFA). Y el desempleo sube a {kpi_fmt('Desempleo / informalidad').split(' /')[0]} con el cobre en máximos: el precio de la renta no baja a la mesa de quien trabaja.")}
   {ficha(
     "Peso por circuito nacional: stock AFP / PIB; minería / PIB; rentas primarias pagadas / PIB. Los circuitos mundiales se reportan en magnitud (no son % del PIB chileno). Indicadores del corte por circuito: stock AFP, cartera y mora CAE, retenciones TGR, empleo, cobre, gasto militar.",
     "<a href='https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/2215/records?lang=es'>CEPALSTAT ind. 2215 (PIB por actividad, compila BC)</a> · <a href='https://www.spensiones.cl'>Superintendencia de Pensiones</a> · Comisión Ingresa · <a href='https://www.tesoreria.cl'>TGR</a> · <a href='https://www.ine.gob.cl'>INE</a> · <a href='https://www.cochilco.cl'>Cochilco</a> · <a href='https://www.sipri.org'>SIPRI</a> · datos: <a href='datos/observatorio/pib_y_mineria_chile.csv'>pib_y_mineria_chile.csv</a> · <a href='datos/observatorio/kpi_corte.csv'>kpi_corte.csv</a>",
-    "2025 / jun-jul 2026 según indicador · descarga 16-08-2026",
+    "2025 / ago-oct 2026 según indicador (CAE: dic-2025 · TGR: jul-2026, sin dato nuevo) · actualización 11-10-2026",
     "O",
     "Cada barra usa la proxy declarada bajo su rótulo (los circuitos NO son sectores del PIB: el gráfico mide peso, no composición). La variación del stock AFP NO es variación de la captura (revaluación).",
     "participación de servicios financieros estricta (sin inmobiliarias): pendiente por trazabilidad BC. Circuitos logístico y agroindustrial: sin serie propia todavía — declarados como pendientes (X) en la tabla, no omitidos.")}
@@ -405,32 +453,34 @@ m3 = f'''<section class="modulo-obs" id="m3">
   <p class="concepto"><strong>Esto es exactamente eso: el plusvalor que sale.</strong> Las utilidades y dividendos de la IED son plusvalor producido en Chile y apropiado por el capital extranjero (ganancia empresarial repatriada); los intereses son una <em>fracción del plusvalor</em> cedida al capital a interés — banca y bonistas de afuera, incluidos los organismos internacionales (Marx, T. III: la ganancia se escinde en ganancia empresarial e interés; el interés no es una categoría aparte). Es una <strong>medición conservadora (piso)</strong>: no incluye el intercambio desigual vía precios — la ventana de Hickel en el módulo 5 — ni los precios de transferencia intraempresa. Dos ventanas sobre la misma transferencia: no se suman, se complementan.</p>
   <blockquote class="cita-boletin cita-marx">«Estos mecanismos… significan que el trabajo se remunera por debajo de su valor, y corresponden, pues, a una superexplotación del trabajo.» <cite>(Marini, Dialéctica de la dependencia, §3 — la respuesta interna al drenaje)</cite></blockquote>
   <div class="graf">{barras_rentas_chile()}</div>
-  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> en 2025 Chile pagó <strong>US$ {fmt(deb25)} millones</strong> en rentas primarias — el máximo de la serie, {fmt(mult,1)} veces lo de 2016 y un {fmt(pib_pct25,1)} % del PIB (2025). El 84 % fueron utilidades y dividendos de la IED. El primer trimestre de 2026 ya pagó US$ {fmt(float(CL_2026["debito_total"]))} millones: la correa se tensa, no se afloja. Por cada dólar de IED que entró en 2024 salieron US$ {fmt(razon_cl,2)} en utilidades: la «inversión» opera como aspiradora neta. Y el vector neto (lo que sale menos lo que entra) es US$ {fmt(neto25)} M al año: las AFP ganan US$ {fmt(cre25)} M en el exterior — el salario diferido financiarizado compensa una fracción de lo que se llevan las transnacionales.</p>
+  <p class="concepto"><strong>El flujo, trimestre a trimestre:</strong> la serie anual esconde el ritmo. Vista por trimestres, la correa muestra su aceleración: el segundo trimestre de {TRI_ANIO} es el de mayor salida de rentas de toda la serie de CEPALSTAT para Chile (que parte en 1993).</p>
+  <div class="graf">{barras_trimestrales()}</div>
+  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> en 2025 Chile pagó <strong>US$ {fmt(deb25)} millones</strong> en rentas primarias — el máximo de la serie, {fmt(mult,1)} veces lo de 2016 y un {fmt(pib_pct25,1)} % del PIB (2025). El 84 % fueron utilidades y dividendos de la IED. En los dos primeros trimestres de {TRI_ANIO} ya salieron <strong>US$ {fmt(deb_parcial)} millones</strong> — un {fmt(var_deb)} % más que en el mismo semestre de {TRI_ANIO-1} (US$ {fmt(deb_parcial_prev)} M) —, de los cuales US$ {fmt(uti_parcial)} M son utilidades y dividendos de la IED ({fmt(var_uti)} % más): la correa se tensa, no se afloja. El trimestre abril-junio marcó US$ {fmt(deb_tri_ult)} M, el más alto registrado. El neto del semestre (lo que sale menos lo que entra) es US$ {fmt(neto_parcial)} M. Por cada dólar de IED que entró en 2024 salieron US$ {fmt(razon_cl,2)} en utilidades: la «inversión» opera como aspiradora neta. Y el vector neto (lo que sale menos lo que entra) es US$ {fmt(neto25)} M al año: las AFP ganan US$ {fmt(cre25)} M en el exterior — el salario diferido financiarizado compensa una fracción de lo que se llevan las transnacionales.</p>
   {incomodo("2020: con la economía parada por la pandemia, el débito apenas bajó (US$ 16.351 M) y el crédito se desplomó a US$ 486 M — el drenaje no se detiene ni con el país detenido. Y con el cobre cerca del máximo histórico, el drenaje del trimestre no corre por precios (intercambio desigual comercial atenuado) sino por esta vía financiero-tributaria.")}
   {ficha(
     "Rentas primarias (balanza de pagos): utilidades y dividendos de la IED + intereses de otra inversión y de cartera pagados al exterior; débito, crédito y balance (= vector neto). Millones US$ corrientes, suma anual de trimestres. Revisión conceptual: las utilidades son plusvalor repatriado; los intereses son fracción del plusvalor (la ganancia se escinde, T. III). Piso: excluye intercambio desigual vía precios y precios de transferencia.",
-    "<a href='https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es'>CEPALSTAT, indicador 547 «Balanza de pagos trimestral»</a> (compila las cifras del Banco Central de Chile) · <a href='https://www.cepal.org/es/publicaciones/82116-la-inversion-extranjera-directa-america-latina-caribe-2025'>CEPAL, La IED en ALyC 2025</a> · datos: <a href='datos/observatorio/rentas_primarias_chile.csv'>rentas_primarias_chile.csv</a>",
-    "serie 2016→2026 T1 · descarga 16-08-2026",
+    "<a href='https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/547/records?lang=es'>CEPALSTAT, indicador 547 «Balanza de pagos trimestral»</a> (compila las cifras del Banco Central de Chile) · <a href='https://www.cepal.org/es/publicaciones/82116-la-inversion-extranjera-directa-america-latina-caribe-2025'>CEPAL, La IED en ALyC 2025</a> · datos: <a href='datos/observatorio/rentas_primarias_chile.csv'>rentas_primarias_chile.csv</a> · <a href='datos/observatorio/rentas_primarias_chile_trimestral.csv'>rentas_primarias_chile_trimestral.csv</a>",
+    f"serie anual 2016→{TRI_ANIO} (parcial: {TRI_Q} trimestres) · serie trimestral 2023 T1→{TRI_ANIO} T{TRI_Q} · descarga 11-10-2026",
     "O",
-    "Suma de los cuatro trimestres de cada año (2026: solo T1, declarado en la etiqueta). Razón US$ 1,51 = utilidades pagadas 2024 / IED entrante 2024 (CEPAL). Neto = débito − crédito.",
+    f"Suma de los cuatro trimestres de cada año ({TRI_ANIO}: {TRI_Q} trimestres acumulados, declarado en la etiqueta; el primer trimestre fue revisado al alza por la fuente respecto del corte de agosto: US$ 8.071 M → US$ 8.386 M). Comparación semestral: mismos trimestres del año anterior. Razón US$ 1,51 = utilidades pagadas 2024 / IED entrante 2024 (CEPAL). Neto = débito − crédito.",
     "ninguno en la serie; la desagregación por destino está en el mapa (módulo 5) con datos BC.")}
-  <p class="fuente-obs">Fuentes: CEPALSTAT (Banco Central de Chile vía CEPAL), descarga 16-08-2026 · CEPAL (2025), <em>La IED en América Latina y el Caribe 2025</em>, pp. 33 y 65 · Elaboración propia. Ver también: Dussel, <em>16 tesis de economía política</em>, Tesis 10 [10.4] «Transferencia de plusvalor como esencia de la dominación social globalizada».</p>
+  <p class="fuente-obs">Fuentes: CEPALSTAT (Banco Central de Chile vía CEPAL), descarga 11-10-2026 · CEPAL (2025), <em>La IED en América Latina y el Caribe 2025</em>, pp. 33 y 65 · Elaboración propia. Ver también: Dussel, <em>16 tesis de economía política</em>, Tesis 10 [10.4] «Transferencia de plusvalor como esencia de la dominación social globalizada».</p>
 </section>'''
 
 m4 = f'''<section class="modulo-obs" id="m4">
   <h3>4 · La retención estatal del plusvalor — y las condiciones fundamentales que solventa</h3>
-  <p class="concepto">La fracción del plusvalor que el Estado retiene vía impuesto de primera categoría es la lectura tributaria de la correlación de fuerzas. El cruce es directo: <strong>mientras más retención, más condiciones fundamentales (salud, educación, vivienda) se pueden solventar</strong> — y al revés: la apuesta de Kast es reducir la retención y devolver ese terreno al mercado. Dos paneles, mismo eje de tiempo: arriba lo que el Estado retiene; abajo lo que el Estado solventa.</p>
+  <p class="concepto">La fracción del plusvalor que el Estado retiene vía impuesto de primera categoría es la lectura tributaria de la correlación de fuerzas. El cruce es directo: <strong>mientras más retención, más condiciones fundamentales (salud, educación, vivienda) se pueden solventar</strong> — y al revés: la apuesta de Kast, ya convertida en ley, es reducir la retención y devolver ese terreno al mercado. Dos paneles, mismo eje de tiempo: arriba lo que el Estado retiene; abajo lo que el Estado solventa.</p>
   <blockquote class="cita-boletin cita-marx">«El gobierno del Estado moderno no es más que un comité que administra los negocios comunes de toda la clase burguesa.» <cite>(Marx y Engels, Manifiesto del Partido Comunista, cap. 1)</cite></blockquote>
   <div class="graf">{panel_doble_retencion_gasto()}</div>
-  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> la retención subió del 15 % al 27 % y con ella el gasto social del 14,6 % al 18,3 % del PIB (salud 3,7 → 5,3; educación 4,0 → 4,9; vivienda plano en 0,3: la gran ausente). La megarreforma revierte ambos lados del panel: −4 puntos de retención con invariabilidad de hasta 20 años, más un ajuste de US$ {fmt(AJ_TOTAL)} millones (US$ {fmt(AJ_ANO)} M el primer año) con PGU, gratuidad y bonos en revisión. Es un solo punto de los principios — el gasto social es capitalismo de Estado, no lo común — pero es el terreno que el mercado quiere recuperar.</p>
+  <p class="analisis"><strong>Interpretación política de la coyuntura:</strong> la retención subió del 15 % al 27 % y con ella el gasto social del 14,6 % al 18,3 % del PIB (salud 3,7 → 5,3; educación 4,0 → 4,9; vivienda plano en 0,3: la gran ausente). La megarreforma — promulgada el 9 de octubre de 2026 como Ley de Reconstrucción Nacional y Desarrollo Económico y Social — revierte ambos lados del panel: −4 puntos de retención en tres tramos (25,5 % en 2027, 24 % en 2028, {fmt(tasa_final)} % en {anio_final}) con invariabilidad tributaria por contrato de 10, 15 o 20 años, y el primer Presupuesto del gobierno llega con el gasto creciendo apenas {fmt(PRES27,1)} % para 2027. Se suma un ajuste de US$ {fmt(AJ_TOTAL)} millones (US$ {fmt(AJ_ANO)} M el primer año) con PGU, gratuidad y bonos en revisión. Es un solo punto de los principios — el gasto social es capitalismo de Estado, no lo común — pero es el terreno que el mercado quiere recuperar.</p>
   {incomodo("el gasto social YA venía cayendo desde el peak de pandemia (24,9 % del PIB en 2021 → 18,3 % en 2023) antes de Kast: la retracción no empieza con él — él la codifica y la amplifica.")}
   {ficha(
-    "Panel A: tasa legal del impuesto de primera categoría por hitos legales (2030 = proyecto en tramitación). Panel B: gasto público social del Gobierno Central en % del PIB, por función (clasificación COFOG). Unidades separadas por panel (tasa % ≠ % del PIB).",
-    "Leyes 18.985 / 20.469 / 20.780 · <a href='https://www.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18216-05'>Senado, Boletín 18216-05</a> · <a href='https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/3127/records?lang=es'>CEPALSTAT ind. 3127 (compila DIPRES)</a> · ajuste: prensa (BioBioChile, Ex-ante, El Desconcierto, abr-mar 2026) · datos: <a href='datos/observatorio/impuesto_primera_categoria.csv'>impuesto_primera_categoria.csv</a> · <a href='datos/observatorio/gasto_social_chile.csv'>gasto_social_chile.csv</a> · <a href='datos/observatorio/ajuste_fiscal_2026.csv'>ajuste_fiscal_2026.csv</a>",
-    "gasto social 2012-2023 (último año disponible) · ajuste 2026 · descarga 16-08-2026",
+    "Panel A: tasa legal del impuesto de primera categoría por hitos legales (2027-2029 = calendario de la ley promulgada el 09-10-2026; al 11-10-2026 falta su publicación en el Diario Oficial, por eso se dibuja punteado y sin número de ley). Panel B: gasto público social del Gobierno Central en % del PIB, por función (clasificación COFOG). Unidades separadas por panel (tasa % ≠ % del PIB).",
+    "Leyes 18.985 / 20.469 / 20.780 · <a href='https://www.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=18216-05'>Senado, Boletín 18216-05</a> · <a href='https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/3127/records?lang=es'>CEPALSTAT ind. 3127 (compila DIPRES)</a> · promulgación y calendario: prensa (Emol 09-10-2026, CNN Chile) · ajuste y Presupuesto 2027: prensa (BioBioChile, Ex-ante, El Desconcierto, mar-abr 2026; Emol y Meganoticias, 05-10-2026) · datos: <a href='datos/observatorio/impuesto_primera_categoria.csv'>impuesto_primera_categoria.csv</a> · <a href='datos/observatorio/gasto_social_chile.csv'>gasto_social_chile.csv</a> · <a href='datos/observatorio/ajuste_fiscal_2026.csv'>ajuste_fiscal_2026.csv</a>",
+    "gasto social 2012-2023 (último año disponible) · ley promulgada 09-10-2026 · Presupuesto 2027 ingresado 30-09-2026 · actualización 11-10-2026",
     "O",
     "Serie de hitos legales (panel A); serie anual COFOG Gobierno Central (panel B). 2020-2021 con gasto de pandemia.",
-    "gasto social 2024-2025 (DIPRES aún no publica la serie en CEPALSTAT); tramos 1970-1989 del impuesto.")}
+    "gasto social 2024-2025 (DIPRES aún no publica la serie en CEPALSTAT); tramos 1970-1989 del impuesto; número de ley y texto del Diario Oficial (se reemplaza la cita de prensa cuando se publique).")}
   <p class="fuente-obs">Fuentes: serie legal citada · CEPALSTAT (DIPRES) · prensa citada en ficha · Elaboración propia. Ver también: Lenin, <em>El Estado y la revolución</em>; Harnecker, <em>Los conceptos elementales del materialismo histórico</em>, cap. 7 §3 «La doble función del Estado».</p>
 </section>'''
 
@@ -491,9 +541,9 @@ pagina = f'''<!DOCTYPE html>
   <div class="me-titulo">
     <p class="kicker">Página de síntesis · Observatorio</p>
     <h1 class="titulo-sec">Observatorio de coyuntura</h1>
-    <p class="principio-sec">Los datos del análisis, públicos para las luchas: tendencias, brechas y el drenaje del plusvalor. Corte de datos: agosto 2026.</p>
+    <p class="principio-sec">Los datos del análisis, públicos para las luchas: tendencias, brechas y el drenaje del plusvalor. Corte de datos: 11 de octubre de 2026.</p>
   </div>
-  <nav class="indice-sub"><a href="index.html">Portada</a><a href="secciones/los-medios-comunes.html">I · Medios comunes</a><a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a><a href="secciones/proletariado.html">III · Proletariado</a><a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a><a href="puntos-reales.html">Puntos reales</a><a class="actual" href="observatorio.html">Observatorio</a></nav>
+  <nav class="indice-sub"><a href="index.html">Portada</a><a href="secciones/los-medios-comunes.html">I · Medios comunes</a><a href="secciones/trabajo-polimorfo.html">II · Trabajo polimorfo</a><a href="secciones/proletariado.html">III · Proletariado</a><a href="secciones/marchitamiento-del-estado.html">IV · Marchitamiento del Estado</a><a href="especial-18-de-octubre.html">Especial 18-O</a><a href="puntos-reales.html">Puntos reales</a><a class="actual" href="observatorio.html">Observatorio</a></nav>
 </header>
 <main class="contenido-sec">
   {term}

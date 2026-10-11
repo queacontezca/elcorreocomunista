@@ -10,14 +10,16 @@ Reproducción libre, total o parcial, citando la fuente (CC BY 4.0).
 
 | Archivo | Qué contiene | Fuente | Estatus |
 |---|---|---|---|
-| `rentas_primarias_chile.csv` | Rentas primarias de la balanza de pagos de Chile (2016→2026 T1), millones US$ | CEPALSTAT ind. 547 (compila Banco Central de Chile) | O |
+| `rentas_primarias_chile.csv` | Rentas primarias de la balanza de pagos de Chile (2016→2026, parcial T1+T2), millones US$ | CEPALSTAT ind. 547 (compila Banco Central de Chile) | O |
+| `rentas_primarias_chile_trimestral.csv` | El mismo flujo por trimestre (2023 T1→2026 T2) | CEPALSTAT ind. 547 | O |
 | `rentas_primarias_al20.csv` | Lo mismo para América Latina (20 países, suma simple) | elaboración propia sobre CEPALSTAT | O |
 | `rentas_debito_pais_2024.csv` | Renta (débito) por país latinoamericano, 2024 | elaboración propia sobre CEPALSTAT | O |
 | `drenaje_mundial_hickel.csv` | Cifras del drenaje Sur→Norte, con su artículo y DOI | Hickel et al. (2021, NPE) y Hickel et al. (2022, GEC) | O |
 | `ied_entradas_cepal.csv` | Entradas de IED en AL y Chile; razones de drenaje | CEPAL, *La IED en ALyC 2025* + CEPALSTAT | O |
-| `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2030 proyecto) | leyes citadas; Senado (Boletín 18216-05) | O |
+| `impuesto_primera_categoria.csv` | Serie legal del impuesto a las empresas (1990→2029, ley promulgada el 09-10-2026) | leyes citadas; prensa mientras no se publique en el Diario Oficial | O |
 | `jornada_semana_obrera.csv` | Composición de la semana obrera y tasas | Fundación SOL 2022 recalculada (Reporte N°1) | C |
 | `kpi_corte.csv` | Indicadores del corte (AFP, CAE, TGR, empleo, cobre, gasto militar, capex digital/IA) — formato máquina: `valor_numerico` + `plantilla` de despliegue | SP · Comisión Ingresa · TGR · INE · Cochilco · SIPRI | O (capex digital/IA: X, pendiente) |
+| `kpi_historial.csv` | Valores de los indicadores en cortes anteriores (no se pierde la historia) | las mismas fuentes | O |
 | `mapa_base_paises.svg` | Geometría de 179 países + clasificación céntrico/periférico | Natural Earth · FMI (proxy declarado) | P |
 
 El detalle por serie (definición, URL, frecuencia, fecha de descarga y notas
@@ -42,6 +44,11 @@ metodológicas) está en `metadatos.yml`.
 
 ## Pendientes declarados (honestidad metodológica)
 
+- **Corte 11-10-2026:** la megarreforma está promulgada pero no publicada en el
+  Diario Oficial; su calendario y la cifra del Presupuesto 2027 se citan de prensa
+  y deben reemplazarse por la fuente oficial (Diario Oficial, DIPRES).
+- La serie regional (`rentas_primarias_al20.csv`) no se actualizó: solo seis países
+  reportan 2026 T2.
 - Desagregación **bilateral** de las utilidades pagadas (Chile → país de origen
   de la IED): se incorpora desde Banco Central / CEPAL cuando la serie esté
   trazable; mientras, el mapa muestra el flujo agregado con su magnitud real.

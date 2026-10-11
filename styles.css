@@ -670,3 +670,63 @@ footer strong{color:var(--papel)}
   text-transform:uppercase; letter-spacing:.08em; font-size:.78rem;
 }
 .btn-comentarios:hover{background:#6d1111}
+
+/* ── Edición de lanzamiento (18·10·2026) ───────────────────────── */
+/* Boletín N°4: tapa en blanco mientras no sale */
+.boletines-lateral li.proximo{opacity:1}
+.boletines-lateral li.proximo .titulo{color:var(--papel); font-weight:bold; font-size:.95rem}
+.boletines-lateral li.proximo .acciones{color:#cbbf9f; white-space:normal}
+.boletines-lateral li.proximo .arts{font-style:italic}
+.bol-tapa-vacia{
+  flex:none; width:98px; aspect-ratio:17/22; box-sizing:border-box;
+  border:1px dashed #6b5f4a; background:#f3edda0d;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.3rem;
+  text-align:center; color:#cbbf9f; padding:.3rem;
+}
+.bol-tapa-vacia .tv-num{font-size:1.25rem; font-style:italic; font-weight:bold; color:#e8b4a0}
+.bol-tapa-vacia .tv-tema{font-size:.7rem; letter-spacing:.14em; text-transform:uppercase}
+.bol-tapa-vacia .tv-estado{font-size:.6rem; font-style:italic}
+@media (max-width:520px){ .bol-tapa-vacia{width:72px} }
+.bol-card.proximo{opacity:1}
+.bol-portada-vacia{
+  flex:none; width:150px; aspect-ratio:17/22; box-sizing:border-box;
+  border:1px dashed var(--filete); background:var(--papel);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.4rem;
+  text-align:center; color:var(--pizarra);
+}
+.bol-portada-vacia .tv-num{font-size:1.8rem; font-style:italic; font-weight:bold; color:var(--rojo)}
+.bol-portada-vacia .tv-tema{font-size:.8rem; letter-spacing:.16em; text-transform:uppercase}
+.bol-portada-vacia .tv-estado{font-size:.72rem; font-style:italic}
+@media (max-width:640px){ .bol-portada-vacia{width:120px} }
+
+/* Especial 18 de octubre: llamado en portada y página */
+.especial-teaser{
+  margin:1.6rem 0 0; background:var(--negro); color:var(--papel);
+  border:2px solid var(--rojo); box-shadow:4px 4px 0 var(--rojo);
+  padding:1.2rem 1.6rem; display:flex; align-items:center; gap:1.6rem;
+}
+.especial-teaser > div{flex:1}
+.especial-teaser .kicker-esp{
+  font-size:.7rem; letter-spacing:.16em; text-transform:uppercase; color:#e8b4a0; margin-bottom:.3rem;
+}
+.especial-teaser h2{font-size:1.45rem; line-height:1.15}
+.especial-teaser h2 a{color:var(--papel); text-decoration:none}
+.especial-teaser p{font-size:.9rem; color:#ddd3b8; margin-top:.45rem; text-align:justify}
+.especial-teaser .boton-obs{border:1px solid var(--papel)}
+@media (max-width:700px){ .especial-teaser{flex-direction:column; align-items:flex-start} }
+.indice a.esp{color:var(--papel); font-weight:bold; border-bottom:2px solid var(--rojo)}
+.lanzamiento{
+  font-size:.8rem; letter-spacing:.06em; border-top:1px solid var(--filete);
+  margin-top:.7rem; padding-top:.6rem;
+}
+.eje-esp{
+  margin:1.6rem 0 .2rem; padding:.45rem .8rem; background:var(--negro); color:var(--papel);
+  font-size:.95rem; letter-spacing:.04em;
+}
+.eje-esp span{display:block; font-size:.74rem; font-weight:normal; font-style:italic; color:#cbbf9f; margin-top:.15rem}
+.mapa-lecturas{width:100%; border-collapse:collapse; font-size:.84rem; margin-top:.6rem}
+.mapa-lecturas th, .mapa-lecturas td{border:1px solid var(--filete); padding:.45rem .55rem; vertical-align:top; text-align:left}
+.mapa-lecturas th{background:var(--papel-oscuro); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase}
+.tabla-scroll{overflow-x:auto}
+/* En pantallas angostas el llamado al Observatorio se apila (antes desbordaba el ancho del teléfono) */
+@media (max-width:700px){ .observatorio-teaser{flex-direction:column; align-items:flex-start} }

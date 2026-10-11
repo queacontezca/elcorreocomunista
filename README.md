@@ -12,7 +12,9 @@ No es un diario de noticias: es un **repositorio del estado de la discusión** �
 
 El sitio se organiza así: la **portada local** (Chile) despacha lo publicado por organizaciones, revistas y militantes; las **secciones** ordenan esa discusión por los cuatro principios del comunismo —los medios comunes, el trabajo polimorfo, el proletariado, el marchitamiento del Estado— más los **puntos reales**; la fila **La Idea del comunismo** lee los tres elementos del eje — movimientos de masas (lo real), Estado (lo simbólico) y organización política (el anudamiento) —; el **observatorio** expone los datos del análisis de coyuntura; y los **boletines** son la producción propia. La fecha de la portada es la de su **última actualización**: la estructura es permanente y avanza el debate.
 
-**Próxima edición del boletín:** N°4 · **«Justicia y política»** — prevista para **octubre de 2026**. Allí discutiremos: educación, movimientos de masa, Estado y organización política.
+**Lanzamiento público:** 18 de octubre de 2026. La edición de lanzamiento lleva un **especial sobre el 18 de octubre** (`especial-18-de-octubre.html`): cómo lo leen las organizaciones, las revistas y el Estado, a siete años.
+
+**Próxima edición del boletín:** N°4, sobre la **justicia** — todavía no sale; su espacio está reservado en la portada y en `boletines.html`.
 
 ## 1. Estructura del repositorio
 
@@ -23,6 +25,7 @@ elcorreocomunista/
 ├── america-latina.html   ← escala América Latina
 ├── mundo.html            ← escala Mundo (en formación)
 ├── puntos-reales.html    ← subsección Puntos reales
+├── especial-18-de-octubre.html ← especial de la edición de lanzamiento
 ├── observatorio.html     ← observatorio de coyuntura (gráficos + mapa del drenaje)
 ├── boletines.html        ← página principal de los boletines
 ├── fuentes.html          ← directorio de fuentes con licencia constatada
