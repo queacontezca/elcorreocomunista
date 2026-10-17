@@ -2,5 +2,5 @@
 <path d="M30,140 A76.5,76.5 0 1 1 182.5,137" fill="none" stroke="#f9514c" stroke-width="13" stroke-linecap="round"/>
 <line x1="182" y1="137" x2="212" y2="137" stroke="#f9514c" stroke-width="15" stroke-linecap="round"/>
 <g transform="rotate(-32 110 125)" fill="#171d22"><rect x="103" y="108" width="14" height="88"/><rect x="80" y="86" width="60" height="26"/></g>
-<g transform="translate(-32,6)"><polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="#f9514c" stroke="#f7ece0" stroke-width="3"/></g>
+<g transform="translate(-32,6)"><polygon points="110,16 117,38 140,38 122,52 129,74 110,60 91,74 98,52 80,38 103,38" fill="#f9514c" stroke="#FBF7E9" stroke-width="3"/></g>
 </svg>

@@ -28,7 +28,7 @@ def fmt(v, dec=0):
     return s.replace(",", "X").replace(".", ",").replace("X", ".")
 
 # Tokens del sistema «Ediciones ¡Que Acontezca!» (rojo-ladrillo, salmon, tinta, pizarra, azul-palido, papel)
-ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#bf4245", "#e69089", "#000000", "#43454a", "#bbc7d1", "#f7ece0"
+ROJO, SAL, NEGRO, PIZ, REJ, PAPEL = "#bf4245", "#e69089", "#000000", "#43454a", "#bbc7d1", "#FBF7E9"
 
 # ───────────────────────── datos ─────────────────────────
 rentas_cl = lee_csv("rentas_primarias_chile.csv")
@@ -494,7 +494,7 @@ m2 = f'''<section class="modulo-obs" id="m2">
 m3 = f'''<section class="modulo-obs" id="m3">
   <h3>3 · La correa financiera: cuánto plusvalor sale del país</h3>
   <p class="concepto"><strong>Esto es exactamente eso: el plusvalor que sale.</strong> Las utilidades y dividendos de la IED son plusvalor producido en Chile y apropiado por el capital extranjero (ganancia empresarial repatriada); los intereses son una <em>fracción del plusvalor</em> cedida al capital a interés — banca y bonistas de afuera, incluidos los organismos internacionales (Marx, T. III: la ganancia se escinde en ganancia empresarial e interés; el interés no es una categoría aparte). Es una <strong>medición conservadora (piso)</strong>: no incluye el intercambio desigual vía precios — la ventana de Hickel en el módulo 5 — ni los precios de transferencia intraempresa. Dos ventanas sobre la misma transferencia: no se suman, se complementan.</p>
-  <blockquote class="cita-boletin cita-marx">«Estos mecanismos… significan que el trabajo se remunera por debajo de su valor, y corresponden, pues, a una superexplotación del trabajo.» <cite>(Marini, Dialéctica de la dependencia, §3 — la respuesta interna al drenaje)</cite></blockquote>
+  <blockquote class="cita-boletin cita-marx">«Estos mecanismos… significan que el trabajo se remunera por debajo de su valor, y corresponden, pues, a una superexplotación del trabajo.» <cite>(Marini, Dialéctica de la dependencia — la respuesta interna al drenaje)</cite></blockquote>
   <div class="graf">{barras_rentas_chile()}</div>
   <p class="concepto"><strong>El flujo, trimestre a trimestre:</strong> la serie anual esconde el ritmo. Vista por trimestres, la correa muestra su aceleración: el segundo trimestre de {TRI_ANIO} es el de mayor salida de rentas de toda la serie de CEPALSTAT para Chile (que parte en 1993).</p>
   <div class="graf">{barras_trimestrales()}</div>
@@ -524,7 +524,7 @@ m4 = f'''<section class="modulo-obs" id="m4">
     "O",
     "Serie de hitos legales (panel A); serie anual COFOG Gobierno Central (panel B). 2020-2021 con gasto de pandemia.",
     "gasto social 2024-2025 (DIPRES aún no publica la serie en CEPALSTAT); tramos 1970-1989 del impuesto; número de ley y texto del Diario Oficial (se reemplaza la cita de prensa cuando se publique).")}
-  <p class="fuente-obs">Fuentes: serie legal citada · CEPALSTAT (DIPRES) · prensa citada en ficha · Elaboración propia. Ver también: Lenin, <em>El Estado y la revolución</em>; Harnecker, <em>Los conceptos elementales del materialismo histórico</em>, cap. 7 §3 «La doble función del Estado».</p>
+  <p class="fuente-obs">Fuentes: serie legal citada · CEPALSTAT (DIPRES) · prensa citada en ficha · Elaboración propia. Ver también: Lenin, <em>El Estado y la revolución</em>; Harnecker, <em>Los conceptos elementales del materialismo histórico</em>, cap. 7, apartado «La doble función del Estado».</p>
 </section>'''
 
 m5 = f'''<section class="modulo-obs" id="m5">

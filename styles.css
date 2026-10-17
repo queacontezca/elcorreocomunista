@@ -762,10 +762,10 @@ footer strong{color:var(--papel)}
 
 :root{
   /* tokens del sistema */
-  --papel:#f7ece0; --blanco:#ffffff; --tinta:#000000; --pizarra:#43454a;
+  --papel:#FBF7E9; --blanco:#ffffff; --tinta:#000000; --pizarra:#43454a;
   --rojo-act:#f9514c; --noche:#171d22; --rojo-ladrillo:#bf4245; --rojo-profundo:#a62c2a;
   --salmon:#e69089; --azul:#6584a9; --azul-claro:#80a1c1; --azul-palido:#bbc7d1;
-  --filete:#b9ad8f;
+  --filete:#21352E; --rosa-viejo:#B2686D; --arena:#EAD29E;
   --font-cartel:"Antonio","Anton","Arial Narrow",sans-serif;
   --font-cintillo:"Anton","Antonio","Arial Narrow",sans-serif;
   --font-grabado:"IM Fell Double Pica","IM FELL Double Pica",Georgia,serif;
