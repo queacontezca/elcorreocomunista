@@ -794,8 +794,8 @@ button, .botones-discusion button, .botones-obs button, .botones-mapa button{bor
   color:var(--tinta); border-bottom:1px solid var(--filete); align-items:center;
 }
 .banda-superior span:first-child{display:flex; align-items:center; gap:.7rem}
-.banda-superior span:first-child::before, .me-sup span::before, footer p:first-child::before{
-  /* marca chica: el sello, porque el logo con multitud se empasta bajo 60 px */
+footer p:first-child::before{
+  /* marca chica solo en el pie: arriba el sello grande ya está en la cabecera */
   content:""; display:inline-block; width:34px; height:34px; flex:none;
   background:url("imagenes/sello-grabado-chico.svg") center/contain no-repeat;
 }
