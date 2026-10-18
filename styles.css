@@ -1396,3 +1396,62 @@ body .cuerpo h1, body .cuerpo h2, body .cuerpo h3, body .cuerpo .epigrafe, body 
 .reg-tabla td span{display:block; font-size:.72rem; color:var(--pizarra)}
 .reg-tabla td:first-child{white-space:nowrap; font-family:var(--font-cintillo); font-size:.7rem; letter-spacing:.08em; text-transform:uppercase}
 @media (max-width:640px){ .reg-tabla thead{display:none} .reg-tabla tr{display:block; border-bottom:4px solid var(--pizarra); padding:.4rem 0} .reg-tabla td{display:block; border:0; padding:.1rem 0} }
+
+/* ══════════════════════════════════════════════════════════════════
+   CAPA «BOLETÍN N°4 FINAL» — 18-10-2026 (borrador de Claude, pendiente de revisión)
+   Lleva al sitio el diseño del PDF «Boletín N°4 - Justicia y Dignidad» (D18):
+   · titulares en Bebas Neue (OFL, alojada en fonts/) y, en dos líneas, la segunda
+     en Anton con el rojo de los títulos interiores (rojo-grabado #A84E54);
+   · bloques en pizarra, rojo-profundo, azul-claro y arena en lugar de azul,
+     salmón y ladrillo; comillas gigantes vectoriales de los separadores;
+   · botones y pestañas en azul-claro (texto negro) en lugar de azul-profundo.
+   ══════════════════════════════════════════════════════════════════ */
+@font-face{font-family:"Bebas Neue"; src:url("fonts/BebasNeue-Regular.ttf") format("truetype"); font-weight:100 900; font-style:normal; font-display:swap}
+:root{
+  --papel:#FBF7E9; --pizarra:#43454a; --rojo-profundo:#A62C2A;
+  --rojo-grabado:#A84E54; --coral:#C3716B; --azul:#80A1C1;
+  --arena:#EAD29E; --azul-claro:#80A1C1; --rosa-viejo:#B2686D; --verde-oscuro:#21352E;
+  --font-cartel:"Bebas Neue","Antonio","Arial Narrow",sans-serif;
+  /* nombres de la hoja vigente reasignados a la paleta del N°4 */
+  --rojo-ladrillo:var(--rojo-grabado);
+  --salmon:var(--arena);
+  --azul-palido:var(--azul-claro);
+  --azul-profundo:var(--azul-claro);
+}
+body{font-synthesis:none}
+h1,h2,.titulo-sec,.bol-info h3,.modulo-obs > h3,.discusion h2{letter-spacing:.04em}
+/* Cabecera: «EL CORREO / COMUNISTA» como la contraportada del N°4 */
+.masthead h1{letter-spacing:.04em}
+.masthead h1 span{font-family:var(--font-cintillo); font-weight:400; color:var(--rojo-grabado); letter-spacing:.03em; font-size:.9em; display:inline-block}
+.bajada{color:var(--rojo-profundo)}
+/* Títulos de página: numeral y barra corta como los títulos interiores */
+.titulo-sec .numeral{font-family:var(--font-cintillo); font-weight:400; color:var(--rojo-grabado)}
+.titulo-sec::after{content:""; display:inline-block; width:2.2rem; height:.45rem; background:var(--pizarra); margin-left:.9rem; vertical-align:.25em}
+.kicker{color:var(--rojo-grabado)}
+.principio-sec{color:var(--rojo-grabado)}
+/* Botones, pestañas y barras: azul-claro con texto negro (4,8:1 o más), activa en pizarra */
+.clasif a, .botones-discusion button, .botones-mapa button, .botones-obs button{background:var(--azul-claro); color:var(--tinta)}
+.clasif a:not(.activa):hover, .botones-discusion button:hover, .botones-mapa button:hover, .botones-obs button:hover{background:var(--pizarra); color:var(--papel)}
+.indice-sub{background:var(--azul-claro)}
+.indice-sub a{color:var(--tinta); border-right-color:var(--papel)}
+.indice-sub a:hover{background:var(--pizarra); color:var(--papel)}
+.indice a.pr, .indice a.esp{border-bottom-color:var(--rojo-grabado)}
+/* Llamado al boletín / especial: bloque pizarra con la comilla vectorial en arena */
+.especial-teaser::before{content:""; width:4.6rem; height:3rem; font-size:0; left:1.2rem; top:1.4rem;
+  background:url("imagenes/comilla-apertura-arena.svg") center/contain no-repeat}
+.especial-teaser .kicker-esp{color:var(--arena)}
+.especial-teaser .boton-obs{background:var(--papel); color:var(--tinta)}
+/* Citas de lateral y de boletines: comilla de apertura del separador, en rojo-grabado */
+.lateral-sec .cita-boletin::before{content:""; display:block; width:3.4rem; height:2.2rem; font-size:0; margin-bottom:.4rem;
+  background:url("imagenes/comilla-apertura-rojo.svg") left center/contain no-repeat}
+.cita-marx{border-left-color:var(--rojo-grabado)}
+.tapa::before{content:""; width:5.6rem; height:3.7rem; font-size:0; right:.8rem; bottom:-.4rem; opacity:.35;
+  background:url("imagenes/comilla-cierre-arena.svg") center/contain no-repeat}
+/* Recuadros: coral con texto papel solo en tamaño grande; el cuerpo va en papel sobre rojo-profundo */
+.dato-incomodo{background:var(--arena); color:var(--tinta)}
+.cifra-exp, .cifra-c{background:var(--arena)}
+.cifra-graf .cifra-rot, .cifra-graf .cifra-ir:hover{color:var(--arena)}
+.serie-lectura span{color:var(--arena)}
+/* Pie: la marca chica queda; las cuentas de la editorial */
+footer a{color:var(--arena)}
+.especial-teaser a:not(.boton-obs){color:var(--arena); text-decoration:underline}
