@@ -91,6 +91,15 @@ series:
     estatus: "O (la fila «Digital/IA — capex hyperscalers» es X: sin fuente propia verificada, no se grafica)"
     notas: "Corte 11-10-2026: se actualizaron AFP, desempleo/informalidad y cobre; CAE, TGR y gasto militar no tienen dato nuevo y conservan su fecha. Los valores del corte anterior quedan en kpi_historial.csv. El stock AFP mide tamaño, no captura; su variación mensual es mayoritariamente revaluación de mercado. El capex de hyperscalers (~US$ 725.000 M, 2026) circulaba antes en el sitio sin ficha del dato ni fuente trazable en esta carpeta: queda declarado como pendiente (X) hasta que la editorial confirme la fuente exacta que usó — entonces se completa esta fila con valor_numerico, unidad y fuente reales."
 
+  ingresos_tributarios_chile.csv:
+    descripcion: "Ingresos tributarios del Gobierno Central de Chile, en % del PIB: total, impuesto a corporaciones y empresas, a personas físicas e impuestos generales sobre bienes y servicios (IVA)"
+    fuente: "CEPALSTAT, indicador 821 «Ingresos tributarios por tipo de impuestos en porcentajes del PIB» (source_id 5283)"
+    url: "https://api-cepalstat.cepal.org/cepalstat/api/v1/indicator/821/data?lang=es"
+    frecuencia: "anual (serie 2012-2022 en el CSV; la API trae desde 1990)"
+    ultima_descarga: "2026-10-19"
+    estatus: "O"
+    notas: "Cobertura: Gobierno Central, sin contribuciones sociales. Último año disponible: 2022. Se usa en la síntesis para comparar, en un mismo año, lo que el Estado retiene, lo que reparte como gasto social y lo que sale como rentas: son series de fuentes distintas sobre el mismo PIB, no un balance contable."
+
   gasto_social_chile.csv:
     descripcion: "Gasto público social del Gobierno Central de Chile, en % del PIB, por función (total, salud, educación, vivienda, protección social)"
     fuente: "CEPALSTAT, indicador 3127 «Gasto público social según clasificación por funciones del gobierno» (compila DIPRES)"
